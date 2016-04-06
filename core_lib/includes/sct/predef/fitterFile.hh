@@ -3,18 +3,23 @@
 
 
 #include "sct/predef/plane.hh"
-#include "sct/internal/factory.hh"
 #include <string>
 #include "sct/platform.hh"
+
+
+
+#ifndef __CINT__
+#include "sct/internal/factory.hh"
 #define registerFitterFile(FitterFileType,FitterFileName) registerClass(fitterFile,FitterFileType,FitterFileName)
+#endif // !__CINT__
 
 class EUTFile;
 class DllExport fitterFile  {
 public:
   
-  using MainType = std::string;
-  using Parameter_t = std::string;
-  using Parameter_ref = const Parameter_t&;
+  typedef std::string MainType;
+  typedef  std::string Parameter_t;
+  typedef const Parameter_t& Parameter_ref;
   virtual xy_plane  apix_hit_local() const = 0;
   virtual xy_plane  apix_hit() const = 0;
   virtual xy_plane  apix_zs_data() const = 0;
@@ -43,6 +48,44 @@ public:
   
 };
 
+class DllExport FFile {
+public:
+
+  typedef std::string MainType;
+  typedef  std::string Parameter_t;
+  typedef const Parameter_t& Parameter_ref;
+  FFile(fitterFile::Parameter_ref name, const fitterFile::MainType& type = "MAY15");
+  xy_plane  apix_hit_local() const;
+  xy_plane  apix_hit() const ;
+  xy_plane  apix_zs_data() const ;
+  xy_plane  apix_fitted() const ;
+  xy_plane  apix_fitted_local() const ;
+
+  xy_plane  DUT_hit_local() const ;
+  xy_plane  DUT_hit() const ;
+  xy_plane  DUT_zs_data() const;
+  xy_plane  DUT_fitted() const ;
+  xy_plane  DUT_fitted_local() const ;
+
+
+  xy_plane  tel_hit_local(double ID) const ;
+  xy_plane  tel_hit(double ID) const ;
+  xy_plane  tel_zs_data(double ID) const ;
+  xy_plane  tel_fitted(double ID) const ;
+  xy_plane  tel_fitted_local(double ID) const ;
+
+  FitterPlane DUT_fitted_local_GBL() const ;
+  FitterPlane tel_fitted_local_GBL(double ID) const ;
+
+
+  EUTFile* getGenericFile();
+  ProcessorCollection* getProcessorCollection() ;
+  fitterFile* get_file();
+private:
+#ifndef __CINT__
+  std::shared_ptr <fitterFile> m_file;
+#endif
+};
 DllExport std::unique_ptr<fitterFile> create_Fitter_file(fitterFile::Parameter_ref name, const fitterFile::MainType& type = "MAY15");
 DllExport void register_file_reader(const std::string& name, fitterFile* (fun)(fitterFile::Parameter_ref param_));
 #endif // fitterFile_h__

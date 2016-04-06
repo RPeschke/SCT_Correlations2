@@ -13,3 +13,108 @@ void register_file_reader(const std::string& name, fitterFile* (fun)(fitterFile:
 {
    Class_factory_Utilities::Factory<fitterFile>::do_register( name ,fun);
 }
+
+FFile::FFile(fitterFile::Parameter_ref name, const fitterFile::MainType& type /*= "MAY15"*/)
+{
+  m_file = std::move(create_Fitter_file(name, type));
+}
+
+xy_plane FFile::apix_hit_local() const
+{
+ return m_file->apix_hit_local();
+}
+
+xy_plane FFile::apix_hit() const
+{
+ return m_file->apix_hit();
+}
+
+xy_plane FFile::apix_zs_data() const
+{
+  return m_file->apix_zs_data();
+}
+
+xy_plane FFile::apix_fitted() const
+{
+  return m_file->apix_fitted();
+}
+
+xy_plane FFile::apix_fitted_local() const
+{
+  return m_file->apix_fitted_local();
+}
+
+xy_plane FFile::DUT_hit_local() const
+{
+  return m_file->DUT_hit_local();
+}
+
+xy_plane FFile::DUT_hit() const
+{
+  return m_file->DUT_hit();
+}
+
+xy_plane FFile::DUT_zs_data() const
+{
+  return m_file->DUT_zs_data();
+}
+
+xy_plane FFile::DUT_fitted() const
+{
+  return m_file->DUT_fitted();
+}
+
+xy_plane FFile::DUT_fitted_local() const
+{
+  return m_file->DUT_fitted_local();
+}
+
+xy_plane FFile::tel_hit_local(double ID) const
+{
+  return m_file->tel_hit_local(ID);
+}
+
+xy_plane FFile::tel_hit(double ID) const
+{
+  return m_file->tel_hit(ID);
+}
+
+xy_plane FFile::tel_zs_data(double ID) const
+{
+  return m_file->tel_zs_data(ID);
+}
+
+xy_plane FFile::tel_fitted(double ID) const
+{
+  return m_file->tel_fitted(ID);
+}
+
+xy_plane FFile::tel_fitted_local(double ID) const
+{
+  return m_file->tel_fitted_local(ID);
+}
+
+FitterPlane FFile::DUT_fitted_local_GBL() const
+{
+  return m_file->DUT_fitted_local_GBL();
+}
+
+FitterPlane FFile::tel_fitted_local_GBL(double ID) const
+{
+  return m_file->tel_fitted_local_GBL(ID);
+}
+
+EUTFile* FFile::getGenericFile()
+{
+  return m_file->getGenericFile();
+}
+
+ProcessorCollection* FFile::getProcessorCollection()
+{
+  return m_file->getProcessorCollection();
+}
+
+fitterFile* FFile::get_file()
+{
+  return m_file.get();
+}

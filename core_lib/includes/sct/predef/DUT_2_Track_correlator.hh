@@ -6,10 +6,12 @@
 #include "sct/lagacy/xml_input_file.hh"
 #include "sct/processor_prob.hh"
 #include <string>
-#include "sct/internal/factory.hh"
 #include "sct/lagacy/setup_description.hh"
 
+#ifndef __CINT__
+#include "sct/internal/factory.hh"
 #define registerDUT_2_Track_correlator(ClassTypeName, name) registerClass(DUT_2_Track_correlator,ClassTypeName,name)
+#endif
 
 class DllExport D2T_prob {
 public:
@@ -34,9 +36,9 @@ private:
 
 class DllExport DUT_2_Track_correlator {
 public:
-  using MainType = std::string;
-  using Parameter_t = D2T_prob;
-  using Parameter_ref = D2T_prob&;
+  typedef  std::string MainType;
+  typedef  D2T_prob Parameter_t;
+  typedef   D2T_prob& Parameter_ref;
   DUT_2_Track_correlator(Parameter_ref param_);
   virtual xy_plane getResidual() = 0;
   virtual xy_plane getResidualVsMissing() = 0;
@@ -47,6 +49,22 @@ protected:
   Parameter_t m_param;
 };
 
+class DllExport D2T {
+public:
+  D2T(const DUT_2_Track_correlator::MainType& name,DUT_2_Track_correlator::Parameter_ref param_);
+  xy_plane getResidual() ;
+  xy_plane getResidualVsMissing() ;
+  xy_plane getTotalTrueHits();
+  xy_plane getTrueHitsWithDUT() ;
+  xy_plane getDUT_Hits() ;
+
+private:
+#ifndef __CINT__
+  std::shared_ptr<DUT_2_Track_correlator> m_d2t;
+#endif
+
+
+};
 
 DllExport void register_DUT_2_Track_correlator(const DUT_2_Track_correlator::MainType& name, DUT_2_Track_correlator* (fun)(DUT_2_Track_correlator::Parameter_ref param_));
 DllExport std::unique_ptr<DUT_2_Track_correlator> create_DUT_2_Track_correlator(DUT_2_Track_correlator::Parameter_ref param_, const DUT_2_Track_correlator::MainType& type);

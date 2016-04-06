@@ -78,3 +78,33 @@ void register_DUT_2_Track_correlator(const DUT_2_Track_correlator::MainType& nam
 {
   return Class_factory_Utilities::Factory<DUT_2_Track_correlator>::Create(type, param_);
 }
+
+ D2T::D2T(const DUT_2_Track_correlator::MainType& name,DUT_2_Track_correlator::Parameter_ref param_)
+ {
+   m_d2t = std::move(create_DUT_2_Track_correlator(param_, name));
+ }
+
+ xy_plane D2T::getResidual()
+ {
+   return m_d2t->getResidual();
+ }
+
+ xy_plane D2T::getResidualVsMissing()
+ {
+   return m_d2t->getResidualVsMissing();
+ }
+
+ xy_plane D2T::getTotalTrueHits()
+ {
+   return m_d2t->getTotalTrueHits();
+ }
+
+ xy_plane D2T::getTrueHitsWithDUT()
+ {
+   return m_d2t->getTrueHitsWithDUT();
+ }
+
+ xy_plane D2T::getDUT_Hits()
+ {
+   return m_d2t->getDUT_Hits();
+ }

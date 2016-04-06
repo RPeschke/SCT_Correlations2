@@ -55,4 +55,16 @@
 #pragma link C++ function Draw;
 #pragma link C++ class DrawOption;
 #pragma link C++ class xy_pro;
+#pragma link C++ class find_nearest;
+#pragma link C++ class find_nearest_strip;
+#pragma link C++ enum axis_def;
+#pragma link C++ class THE;
+#pragma link C++ class truehitExtractor;
+#pragma link C++ class TH_param;
+#pragma link C++ class D2T;
+#pragma link C++ class DUT_2_Track_correlator;
+#pragma link C++ class D2T_prob;
+
+#pragma link C++ class FFile;
+#pragma link C++ class fitterFile;
 #endif
