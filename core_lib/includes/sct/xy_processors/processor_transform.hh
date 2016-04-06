@@ -14,7 +14,5 @@ public:
 };
 
 
-DllExport xy_plane transform(const xy_plane& pl, double x_slope, double x_offset, double y_slope, double y_offset, processor_prob& pprob = saveWithRandomName("transform__"));
-DllExport xy_plane transform_move(const xy_plane& pl,  double x_offset, double y_offset, processor_prob& pprob = saveWithRandomName("transform_move__"));
 
 #endif // processor_transform_h__

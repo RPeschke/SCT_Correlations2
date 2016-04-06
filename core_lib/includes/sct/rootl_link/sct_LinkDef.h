@@ -54,4 +54,5 @@
 
 #pragma link C++ function Draw;
 #pragma link C++ class DrawOption;
+#pragma link C++ class xy_pro;
 #endif

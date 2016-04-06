@@ -11,6 +11,7 @@
 #include "sct/ProcessorCollection.h"
 #include "TGraph.h"
 #include "TF1.h"
+#include "sct/xy_processors/xy_pro.hh"
 
 #define  SCT_THROW(X)  std::cout<<X<<std::endl
 
@@ -348,7 +349,7 @@ bool FileProcessors_standard::process_file(FileProberties* fileP)
 
 
 
-  m_residual = residual(
+  m_residual = xy_pro::residual(
     m_input_file->DUT_fitted_local_GBL().get_x(),
     m_input_file->DUT_hit_local().get_x(),
     processor_prob().setName("residualVSEvent")

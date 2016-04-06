@@ -9,6 +9,5 @@ public:
   std::shared_ptr<S_Cut> m_cut;
 };
 
-DllExport xy_plane cut_xy(const xy_plane& pl, const S_Cut& cut_, processor_prob& pprob = saveWithRandomName("cut_xy_"));
 
 #endif // processor_cut_xy_h__

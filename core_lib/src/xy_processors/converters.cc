@@ -4,17 +4,18 @@
 
 #include <iostream>
 #include "TMath.h"
+#include "sct/xy_processors/xy_pro.hh"
 
 xy_plane convert_local_to_global(const xy_plane& local_hits, const Xlayer& layer, processor_prob& pprob/*= saveWithRandomName("local2global__") */)
 {
 
 
-  auto rot = rotate(
+  auto rot = xy_pro::rotate(
     local_hits,
     layer.ladder.rotationXY / 360 * TMath::Pi() * 2,
     DontsaveWithRandomName()
     );
-  auto a = linear_trans(
+  auto a = xy_pro::linear_trans(
     rot,
     layer.sensitive.rotation1,
     layer.sensitive.rotation2,
@@ -24,7 +25,7 @@ xy_plane convert_local_to_global(const xy_plane& local_hits, const Xlayer& layer
     );
 
 
-  auto b = transform_move(
+  auto b = xy_pro::transform_move(
     a,
     layer.ladder.positionX,
     layer.ladder.positionY,
@@ -37,7 +38,7 @@ xy_plane convert_local_to_global(const xy_plane& local_hits, const Xlayer& layer
 xy_plane convert_global_to_local(const xy_plane& global_hits, const Xlayer& layer, processor_prob& pprob/*= saveWithRandomName("global2local__") */)
 {
 
-  auto b = transform_move(
+  auto b = xy_pro::transform_move(
     global_hits,
     -layer.ladder.positionX,
     -layer.ladder.positionY,
@@ -53,7 +54,7 @@ xy_plane convert_global_to_local(const xy_plane& global_hits, const Xlayer& laye
   }
 
 
-  auto a = linear_trans(
+  auto a = xy_pro::linear_trans(
     b,
     layer.sensitive.rotation4 / det_A,
     -layer.sensitive.rotation2 / det_A,
@@ -62,7 +63,7 @@ xy_plane convert_global_to_local(const xy_plane& global_hits, const Xlayer& laye
     DontsaveWithRandomName()
     );
 
-  auto local_hits = rotate(
+  auto local_hits = xy_pro::rotate(
     a,
     -layer.ladder.rotationXY / 360 * TMath::Pi() * 2,
     pprob
@@ -74,7 +75,7 @@ xy_plane convert_global_to_local(const xy_plane& global_hits, const Xlayer& laye
 xy_plane convert_hits_to_zs_data_GBL(const xy_plane& hits, const Xlayer& layer, processor_prob& pprob/*= saveWithRandomName("hits_to_zs_data_GBL__") */)
 {
 
-  return transform(
+  return xy_pro::transform(
     hits,
     1 / layer.sensitive.pitchX,                                                         // x_slope
     -(layer.sensitive.positionX - layer.sensitive.sizeX / 2) / layer.sensitive.pitchX,  //x_offset
@@ -86,7 +87,7 @@ xy_plane convert_hits_to_zs_data_GBL(const xy_plane& hits, const Xlayer& layer, 
 
 xy_plane convert_zs_data_to_hits_GBL(const xy_plane& sz_data, const Xlayer& layer, processor_prob& pprob/*= saveWithRandomName("zs_data_to_hits_GBL___") */)
 {
-  return transform(
+  return xy_pro::transform(
     sz_data,
     layer.sensitive.pitchX,                                     // x_slope
     layer.sensitive.positionX - layer.sensitive.sizeX / 2,      //x_offset
@@ -98,7 +99,7 @@ xy_plane convert_zs_data_to_hits_GBL(const xy_plane& sz_data, const Xlayer& laye
 
 xy_plane convert_zs_data_to_hits_DAF(const xy_plane& sz_data, const Xlayer& layer, processor_prob&  pprob/*= saveWithRandomName("zs_data_to_hits_DAF___") */)
 {
-  return transform(
+  return xy_pro::transform(
     sz_data,
     layer.sensitive.pitchX,          // x_slope
     -layer.sensitive.sizeX / 2,      //x_offset
@@ -110,7 +111,7 @@ xy_plane convert_zs_data_to_hits_DAF(const xy_plane& sz_data, const Xlayer& laye
 
 xy_plane convert_hits_to_zs_data_DAF(const xy_plane& hits, const Xlayer& layer, processor_prob& pprob/*= saveWithRandomName("hits_to_zs_data_DAF___") */)
 {
-  return transform(
+  return xy_pro::transform(
     hits,
     1 / layer.sensitive.pitchX,                            // x_slope
     (layer.sensitive.sizeX / 2) / layer.sensitive.pitchX,  //x_offset

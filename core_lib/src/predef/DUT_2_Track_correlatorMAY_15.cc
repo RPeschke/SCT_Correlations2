@@ -6,6 +6,7 @@
 #include "sct/xy_processors/processor_cut_xy.hh"
 #include "sct/xy_processors/find_nearest_strip.hh"
 #include "sct/xy_processors/processor_hitmap.hh"
+#include "sct/xy_processors/xy_pro.hh"
 
 class DUT_2_Track_correlatorMAY15:public DUT_2_Track_correlator {
 public:
@@ -33,14 +34,14 @@ DUT_2_Track_correlatorMAY15::DUT_2_Track_correlatorMAY15(DUT_2_Track_correlator:
     );
 
 
-  auto dut_rotated = rotate(
+  auto dut_rotated = xy_pro::rotate(
     trueHitsInStrips,
     param_.get_xmlFile()->globalConfig.Rotation,
     DontsaveWithRandomName()
     );
 
   std::string trueHitsInStrips_name = param_.get_processor_pro().name + "_true";
-  auto dut_rotated_moved = transform_move(
+  auto dut_rotated_moved = xy_pro::transform_move(
     dut_rotated,
     param_.get_xmlFile()->globalConfig.Position_value,
     0,
@@ -48,7 +49,7 @@ DUT_2_Track_correlatorMAY15::DUT_2_Track_correlatorMAY15(DUT_2_Track_correlator:
     );
 
   std::string trueHitsInStrips_name_cutted = param_.get_processor_pro().name + "_true_cutted";
-  m_totalTrueHit_afterCut = cut_xy(
+  m_totalTrueHit_afterCut = xy_pro::cut_xy(
     dut_rotated_moved,
     param_.get_xmlFile()->globalConfig.cut(),
     processor_prob(param_.get_processor_pro()).setName(trueHitsInStrips_name)
@@ -66,7 +67,7 @@ DUT_2_Track_correlatorMAY15::DUT_2_Track_correlatorMAY15(DUT_2_Track_correlator:
     );
 
   std::string res_vs_missing_name = param_.get_processor_pro().name + "_res_vs_missing";
-  m_residualVsMissing = hitmap(
+  m_residualVsMissing = xy_pro::hitmap(
     find_closest.getResidual().get_x(),
     find_closest.getHitOnPlaneA().get_y(),
     processor_prob(param_.get_processor_pro()).setName(res_vs_missing_name)

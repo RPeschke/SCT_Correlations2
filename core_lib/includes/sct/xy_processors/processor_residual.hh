@@ -9,5 +9,5 @@ public:
   virtual void processHit(double x, double y) ;
 };
 
-DllExport xy_plane residual(const axis& x_, const axis& y_, processor_prob& pprob = saveWithRandomName("residual__"));
+
 #endif // processor_residual_h__

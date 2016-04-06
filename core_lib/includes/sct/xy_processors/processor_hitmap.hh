@@ -4,8 +4,6 @@
 #include "sct/predef/plane.hh"
 
 
-DllExport xy_plane hitmap(const axis& x_, const axis& y_, processor_prob& pprob= saveWithRandomName("hitmap__"));
-
 class processor_hitmap :public processor_hit2d{
 public:  
   processor_hitmap(const axis& x_, const axis& y_, processor_prob& pprob);

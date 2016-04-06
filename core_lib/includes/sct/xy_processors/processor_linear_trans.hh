@@ -10,8 +10,5 @@ public:
 };
 
 
-DllExport xy_plane linear_trans(const xy_plane& pl, double a11, double a12, double a21, double a22, processor_prob pprob = saveWithRandomName("linear_trans__"));
-
-DllExport xy_plane rotate(const xy_plane& pl, double angle, processor_prob pprob = saveWithRandomName("rotate__"));
 
 #endif // processor_linear_trans_h__

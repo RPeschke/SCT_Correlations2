@@ -3,7 +3,7 @@ FIND_PACKAGE(RapidXML REQUIRED)
 
 INCLUDE_DIRECTORIES( . inc ${ROOT_INCLUDE_DIR} )
 
-SET(SCT_CORR_name SCT_CORELATIONS)
+SET(SCT_CORR_name SCT_CORRELATIONS)
 
 
 file(GLOB_RECURSE SOURCES ${PROJECT_SOURCE_DIR}/core_lib/src/*.cc)
@@ -23,7 +23,7 @@ ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/lagacy/setup_description.hh
 ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/lagacy/s_cuts.h 
 ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/lagacy/xml_input_file.hh 
 ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/lagacy/Draw.h  
-
+${PROJECT_SOURCE_DIR}/core_lib/includes/sct/xy_processors/xy_pro.hh
  )
 
 

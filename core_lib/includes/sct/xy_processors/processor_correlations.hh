@@ -10,6 +10,5 @@ public:
 
 };
 
-DllExport xy_plane correlations(const axis& x_, const axis& y_, processor_prob& pprob = saveWithRandomName("correlation_"));
 
 #endif // processor_correlations_h__
