@@ -2,7 +2,7 @@
 #include "sct/internal/TTreeVectorExtractor.hh"
 
 #ifdef  _DEBUG
-#include "ReleaseVectorDef/ReleaseVectorDef.h"
+#include "ReleaseVectorDef.h"
 #else
 #include "TTree.h"
 #endif //  _DEBUG
