@@ -1,0 +1,1 @@
+rootcint -f DictOutput.cxx -c -p sct/axis.hh sct/collection.h sct/EUTFile.h sct/generic_plane.hh sct/processor.h sct/ProcessorCollection.h sct\xy_processors\processorPlaneVSPlane.h  sct\predef\hit.hh sct\predef\plane.hh sct\lagacy\setup_description.hh sct\lagacy\s_cuts.h sct\lagacy\xml_input_file.hh sct\lagacy\Draw.h  sct\rootl_link\sct_LinkDef.h

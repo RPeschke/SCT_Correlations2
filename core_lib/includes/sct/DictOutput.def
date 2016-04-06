@@ -1,0 +1,17 @@
+NAME              "" WINDOWAPI
+
+VERSION           1.0
+
+HEAPSIZE  1048576,4096
+
+EXPORTS
+        G__cpp_dllrevDictOutput @1
+        G__set_cpp_environmentDictOutput @2
+        G__cpp_setup_tagtableDictOutput @3
+        G__cpp_setup_inheritanceDictOutput @4
+        G__cpp_setup_typetableDictOutput @5
+        G__cpp_setup_memvarDictOutput @6
+        G__cpp_setup_memfuncDictOutput @7
+        G__cpp_setup_globalDictOutput @8
+        G__cpp_setup_funcDictOutput @9
+        G__cpp_setupDictOutput @10
