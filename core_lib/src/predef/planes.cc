@@ -11,7 +11,7 @@ std::vector<std::string> xy_names() {
   ret.push_back(ID_DEF);
   return ret;
 }
-plane::plane(const generic_plane& pl) :m_plane(pl){
+plane::plane(const generic_plane& pl) :m_plane(pl) {
 
 }
 
@@ -20,11 +20,16 @@ plane::plane()
 
 }
 
+plane::plane(const plane& rhs) :m_plane(rhs.m_plane)
+{
+
+}
+
 bool plane::next() {
   return m_plane.next();
 }
 
-ProcessorCollection* plane::get_ProcessorCollection() const{
+ProcessorCollection* plane::get_ProcessorCollection() const {
   return m_plane.get_ProcessorCollection();
 }
 
@@ -32,8 +37,14 @@ const generic_plane* plane::get_generic_plane()const {
   return &m_plane;
 }
 
-generic_plane* plane::get_generic_plane(){
+generic_plane* plane::get_generic_plane() {
   return &m_plane;
+}
+
+plane& plane::operator=(const plane& rhs)
+{
+  m_plane = rhs.m_plane;
+  return *this;
 }
 
 xy_plane::xy_plane(const generic_plane& pl) :plane(pl) {
@@ -44,6 +55,22 @@ xy_plane::xy_plane(const generic_plane& pl) :plane(pl) {
 xy_plane::xy_plane()
 {
 
+}
+
+xy_plane::xy_plane(const xy_plane& rhs) :plane(rhs)
+{
+  Hit = std::make_shared<hit>();
+  m_plane.setHitAxisAdress(X_DEF, &Hit->x);
+  m_plane.setHitAxisAdress(Y_DEF, &Hit->y);
+}
+
+xy_plane& xy_plane::operator=(const xy_plane& rhs)
+{
+  plane::operator=(rhs);
+  Hit = std::make_shared<hit>();
+  m_plane.setHitAxisAdress(X_DEF, &Hit->x);
+  m_plane.setHitAxisAdress(Y_DEF, &Hit->y);
+  return *this;
 }
 
 hit* xy_plane::get_hit() {
@@ -74,10 +101,34 @@ FitterPlane::FitterPlane()
 
 }
 
+FitterPlane::FitterPlane(const FitterPlane& rhs) :xy_plane(rhs)
+{
+  F_Hit = std::make_shared<fitterHit>();
+  m_plane.setHitAxisAdress(X_DEF, &F_Hit->x);
+  m_plane.setHitAxisAdress(Y_DEF, &F_Hit->y);
+  m_plane.setHitAxisAdress("chi2", &F_Hit->chi2);
+  m_plane.setHitAxisAdress("ndf", &F_Hit->ndf);
+  m_plane.setHitAxisAdress("phi", &F_Hit->phi);
+  m_plane.setHitAxisAdress("theta", &F_Hit->theta);
+}
+
+FitterPlane& FitterPlane::operator=(const FitterPlane& rhs)
+{
+  xy_plane::operator=(rhs);
+  F_Hit = std::make_shared<fitterHit>();
+  m_plane.setHitAxisAdress(X_DEF, &F_Hit->x);
+  m_plane.setHitAxisAdress(Y_DEF, &F_Hit->y);
+  m_plane.setHitAxisAdress("chi2", &F_Hit->chi2);
+  m_plane.setHitAxisAdress("ndf", &F_Hit->ndf);
+  m_plane.setHitAxisAdress("phi", &F_Hit->phi);
+  m_plane.setHitAxisAdress("theta", &F_Hit->theta);
+  return *this;
+}
+
 hit* FitterPlane::get_hit() {
   return F_Hit.get();
 }
 
-fitterHit* FitterPlane::get_fitterHit(){
+fitterHit* FitterPlane::get_fitterHit() {
   return F_Hit.get();
 }

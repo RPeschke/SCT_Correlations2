@@ -16,6 +16,8 @@ class DllExport plane {
 public:
   plane(const generic_plane& pl);
   plane();
+  plane(const plane& rhs);
+  plane& operator=(const plane& rhs);
   virtual hit* get_hit() = 0;
   bool next();
   ProcessorCollection* get_ProcessorCollection() const;
@@ -29,6 +31,8 @@ class DllExport xy_plane :public plane {
 public:
   xy_plane(const generic_plane& pl);
   xy_plane();
+  xy_plane(const xy_plane& rhs);
+  xy_plane& operator=(const xy_plane& rhs);
   virtual hit* get_hit();
   axis get_x() const;
   axis get_y() const;
@@ -43,6 +47,8 @@ class DllExport FitterPlane :public xy_plane {
 public:
   FitterPlane(const generic_plane& pl);
   FitterPlane();
+  FitterPlane(const FitterPlane& rhs);
+  FitterPlane& operator=(const FitterPlane& rhs);
   virtual hit* get_hit();
   fitterHit* get_fitterHit();
 private:
