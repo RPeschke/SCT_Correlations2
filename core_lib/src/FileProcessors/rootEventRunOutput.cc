@@ -107,7 +107,7 @@ void rootEventRunOutput::set_RunNumber(double RunNum)
 
 void rootEventRunOutput::reset()
 {
-  m_collection.clear();
+  m_collection.clear_event();
   *m_rotation = 0;
   *m_totalNumOfEvents = 0;
   *m_total_efficiency = 0;

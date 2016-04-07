@@ -106,10 +106,15 @@ int collection::get_Event_Nr() const {
   return *m_event_nr;
 }
 
-void collection::clear(){
+void collection::clear_event(){
   for (auto& e:m_data)  {
     e->reset();
   }
+}
+
+void collection::clear_collection()
+{
+  m_tree->Reset();
 }
 
 #ifdef _DEBUG

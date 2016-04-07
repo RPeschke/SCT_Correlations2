@@ -33,7 +33,8 @@ public:
   axis getAxis(double planeID, const std::string& axis_name);
   void set_Event_Nr(int EventNR);
   int get_Event_Nr() const;
-  void clear();
+  void clear_event();
+  void clear_collection();
 #ifndef __CINT__
 #ifdef _DEBUG
   void load();

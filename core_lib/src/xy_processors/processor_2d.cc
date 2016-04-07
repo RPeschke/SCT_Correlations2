@@ -4,8 +4,10 @@
 #include "sct/predef/plane.hh"
 #include "sct/collection.h"
 
+
 init_returns processor_2d::init()
 {
+  m_output_coll->clear_collection();
   return i_sucess;
 }
 
@@ -25,7 +27,7 @@ processor_2d::processor_2d(const axis& x_, const  axis& y_, processor_prob& ppro
 
 process_returns processor_2d::processEvent(){
   ++m_current;
-   m_output_coll->clear();
+   m_output_coll->clear_event();
 
   return processCurrentEvent();
 }

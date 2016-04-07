@@ -21,6 +21,7 @@ processorPlaneVSPlane::processorPlaneVSPlane(
 
 
 init_returns processorPlaneVSPlane::init(){
+  m_output_coll->clear_collection();
   return i_sucess;
 }
 
@@ -29,7 +30,7 @@ process_returns processorPlaneVSPlane::processEvent(){
   ++m_current;
   m_size_x = 0;
   m_size_y = 0;
-  m_output_coll->clear();
+  m_output_coll->clear_event();
   
   bool first = true;
   processEventStart();
