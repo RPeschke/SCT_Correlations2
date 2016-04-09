@@ -5,6 +5,7 @@
 #include "sct/ProcessorCollection.h"
 #include "sct/lagacy/Draw.h"
 #include "sct/lagacy/SCT_helpers.hh"
+#include "TMath.h"
 #define TrueResiduals_DEF 0
 #define  REFERENCE_RESIDUALS_DEF 1
 
@@ -49,20 +50,22 @@ void residual_efficiency_processor::processHit(const hit& p1, const hit& p2)
 
 void residual_efficiency_processor::processHit_1(const hit& p1)
 {
-  for (int i = 0; i < m_strips; ++i) {
+  double ax = 0;
+  double ay = 0;
+  if (m_axis == x_axis_def) {
+    ax = p1.x;
+    ay = p1.y;
+  } else if (m_axis == y_axis_def) {
+    ax = p1.y;
+    ay = p1.x;
+  }
 
-    if (m_axis == x_axis_def) {
+  int start_ = TMath::Floor(ax - m_strips);
+  int end_ = TMath::Ceil(ax + m_strips);
 
-      auto r = make_residual(p1.x, i);
-
-      pushHit(r, p1.y, REFERENCE_RESIDUALS_DEF);
-
-    }
-    else if (m_axis == y_axis_def) {
-      auto r = make_residual(p1.y, i);
-      pushHit(r, p1.x, REFERENCE_RESIDUALS_DEF);
-
-    }
+  for (int i = start_; i < end_; ++i) {
+      auto r = make_residual(ax, i);
+      pushHit(r, ay, REFERENCE_RESIDUALS_DEF);
   }
 }
 
