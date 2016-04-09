@@ -27,7 +27,7 @@ registerDUT_2_Track_correlator(DUT_2_Track_correlatorMAY15, "MAY15");
 
 DUT_2_Track_correlatorMAY15::DUT_2_Track_correlatorMAY15(DUT_2_Track_correlator::Parameter_ref param_) :DUT_2_Track_correlator(param_)
 {
-  auto trueHitsInStrips = convert_hits_to_zs_data_GBL(
+  auto trueHitsInStrips = convert::hits_to_zs_data_GBL(
     param_.get_trueHits(),
     *param_.get_gear()->detector.layer_by_ID(8),
     DontsaveWithRandomName()
