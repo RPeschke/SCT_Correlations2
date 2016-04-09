@@ -35,6 +35,7 @@ ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/lagacy/SCT_helpers.hh
 ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/xy_processors/converters.hh
 ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/analysis/efficiency.hh
 ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/analysis/residual_efficiency.hh
+${PROJECT_SOURCE_DIR}/core_lib/includes/sct/analysis/instrip_efficiency.hh
  )
 
 
