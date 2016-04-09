@@ -1,4 +1,5 @@
 #include "sct/FileProcessors/FileProcessorsBase.hh"
+#include "sct//FileProcessors/FileProcessors_standard.hh"
 #include "TH2D.h"
 #include <iostream>
 #include "sct/lagacy/Draw.h"
@@ -12,6 +13,9 @@
 #include "TGraph.h"
 #include "TF1.h"
 #include "sct/xy_processors/xy_pro.hh"
+#include "TMath.h"
+#include "sct/lagacy/SCT_helpers.hh"
+#include "sct/analysis/residual_efficiency.hh"
 
 #define  SCT_THROW(X)  std::cout<<X<<std::endl
 
@@ -19,57 +23,7 @@ template <typename T>
 void xml_print(const std::string& tag, const T& value) {
   std::cout << tag << ":  " << value << std::endl;
 }
-class FileProcessors_standard:public FileProcessorsBase {
-public:
-  FileProcessors_standard(Parameter_ref par);
-  virtual ~FileProcessors_standard();
-  Long64_t DrawResidual(Double_t min_X, Double_t max_X);
-  Long64_t DrawResidual();
-  Long64_t DrawResidualVsEvent(Double_t min_X, Double_t max_X);
-  Long64_t DrawResidualVsEvent();
-  Long64_t DrawResidualVsMissingCordinate(Double_t min_X, Double_t max_X);
-  Long64_t DrawResidualVsMissingCordinate();
-  Long64_t Draw_Efficinecy_map();
-  Long64_t Draw_Hit_map();
-  Long64_t Draw_DUT_Hits_map();
-  TH2D* getResidualVsMissingCordinate();
-  virtual void saveHistograms(TFile* outPutFile, double residual_min, double residual_max) ;
 
-private:
-
-  virtual  bool process_file(FileProberties* fileP) override;
-  void extract_efficiency();
-  void extract_hitMap();
-  void extract_residual();
-  void extract_rotation();
-  void process_reset();
-
-
-
-  virtual std::string get_suffix() const override;
-
-
-  std::shared_ptr<TH1D> m_Residual;
-  std::shared_ptr<TH1D> m_Hits_total;
-  std::shared_ptr<TH1D> m_Hits_with_DUT_Hits;
-  std::shared_ptr<TH1D> m_Efficieny_map;
-  std::shared_ptr<TH1D> m_Efficieny_trueHits;
-  std::shared_ptr<TH2D> m_resVSMissing;
-  std::shared_ptr<TH2D> m_ResidualVsEvent;
-  
-  
-  
-  std::unique_ptr<fitterFile> m_input_file;
-  xy_plane m_trueHits , m_residual;
-  std::unique_ptr<DUT_2_Track_correlator> m_corr;
-
-
-
-
-  TFile* m_dummy = nullptr;
-  std::shared_ptr <TF1> m_fit;
-
-};
 
 FileProcessors_standard::FileProcessors_standard(Parameter_ref par)
 {
@@ -90,7 +44,7 @@ FileProcessors_standard::~FileProcessors_standard()
 
 }
 
-Long64_t FileProcessors_standard::DrawResidual(Double_t min_X, Double_t max_X)
+int FileProcessors_standard::DrawResidual(Double_t min_X, Double_t max_X)
 {
   m_Residual = std::make_shared<TH1D>(
     "residual",
@@ -110,7 +64,7 @@ Long64_t FileProcessors_standard::DrawResidual(Double_t min_X, Double_t max_X)
     );
 }
 
-Long64_t FileProcessors_standard::DrawResidual()
+int FileProcessors_standard::DrawResidual()
 {
   auto ret = Draw(
     m_corr->getResidual(),
@@ -122,7 +76,7 @@ Long64_t FileProcessors_standard::DrawResidual()
   return ret;
 }
 
-Long64_t FileProcessors_standard::DrawResidualVsEvent(Double_t min_X, Double_t max_X)
+int FileProcessors_standard::DrawResidualVsEvent(Double_t min_X, Double_t max_X)
 {
   m_ResidualVsEvent = std::make_shared<TH2D>(
     "ResidualVsEvent",
@@ -141,7 +95,7 @@ Long64_t FileProcessors_standard::DrawResidualVsEvent(Double_t min_X, Double_t m
     );
 }
 
-Long64_t FileProcessors_standard::DrawResidualVsEvent()
+int FileProcessors_standard::DrawResidualVsEvent()
 {
   auto ret = Draw(
     m_residual,
@@ -154,7 +108,7 @@ Long64_t FileProcessors_standard::DrawResidualVsEvent()
   return ret;
 }
 
-Long64_t FileProcessors_standard::DrawResidualVsMissingCordinate(Double_t min_X, Double_t max_X)
+int FileProcessors_standard::DrawResidualVsMissingCordinate(Double_t min_X, Double_t max_X)
 {
   m_resVSMissing = std::make_shared<TH2D>(
     "ResidualVsMissingCordinate",
@@ -179,7 +133,7 @@ Long64_t FileProcessors_standard::DrawResidualVsMissingCordinate(Double_t min_X,
   return ret;
 }
 
-Long64_t FileProcessors_standard::DrawResidualVsMissingCordinate()
+int FileProcessors_standard::DrawResidualVsMissingCordinate()
 {
   auto ret = Draw(
     m_corr->getResidualVsMissing(),
@@ -194,7 +148,7 @@ Long64_t FileProcessors_standard::DrawResidualVsMissingCordinate()
   return ret;
 }
 
-Long64_t FileProcessors_standard::Draw_Efficinecy_map()
+int FileProcessors_standard::Draw_Efficinecy_map()
 {
   m_Efficieny_trueHits = std::make_shared<TH1D>(
     "total",
@@ -221,17 +175,18 @@ Long64_t FileProcessors_standard::Draw_Efficinecy_map()
     .draw_x()
     .output_object(m_Efficieny_map.get())
     );
- // auto e = SCT_helpers::calc_efficiency(m_Efficieny_trueHits.get(), m_Efficieny_map.get());
- // auto eth2d = dynamic_cast<TH1D*>(e);
+  
+  auto e = SCT_helpers::calc_efficiency(m_Efficieny_trueHits.get(), m_Efficieny_map.get());
+  auto eth2d = dynamic_cast<TH1D*>(e);
 
-//  m_Efficieny_map = std::shared_ptr<TH1D>(eth2d);
+  m_Efficieny_map = std::shared_ptr<TH1D>(eth2d);
   // m_Efficieny_map->Divide(m_Efficieny_trueHits.get());
 
   m_Efficieny_map->Draw();
   return n;
 }
 
-Long64_t FileProcessors_standard::Draw_Hit_map()
+int FileProcessors_standard::Draw_Hit_map()
 {
   m_Hits_total = std::make_shared<TH1D>(
     "total",
@@ -247,7 +202,7 @@ Long64_t FileProcessors_standard::Draw_Hit_map()
     );
 }
 
-Long64_t FileProcessors_standard::Draw_DUT_Hits_map()
+int FileProcessors_standard::Draw_DUT_Hits_map()
 {
   m_Hits_with_DUT_Hits = std::make_shared<TH1D>(
     "DUT",
@@ -330,49 +285,62 @@ bool FileProcessors_standard::process_file(FileProberties* fileP)
 
 
 
- 
+  std::cout << fileP->getTfile()->GetName() << std::endl;
 
   XML_imput_file xfile("C:/Users/Argg/Documents/Neuer Ordner/gitHub/SCT_correlations2/DEVICE_1_ASIC_on_Position_5_150V.xml");
 
-  m_input_file = create_Fitter_file("C:/Users/Argg/Documents/Neuer Ordner/gitHub/SCT_correlations2/run000872_fitter.root", "MAY15");
+  std::cout << "1" << std::endl;
+
+  m_input_file = FFile("C:/Users/Argg/Documents/Neuer Ordner/gitHub/SCT_correlations2/run000872_fitter.root", "MAY15");
+  std::cout << "2" << std::endl;
   new TFile("test.root", "recreate");
-
-  auto gear = Xgear("C:/Users/Argg/Documents/Neuer Ordner/gitHub/SCT_correlations2/alignedGear-check-iter2-run000703_with_plane20.xml");
-
-  auto tr = create_truehitExtractor(TH_param().set_fitterFile(m_input_file.get()).set_gear(&gear), "MAY15");
-  m_trueHits = tr->get_true_DUT_Hits();
-
-
-  m_corr = create_DUT_2_Track_correlator(D2T_prob().set_gear(&gear).set_xmlFile(&xfile).set_trueHits(m_trueHits).set_DUTHits(m_input_file->DUT_zs_data()), "MAY15");
-
+  std::cout << "3" << std::endl;
+  Xgear gear("D:/sct_corr_2_test/DEVICE_2_ASIC_on_Position_5_400V/alignedGear-check-iter2-run000703_with_plane20.xml");
+  std::cout << "4" << std::endl;
+  THE the("MAY15", TH_param().set_fitterFile(m_input_file).set_gear(&gear));
+  std::cout << "5" << std::endl;
+  m_trueHits = the.get_true_DUT_Hits();
+  std::cout << "6" << std::endl;
 
 
+  D2T d2t("MAY15", D2T_prob().set_gear(&gear).set_xmlFile(&xfile).set_trueHits(m_trueHits).set_DUTHits(m_input_file.DUT_zs_data()));
 
+
+
+  std::cout << "7" << std::endl;
+
+//   efficiency m(d2t.getTotalTrueHits(), d2t.getTrueHitsWithDUT());
+//    m.DrawTrueHits();
+  residual_efficiency rr(d2t.getTotalTrueHits(),m_input_file.DUT_zs_data(),400,x_axis_def);
 
   m_residual = xy_pro::residual(
-    m_input_file->DUT_fitted_local_GBL().get_x(),
-    m_input_file->DUT_hit_local().get_x(),
+    m_input_file.DUT_fitted_local_GBL().get_x(),
+    m_input_file.DUT_hit_local().get_x(),
     processor_prob().setName("residualVSEvent")
     );
-
+  std::cout << "8" << std::endl;
 
 
 #ifdef _DEBUG
   m_input_file->getProcessorCollection()->loop(20000);
 #else
-  m_input_file->getProcessorCollection()->loop();
+  m_input_file.getProcessorCollection()->loop();
 #endif // _DEBUG
 
-
+  std::cout << "9" << std::endl;
 
   Draw_Efficinecy_map();
-
+  std::cout << "10" << std::endl;
   extract_hitMap();
+  std::cout << "11" << std::endl;
   extract_efficiency();
+  std::cout << "12" << std::endl;
   extract_residual();
+  std::cout << "13" << std::endl;
   extract_rotation();
-
+  std::cout << "14" << std::endl;
   m_outputl->fill();
+  std::cout << "15" << std::endl;
   return true;
 }
 double BinNomialSigma(double totalHits, double DUTHits) {
@@ -447,12 +415,12 @@ void FileProcessors_standard::extract_residual()
 
 void FileProcessors_standard::extract_rotation()
 {
-//   DrawResidualVsMissingCordinate(-10, 10);
-//   auto h = getResidualVsMissingCordinate();
-//   auto f1 = SCT_helpers::LinearFit_Of_Profile(h, sct_type::procent_t(1));
-//   auto rot = TMath::ATan(f1.GetParameter("p1"));
-//   m_outputl->set_rotation(rot);
-//   xml_print("rotation", rot);
+  DrawResidualVsMissingCordinate(-10, 10);
+  auto h = getResidualVsMissingCordinate();
+  auto f1 = SCT_helpers::LinearFit_Of_Profile(h, 1);
+  auto rot = TMath::ATan(f1.GetParameter("p1"));
+  m_outputl->set_rotation(rot);
+  xml_print("rotation", rot);
 }
 
 void FileProcessors_standard::process_reset()
