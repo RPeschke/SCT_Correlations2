@@ -11,6 +11,10 @@ void ProcessorCollection::addProcessor(std::shared_ptr<processor> processor_){
 }
 
 init_returns ProcessorCollection::init(){
+  if (m_processors.empty())
+  {
+    return i_error;
+  }
   for (auto&e:m_processors){
     auto ret=e->init();
     if (ret!=i_sucess){
@@ -31,7 +35,9 @@ end_returns ProcessorCollection::end(){
 }
 
 void ProcessorCollection::loop(){
-  init();
+  if (init()==i_error) {
+    return;
+  }
   while (next())
   {
 
