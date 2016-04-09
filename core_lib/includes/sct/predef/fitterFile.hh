@@ -55,6 +55,7 @@ public:
   typedef  std::string Parameter_t;
   typedef const Parameter_t& Parameter_ref;
   FFile(fitterFile::Parameter_ref name, const fitterFile::MainType& type = "MAY15");
+  FFile();
   xy_plane  apix_hit_local() const;
   xy_plane  apix_hit() const ;
   xy_plane  apix_zs_data() const ;

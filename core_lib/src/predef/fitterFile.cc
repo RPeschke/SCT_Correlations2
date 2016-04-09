@@ -19,6 +19,11 @@ FFile::FFile(fitterFile::Parameter_ref name, const fitterFile::MainType& type /*
   m_file = std::move(create_Fitter_file(name, type));
 }
 
+FFile::FFile()
+{
+
+}
+
 xy_plane FFile::apix_hit_local() const
 {
  return m_file->apix_hit_local();
