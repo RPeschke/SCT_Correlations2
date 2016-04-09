@@ -4,17 +4,18 @@
 #include "sct/lagacy/setup_description.hh"
 #include "TFile.h"
 #include "sct/platform.hh"
-#include <memory>
-#include "sct/FileProcessors/FileProberties.hh"
+
+#ifndef __CINT__
 #include "sct/FileProcessors/rootEventRunOutput.hh"
-
-
+#include "sct/FileProcessors/FileProberties.hh"
+#include <memory>
+#endif
 
 class DllExport FileProcessorsBase {
 public:
-  using MainType = std::string;
-  using Parameter_t = std::string;
-  using Parameter_ref = const std::string&;
+  typedef std::string MainType;
+  typedef std::string Parameter_t;
+  typedef const std::string& Parameter_ref;
   FileProcessorsBase();
   virtual ~FileProcessorsBase();
   void setOutputName(const char* name);
@@ -31,6 +32,7 @@ public:
   const XML_imput_file* get_xml_input() const;
   const Xgear* get_gear() const;
 protected:
+#ifndef __CINT__
   std::shared_ptr<rootEventRunOutput> m_outputl;
 
 
@@ -56,6 +58,7 @@ private:
 
   std::string m_outname;
 
+#endif
 };
 
 #endif // FileProcessorsBase_h__
