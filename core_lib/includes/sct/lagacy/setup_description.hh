@@ -55,7 +55,7 @@ public:
   Xsensitive  sensitive;
   static const char* NodeName();
 };
-struct DllExport Xdetector {
+class DllExport Xdetector {
 public:
   Xdetector(rapid_xml_node* n);
   Xdetector();
@@ -67,7 +67,7 @@ public:
   const Xlayer* layer_by_ID(double ID) const;
   std::vector<Xlayer> layer;
 };
-struct DllExport XBField {
+class DllExport XBField {
 public:
   XBField(rapid_xml_node* n);
   XBField();
@@ -75,7 +75,7 @@ public:
   double x, y, z;
 };
 
-struct DllExport Xgear {
+class DllExport Xgear {
 
 public:
   Xgear(rapid_xml_node* n);
