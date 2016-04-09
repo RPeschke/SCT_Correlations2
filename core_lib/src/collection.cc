@@ -114,7 +114,9 @@ void collection::clear_event(){
 
 void collection::clear_collection()
 {
-  m_tree->Reset();
+  if (outPutTree) {
+    outPutTree->Reset();
+  }
 }
 
 #ifdef _DEBUG
