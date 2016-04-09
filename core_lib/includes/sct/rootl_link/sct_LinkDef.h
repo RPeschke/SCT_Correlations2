@@ -67,4 +67,15 @@
 
 #pragma link C++ class FFile;
 #pragma link C++ class fitterFile;
+#pragma link C++ class FileProcessorsBase;
+#pragma link C++ class FileProcessors_standard;
+#pragma link C++ class SCT_helpers;
+
+#pragma link C++ class convert;
+#pragma link C++ function saveWithRandomName;
+#pragma link C++ function DontsaveWithRandomName;
+#pragma link C++ class efficiency;
+#pragma link C++ class efficiency2D;
+#pragma link C++ class residual_efficiency;
+
 #endif

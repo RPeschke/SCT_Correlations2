@@ -29,6 +29,12 @@ ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/xy_processors/find_nearest_strip.hh
 ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/predef/truehitExtractor.hh
 ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/predef/DUT_2_Track_correlator.hh
 ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/predef/fitterFile.hh
+${PROJECT_SOURCE_DIR}/core_lib/includes/sct/FileProcessors/FileProcessors_standard.hh
+${PROJECT_SOURCE_DIR}/core_lib/includes/sct/FileProcessors/FileProcessorsBase.hh
+${PROJECT_SOURCE_DIR}/core_lib/includes/sct/lagacy/SCT_helpers.hh
+${PROJECT_SOURCE_DIR}/core_lib/includes/sct/xy_processors/converters.hh
+${PROJECT_SOURCE_DIR}/core_lib/includes/sct/analysis/efficiency.hh
+${PROJECT_SOURCE_DIR}/core_lib/includes/sct/analysis/residual_efficiency.hh
  )
 
 
