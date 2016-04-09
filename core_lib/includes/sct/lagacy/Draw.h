@@ -86,4 +86,8 @@ DllExport int Draw(const axis& ax, DrawOption drawOp = DrawOption());
 DllExport int Draw(generic_plane& gp, DrawOption drawOp = DrawOption());
 DllExport int Draw(xy_plane& gp, DrawOption drawOp = DrawOption());
 
+
+
+DllExport void Print(axis& ax);
+DllExport void Print(xy_plane& gp);
 #endif // DrawOption_h__

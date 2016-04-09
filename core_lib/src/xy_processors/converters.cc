@@ -5,6 +5,7 @@
 #include <iostream>
 #include "TMath.h"
 #include "sct/xy_processors/xy_pro.hh"
+#include "sct/xy_processors/modulo.hh"
 
 void convert::test()
 {
@@ -125,3 +126,4 @@ xy_plane convert::hits_to_zs_data_DAF(const xy_plane& hits, const Xlayer& layer,
     pprob
     );
 }
+

@@ -77,5 +77,7 @@
 #pragma link C++ class efficiency;
 #pragma link C++ class efficiency2D;
 #pragma link C++ class residual_efficiency;
+#pragma link C++ function Print;
+#pragma link C++ class instrip_efficiency;
 
 #endif

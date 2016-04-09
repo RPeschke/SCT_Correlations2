@@ -7,6 +7,7 @@
 #include "TVirtualPad.h"
 #include "sct/predef/plane.hh"
 #include "sct/generic_plane.hh"
+#include "sct/predef/hit.hh"
 
 DrawOption::DrawOption(const char* options /*= "colz"*/, const char* cuts /*= ""*/, const char * axis /*= "y:x"*/) : m_options(options), m_cut(cuts), m_axis(axis)
 {
@@ -421,4 +422,27 @@ int Draw(const axis& ax, DrawOption drawOp)
  int Draw(xy_plane& gp, DrawOption drawOp /*= DrawOption()*/)
  {
    return Draw(*gp.get_generic_plane(), drawOp);
+ }
+
+ void Print( axis& ax)
+ {
+   std::cout << "< "<< ax.getName()<< " >" << std::endl;
+   while (ax.next())
+   {
+     std::cout << ax.getValue() <<  std::endl;
+   }
+   std::cout << "</ " << ax.getName() << " >" << std::endl;
+ }
+
+
+
+ void Print(xy_plane& gp)
+ {
+   std::cout << "< " <<" " << " >" << std::endl;
+   while (gp.next())
+   {
+     std::cout << gp.get_hit()->x << "    "<< gp.get_hit()->y << std::endl;
+   }
+   std::cout << "</ " << "  " << " >" << std::endl;
+
  }
