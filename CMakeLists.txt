@@ -43,7 +43,7 @@ add_subdirectory(ReleaseVectorDef)
 add_subdirectory(core_lib)
 add_subdirectory(bin_processFile)
 
-
+add_subdirectory(bin_processCollection)
 
 #######################################################
 # Print out system information useful for bug reports #
