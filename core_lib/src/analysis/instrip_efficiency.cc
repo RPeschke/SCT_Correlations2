@@ -6,6 +6,11 @@
 instrip_efficiency::instrip_efficiency(const xy_plane& trueHits, const xy_plane& trueHits_with_dut, double x_mod, double y_mod, processor_prob& plot_prob_ /*= saveWithRandomName("instrip_efficiency__") */)
 {
   m_true_hits_plane = xy_pro::modulo(trueHits, x_mod, y_mod, plot_prob_);
+  
+  
+  plot_prob_.setName(plot_prob_.name + "_with_DUT");
+  
+    
   m_true_w_dut_plane = xy_pro::modulo(trueHits_with_dut, x_mod, y_mod, plot_prob_);
 
 }
