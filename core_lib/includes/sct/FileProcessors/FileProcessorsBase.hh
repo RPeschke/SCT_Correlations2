@@ -41,6 +41,7 @@ protected:
 #ifndef __CINT__
   std::shared_ptr<rootEventRunOutput> m_outputl;
 
+  TFile* m_outputfile = nullptr;
 
 private:
   virtual std::string get_suffix() const = 0;
@@ -59,7 +60,6 @@ private:
 
 
   std::vector<FileProberties> m_files;
-
 
 
   std::string m_outname;

@@ -239,7 +239,7 @@ bool FileProcessors_standard::process_file(FileProberties* fileP)
   {
     return false;
   }
-  
+  m_outputfile->cd();
   xml_print("fileName", fileP->m_fileName);
   m_outputl->reset();
 
@@ -252,7 +252,7 @@ bool FileProcessors_standard::process_file(FileProberties* fileP)
 
   xml_print("HV", fileP->m_HV);
   m_outputl->set_HV(fileP->m_HV);
-  new TFile("dummy123.root", "recreate");
+
 
 
 

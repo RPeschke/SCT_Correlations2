@@ -105,8 +105,8 @@ bool FileProcessorsBase::process()
   //auto files = xml_print("files1");
 
 
-  auto _file1 = new TFile(m_outname.c_str(),"recreate");
-  start_collection(_file1);
+  m_outputfile = new TFile(m_outname.c_str(),"recreate");
+  start_collection(m_outputfile);
 
 
 
@@ -118,8 +118,7 @@ bool FileProcessorsBase::process()
   }
   end_collection();
 
-  _file1->Write();
-
+  m_outputfile->Write();
   return true;
 }
 
