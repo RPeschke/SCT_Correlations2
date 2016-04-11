@@ -109,7 +109,7 @@ int main(int argc, char **argv) {
     cmd.add(inPath);
     ValueArg<std::string>  output_path("o", "outPath", "output path", false, "dummy.root", "string");
     cmd.add(output_path);
-    ValueArg<std::string>  processor_type("s", "Processor", "which processor to use Standard or Modulo", false, "Standard", "string");
+    ValueArg<std::string>  processor_type("s", "Processor", "which processor to use Standard or Modulo", false, "standard", "string");
     cmd.add(processor_type);
     ValueArg<int> element("e", "element", "element of interest  in the XML file", true, 1, "int");
     cmd.add(element);
@@ -124,7 +124,7 @@ int main(int argc, char **argv) {
     TFile * __file1 = new TFile(output_path.getValue().c_str(), "recreate");
 
 
-    auto p= create_processor("standard");
+    auto p= create_processor(processor_type.getValue());
     if (!p)
     {
       return -1;
