@@ -79,5 +79,6 @@
 #pragma link C++ class residual_efficiency;
 #pragma link C++ function Print;
 #pragma link C++ class instrip_efficiency;
+#pragma link C++ class Cluster_strip;
 
 #endif

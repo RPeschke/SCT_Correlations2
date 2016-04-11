@@ -3,7 +3,7 @@ FIND_PACKAGE(RapidXML REQUIRED)
 
 INCLUDE_DIRECTORIES( . inc ${ROOT_INCLUDE_DIR} )
 
-SET(SCT_CORR_name SCT_CORRELATIONS)
+
 
 
 file(GLOB_RECURSE SOURCES ${PROJECT_SOURCE_DIR}/core_lib/src/*.cc)
@@ -36,6 +36,7 @@ ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/xy_processors/converters.hh
 ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/analysis/efficiency.hh
 ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/analysis/residual_efficiency.hh
 ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/analysis/instrip_efficiency.hh
+${PROJECT_SOURCE_DIR}/core_lib/includes/sct/lagacy/Cluster_strip.hh
  )
 
 
@@ -53,14 +54,14 @@ ADD_CUSTOM_COMMAND(OUTPUT ${SCT_DICTIONARY}
       ARGS -f ${SCT_DICTIONARY} -c -p -I${MY_INCLUDE_DIRECTORIES} ${SCT_ROOT_HEADERS} ${LINKDEF_FILE} 
 )
 
-ADD_LIBRARY( ${SCT_CORR_name} SHARED ${SOURCES} ${SCT_DICTIONARY})
+ADD_LIBRARY( ${PROJECT_NAME} SHARED ${SOURCES} ${SCT_DICTIONARY})
 
 INCLUDE_DIRECTORIES(${RAPIDXML_INCLUDE_DIRS})
 
-target_link_libraries(${SCT_CORR_name}  ${ROOT_LIBRARIES} ${ADDITIONAL_LIBRARIES}  ${RAPIDXML_INCLUDE_DIRS})
+target_link_libraries(${PROJECT_NAME}  ${ROOT_LIBRARIES} ${ADDITIONAL_LIBRARIES}  ${RAPIDXML_INCLUDE_DIRS})
 
 
-INSTALL(TARGETS ${SCT_CORR_name}
+INSTALL(TARGETS ${PROJECT_NAME}
   RUNTIME DESTINATION bin
   LIBRARY DESTINATION lib
   ARCHIVE DESTINATION lib

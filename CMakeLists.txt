@@ -31,6 +31,7 @@ SET(CMAKE_INSTALL_PREFIX "${INSTALL_PREFIX}" CACHE INTERNAL "Prefix prepended to
 INCLUDE_DIRECTORIES( ./core_lib/includes )
 INCLUDE_DIRECTORIES( ./ReleaseVectorDef/inc )
 
+
 set(SCT_PLOTS_INCLUDES ${PROJECT_SOURCE_DIR}/core_lib/includes)
 
 # additional packages to be searched for by cmake
@@ -38,11 +39,11 @@ LIST( APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake )
 
 
 
-
-add_subdirectory(core_lib)
-
-
 add_subdirectory(ReleaseVectorDef)
+add_subdirectory(core_lib)
+add_subdirectory(bin_processFile)
+
+
 
 #######################################################
 # Print out system information useful for bug reports #
