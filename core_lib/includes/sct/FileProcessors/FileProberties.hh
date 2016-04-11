@@ -2,18 +2,14 @@
 #define FileProberties_h__
 #include "TFile.h"
 #include <memory>
+#include <string>
 
 class FileProberties {
 public:
-  TFile* getTfile() const;
-  void setTFile(TFile* file);
-  void setTFile(std::shared_ptr<TFile> file);
+
   double m_Threshold = 0;
   double m_runNumber = 0;
   double m_HV = 0;
-
-private:
-  std::shared_ptr<TFile> m_fileOwnd;
-  TFile* m_file = nullptr;
+  std::string m_fileName;
 };
 #endif // FileProberties_h__

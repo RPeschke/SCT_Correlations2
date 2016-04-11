@@ -6,6 +6,7 @@
 
 #ifndef __CINT__
 #include <memory>
+#include "sct/analysis/efficiency.hh"
 #endif
 #include "sct/predef/fitterFile.hh"
 
@@ -14,6 +15,7 @@ class TH1D;
 class fitterFile;
 class DUT_2_Track_correlator;
 class TF1;
+
 class DllExport FileProcessors_standard :public FileProcessorsBase {
 public:
   FileProcessors_standard(Parameter_ref par);
@@ -45,18 +47,16 @@ private:
 
 
   std::shared_ptr<TH1D> m_Residual;
-  std::shared_ptr<TH1D> m_Hits_total;
-  std::shared_ptr<TH1D> m_Hits_with_DUT_Hits;
-  std::shared_ptr<TH1D> m_Efficieny_map;
-  std::shared_ptr<TH1D> m_Efficieny_trueHits;
+  TH1D* m_Hits_total;
+  TH1D* m_Efficieny_map;
   std::shared_ptr<TH2D> m_resVSMissing;
   std::shared_ptr<TH2D> m_ResidualVsEvent;
-
+  std::shared_ptr<efficiency> m_efficiency;
 
 
   FFile m_input_file;
-  xy_plane m_trueHits, m_residual;
-  std::shared_ptr<DUT_2_Track_correlator> m_corr;
+  xy_plane m_trueHits, m_residual ,m_totalTrue_hits,m_truehits_withDUT,m_ResidualVsMissing;
+
 
 
 

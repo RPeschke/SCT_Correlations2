@@ -9,7 +9,14 @@
 #include "sct/FileProcessors/rootEventRunOutput.hh"
 #include "sct/FileProcessors/FileProberties.hh"
 #include <memory>
+#include "sct/internal/factory.hh"
 #endif
+
+template <typename T>
+void xml_print(const std::string& tag, const T& value) {
+  std::cout << tag << ":  " << value << std::endl;
+}
+#define register_file_processor(class_type,class_name) registerClass(FileProcessorsBase,class_type,class_name)
 
 class DllExport FileProcessorsBase {
 public:
@@ -19,7 +26,6 @@ public:
   FileProcessorsBase();
   virtual ~FileProcessorsBase();
   void setOutputName(const char* name);
-  void push_files(TFile* _file, double Threshold, double runNumber);
   void push_files(const char* _fileName, double Threshold, double runNumber, double HV);
 
   int Add_XML_RunList(const std::string& xmlInputFileName, std::string path__, std::string outputPath = ".", int element = -1);
@@ -61,4 +67,6 @@ private:
 #endif
 };
 
+
+DllExport std::unique_ptr<FileProcessorsBase> create_processor(const FileProcessorsBase::MainType& type ="standard",FileProcessorsBase::Parameter_ref param_="");
 #endif // FileProcessorsBase_h__

@@ -19,12 +19,9 @@
 
 #define  SCT_THROW(X)  std::cout<<X<<std::endl
 
-template <typename T>
-void xml_print(const std::string& tag, const T& value) {
-  std::cout << tag << ":  " << value << std::endl;
-}
 
 
+register_file_processor(FileProcessors_standard, "standard");
 FileProcessors_standard::FileProcessors_standard(Parameter_ref par)
 {
 
@@ -56,7 +53,7 @@ int FileProcessors_standard::DrawResidual(Double_t min_X, Double_t max_X)
 
 
   return Draw(
-    m_corr->getResidual(),
+    m_residual,
     DrawOption()
     .draw_x()
     .cut_x(min_X, max_X)
@@ -67,7 +64,7 @@ int FileProcessors_standard::DrawResidual(Double_t min_X, Double_t max_X)
 int FileProcessors_standard::DrawResidual()
 {
   auto ret = Draw(
-    m_corr->getResidual(),
+    m_residual,
     DrawOption().draw_x()
     );
 
@@ -121,7 +118,7 @@ int FileProcessors_standard::DrawResidualVsMissingCordinate(Double_t min_X, Doub
 
 
   auto ret = Draw(
-    m_corr->getResidualVsMissing(),
+    m_ResidualVsMissing,
     DrawOption()
     .draw_x_VS_y()
     .cut_x(min_X, max_X)
@@ -136,7 +133,7 @@ int FileProcessors_standard::DrawResidualVsMissingCordinate(Double_t min_X, Doub
 int FileProcessors_standard::DrawResidualVsMissingCordinate()
 {
   auto ret = Draw(
-    m_corr->getResidualVsMissing(),
+    m_ResidualVsMissing,
     DrawOption()
     .draw_x_VS_y()
     .opt_colz()
@@ -150,72 +147,20 @@ int FileProcessors_standard::DrawResidualVsMissingCordinate()
 
 int FileProcessors_standard::Draw_Efficinecy_map()
 {
-  m_Efficieny_trueHits = std::make_shared<TH1D>(
-    "total",
-    "total",
-    get_xml_input()->globalConfig.NumberOfBins, -0.5, get_xml_input()->globalConfig.NumberOfStrips - 0.5
-    );
-
-  Draw(
-    m_corr->getTotalTrueHits(),
-    DrawOption()
-    .draw_x()
-    .output_object(m_Efficieny_trueHits.get())
-    );
-
-  m_Efficieny_map = std::make_shared<TH1D>(
-    "Efficiency",
-    "Efficiency",
-    get_xml_input()->globalConfig.NumberOfBins, -0.5, get_xml_input()->globalConfig.NumberOfStrips - 0.5
-    );
-
-  auto n = Draw(
-    m_corr->getTrueHitsWithDUT(),
-    DrawOption()
-    .draw_x()
-    .output_object(m_Efficieny_map.get())
-    );
-  
-  auto e = SCT_helpers::calc_efficiency(m_Efficieny_trueHits.get(), m_Efficieny_map.get());
-  auto eth2d = dynamic_cast<TH1D*>(e);
-
-  m_Efficieny_map = std::shared_ptr<TH1D>(eth2d);
-  // m_Efficieny_map->Divide(m_Efficieny_trueHits.get());
-
-  m_Efficieny_map->Draw();
-  return n;
+  m_Efficieny_map = m_efficiency->DrawEfficiency(get_xml_input()->globalConfig.NumberOfBins, 0, get_xml_input()->globalConfig.NumberOfBins);
+  return 0;
 }
 
 int FileProcessors_standard::Draw_Hit_map()
 {
-  m_Hits_total = std::make_shared<TH1D>(
-    "total",
-    "total",
-    get_xml_input()->globalConfig.NumberOfBins, -0.5, get_xml_input()->globalConfig.NumberOfStrips - 0.5
-    );
-
-  return  Draw(
-    m_corr->getTotalTrueHits(),
-    DrawOption()
-    .draw_x()
-    .output_object(m_Hits_total.get())
-    );
+  m_Hits_total = m_efficiency->DrawTrueHits(get_xml_input()->globalConfig.NumberOfBins, 0, get_xml_input()->globalConfig.NumberOfBins);
+  return 0;
 }
 
 int FileProcessors_standard::Draw_DUT_Hits_map()
 {
-  m_Hits_with_DUT_Hits = std::make_shared<TH1D>(
-    "DUT",
-    "DUT",
-    get_xml_input()->globalConfig.NumberOfBins, -0.5, get_xml_input()->globalConfig.NumberOfStrips - 0.5
-    );
-
-  return Draw(
-    m_corr->getTrueHitsWithDUT(),
-    DrawOption()
-    .draw_x()
-    .output_object(m_Hits_with_DUT_Hits.get())
-    );
+  m_efficiency->DrawDUTHits(get_xml_input()->globalConfig.NumberOfBins, 0, get_xml_input()->globalConfig.NumberOfBins);
+  return 0;
 }
 
 TH2D* FileProcessors_standard::getResidualVsMissingCordinate()
@@ -264,13 +209,13 @@ void FileProcessors_standard::saveHistograms(TFile* outPutFile, double residual_
 #endif // _DEBUG
 
 
- DrawResidualVsMissingCordinate(residual_min, residual_max);
+  DrawResidualVsMissingCordinate(residual_min, residual_max);
 
   if (outPutFile) {
-    outPutFile->Add(m_Efficieny_map.get());
-    outPutFile->Add(m_Efficieny_trueHits.get());
-    outPutFile->Add(m_Hits_total.get());
-    outPutFile->Add(m_Hits_with_DUT_Hits.get());
+    outPutFile->Add(m_Efficieny_map);
+
+    outPutFile->Add(m_Hits_total);
+
     outPutFile->Add(m_ResidualVsEvent.get());
     outPutFile->Add(m_resVSMissing.get());
     outPutFile->Add(m_Residual.get());
@@ -281,66 +226,72 @@ void FileProcessors_standard::saveHistograms(TFile* outPutFile, double residual_
 bool FileProcessors_standard::process_file(FileProberties* fileP)
 {
   process_reset();
-//  auto file_PRINTOUT = xml_print("file");
+  //  auto file_PRINTOUT = xml_print("file");
 
 
 
-  std::cout << fileP->getTfile()->GetName() << std::endl;
+  std::cout << fileP->m_fileName << std::endl;
 
-  XML_imput_file xfile("C:/Users/Argg/Documents/Neuer Ordner/gitHub/SCT_correlations2/DEVICE_1_ASIC_on_Position_5_150V.xml");
 
-  std::cout << "1" << std::endl;
 
-  m_input_file = FFile("C:/Users/Argg/Documents/Neuer Ordner/gitHub/SCT_correlations2/run000872_fitter.root", "MAY15");
-  std::cout << "2" << std::endl;
-  new TFile("test.root", "recreate");
-  std::cout << "3" << std::endl;
-  Xgear gear("D:/sct_corr_2_test/DEVICE_2_ASIC_on_Position_5_400V/alignedGear-check-iter2-run000703_with_plane20.xml");
-  std::cout << "4" << std::endl;
-  THE the("MAY15", TH_param().set_fitterFile(m_input_file).set_gear(&gear));
-  std::cout << "5" << std::endl;
+  m_input_file = FFile(fileP->m_fileName, "MAY15");
+  if (!m_input_file.isOpen())
+  {
+    return false;
+  }
+  
+  xml_print("fileName", fileP->m_fileName);
+  m_outputl->reset();
+
+  xml_print("m_runNumber", fileP->m_runNumber);
+  m_outputl->set_RunNumber(fileP->m_runNumber);
+
+
+  xml_print("threshold", fileP->m_Threshold);
+  m_outputl->set_Threshold(fileP->m_Threshold);
+
+  xml_print("HV", fileP->m_HV);
+  m_outputl->set_HV(fileP->m_HV);
+  new TFile("dummy123.root", "recreate");
+
+
+
+  THE the("MAY15", TH_param().set_fitterFile(m_input_file).set_gear(get_gear()));
   m_trueHits = the.get_true_DUT_Hits();
-  std::cout << "6" << std::endl;
-
-
-  D2T d2t("MAY15", D2T_prob().set_gear(&gear).set_xmlFile(&xfile).set_trueHits(m_trueHits).set_DUTHits(m_input_file.DUT_zs_data()));
 
 
 
-  std::cout << "7" << std::endl;
+  D2T d2t("MAY15", D2T_prob().set_gear(get_gear()).set_xmlFile(*get_xml_input()).set_trueHits(m_trueHits).set_DUTHits(m_input_file.DUT_zs_data()));
+  m_totalTrue_hits = d2t.getTotalTrueHits();
+  m_truehits_withDUT = d2t.getTrueHitsWithDUT();
+  m_efficiency = std::make_shared<efficiency>(d2t.getTotalTrueHits(), d2t.getTrueHitsWithDUT());
+  m_ResidualVsMissing = d2t.getResidualVsMissing();
 
-//   efficiency m(d2t.getTotalTrueHits(), d2t.getTrueHitsWithDUT());
-//    m.DrawTrueHits();
-  residual_efficiency rr(d2t.getTotalTrueHits(),m_input_file.DUT_zs_data(),400,x_axis_def);
+  //   efficiency m(d2t.getTotalTrueHits(), d2t.getTrueHitsWithDUT());
+  //    m.DrawTrueHits();
+  residual_efficiency rr(d2t.getTotalTrueHits(), m_input_file.DUT_zs_data(), 400, x_axis_def);
 
   m_residual = xy_pro::residual(
     m_input_file.DUT_fitted_local_GBL().get_x(),
     m_input_file.DUT_hit_local().get_x(),
-    processor_prob().setName("residualVSEvent")
+    processor_prob().setName("residualVSEvent").save2Disk()
     );
-  std::cout << "8" << std::endl;
 
 
 #ifdef _DEBUG
-  m_input_file->getProcessorCollection()->loop(20000);
+  m_input_file.getProcessorCollection()->loop(20000);
 #else
   m_input_file.getProcessorCollection()->loop();
 #endif // _DEBUG
 
-  std::cout << "9" << std::endl;
 
   Draw_Efficinecy_map();
-  std::cout << "10" << std::endl;
   extract_hitMap();
-  std::cout << "11" << std::endl;
   extract_efficiency();
-  std::cout << "12" << std::endl;
   extract_residual();
-  std::cout << "13" << std::endl;
   extract_rotation();
-  std::cout << "14" << std::endl;
   m_outputl->fill();
-  std::cout << "15" << std::endl;
+  
   return true;
 }
 double BinNomialSigma(double totalHits, double DUTHits) {
@@ -348,7 +299,7 @@ double BinNomialSigma(double totalHits, double DUTHits) {
 }
 void FileProcessors_standard::extract_efficiency()
 {
-  double totalHits = (double)Draw(m_corr->getTotalTrueHits(),
+  double totalHits = (double)Draw(m_totalTrue_hits,
     DrawOption()
     .cut_x(get_xml_input()->globalConfig.AvtiveStrips.getMin(),
       get_xml_input()->globalConfig.AvtiveStrips.getMax())
@@ -357,7 +308,7 @@ void FileProcessors_standard::extract_efficiency()
   xml_print("TotalNumOfEvents", totalHits);
   m_outputl->set_TotalNumOfEvents(totalHits);
 
-  double DUTHits = Draw(m_corr->getTrueHitsWithDUT(),
+  double DUTHits = Draw(m_truehits_withDUT,
     DrawOption()
     .cut_x(get_xml_input()->globalConfig.AvtiveStrips.getMin(),
       get_xml_input()->globalConfig.AvtiveStrips.getMax())
@@ -378,17 +329,19 @@ void FileProcessors_standard::extract_efficiency()
 
 void FileProcessors_standard::extract_hitMap()
 {
-  for (Int_t i = 0; i < m_Efficieny_map->GetNbinsX(); ++i) {
+  auto eff = m_efficiency->DrawEfficiency(get_xml_input()->globalConfig.NumberOfBins, 0, get_xml_input()->globalConfig.NumberOfBins);
+  auto true_hits = m_efficiency->DrawTrueHits(get_xml_input()->globalConfig.NumberOfBins, 0, get_xml_input()->globalConfig.NumberOfBins);
+  for (Int_t i = 0; i < eff->GetNbinsX(); ++i) {
 
     m_outputl->push(
-      m_Efficieny_map->GetBinCenter(i),        //xPosition
+      eff->GetBinCenter(i),        //xPosition
       1,                               //yPosition   
-      m_Efficieny_map->GetBinContent(i),       //Efficiency
+      eff->GetBinContent(i),       //Efficiency
       BinNomialSigma(
-        m_Efficieny_trueHits->GetBinContent(i),
-        m_Efficieny_map->GetBinContent(i)
+        true_hits->GetBinContent(i),
+        eff->GetBinContent(i)
         ),
-      m_Efficieny_trueHits->GetBinContent(i)    //Total True Hits
+      true_hits->GetBinContent(i)    //Total True Hits
       );
   }
 }
@@ -426,7 +379,7 @@ void FileProcessors_standard::extract_rotation()
 void FileProcessors_standard::process_reset()
 {
   m_outputl->reset();
-  
+
 }
 
 std::string FileProcessors_standard::get_suffix() const

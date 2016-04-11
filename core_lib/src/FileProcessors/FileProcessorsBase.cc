@@ -1,9 +1,15 @@
 #include "sct/FileProcessors/FileProcessorsBase.hh"
 #include <iostream>
 #include "TCanvas.h"
+#include "sct/internal/factoryDef.hh"
+registerBaseClassDef(FileProcessorsBase);
 
 
 #define  SCT_THROW(X)  std::cout<<X<<std::endl
+
+
+
+
 
 FileProcessorsBase::FileProcessorsBase()
 {
@@ -12,7 +18,7 @@ FileProcessorsBase::FileProcessorsBase()
 
 FileProcessorsBase::~FileProcessorsBase()
 {
-
+  //std::cout << "~FileProcessorsBase() \n";
 }
 
 void FileProcessorsBase::setOutputName(const char* name)
@@ -20,23 +26,12 @@ void FileProcessorsBase::setOutputName(const char* name)
   m_outname = name;
 }
 
-void FileProcessorsBase::push_files(TFile* _file, double Threshold, double runNumber)
-{
-  FileProberties p;
-  p.setTFile(_file);
-  p.m_Threshold = Threshold;
-  p.m_runNumber = runNumber;
-  m_files.push_back(p);
-}
+
 
 void FileProcessorsBase::push_files(const char* _fileName, double Threshold, double runNumber, double HV)
 {
   FileProberties p;
-  p.setTFile(std::shared_ptr<TFile>(new TFile(_fileName)));
-  if (!p.getTfile()->IsOpen()) {
-
-    return;
-  }
+  p.m_fileName = _fileName;
 
   p.m_Threshold = Threshold;
   p.m_runNumber = runNumber;
@@ -47,13 +42,14 @@ void FileProcessorsBase::push_files(const char* _fileName, double Threshold, dou
 int FileProcessorsBase::Add_XML_RunList(const std::string& xmlInputFileName, std::string path__, std::string outputPath /*= "."*/, int element /*= -1*/)
 {
   path__ += "/";
-  m_input_files_xml = std::make_shared<XML_imput_file>(xmlInputFileName.c_str());
+  auto test = XML_imput_file(xmlInputFileName.c_str());
+  m_input_files_xml = std::shared_ptr<XML_imput_file>(new XML_imput_file( xmlInputFileName.c_str()));
 
-  if (m_input_files_xml->size()==0) {
+  if (get_xml_input()->size()==0) {
     SCT_THROW("no fitter files in root file");
     return -1;
   }
-  auto collname = m_input_files_xml->globalConfig.CollectionName;
+  auto collname = get_xml_input()->globalConfig.CollectionName;
   if (element != -1) {
     outputPath += "/" + collname + "_" + get_suffix() + "_" + std::to_string(element) + ".root";
   }
@@ -65,20 +61,20 @@ int FileProcessorsBase::Add_XML_RunList(const std::string& xmlInputFileName, std
   setOutputName(outputPath.c_str());
 
 
-  setGearFile(m_input_files_xml->globalConfig.gearFile.c_str());
+  setGearFile(get_xml_input()->globalConfig.gearFile.c_str());
 
 
   if (element != -1) {
-    if (element >= (int)m_input_files_xml->size()) {
+    if (element >= (int)get_xml_input()->size()) {
       SCT_THROW("out of boundary. Selected element number larger then file list size");
     }
-    auto& e = m_input_files_xml->get_File(element);
+    auto& e = get_xml_input()->get_File(element);
     push_files((path__ + std::string(e.name)).c_str(), e.threshold, e.runNumber, e.HV);
 
   }
   else {
-    for (int i = 0; i < m_input_files_xml->size(); ++i) {
-      auto& e = m_input_files_xml->get_File(i);
+    for (int i = 0; i < get_xml_input()->size(); ++i) {
+      auto& e = get_xml_input()->get_File(i);
       push_files((path__ + std::string(e.name)).c_str(), e.threshold, e.runNumber, e.HV);
     }
 
@@ -116,7 +112,7 @@ bool FileProcessorsBase::process()
 
   for (auto &e : m_files) {
 
-    process_set_run_prob(e);
+
     process_file(&e);
     m_outputl->fill();
   }
@@ -139,22 +135,16 @@ const Xgear* FileProcessorsBase::get_gear() const
 
 void FileProcessorsBase::process_set_run_prob(const FileProberties& fileP)
 {
- // xml_print("fileName", fileP.getTfile()->GetName());
-  m_outputl->reset();
 
-  //xml_print("m_runNumber", fileP.m_runNumber);
-  m_outputl->set_RunNumber(fileP.m_runNumber);
-
-
- // xml_print("threshold", fileP.m_Threshold);
-  m_outputl->set_Threshold(fileP.m_Threshold);
-
-  //xml_print("HV", fileP.m_HV);
-  m_outputl->set_HV(fileP.m_HV);
 }
 
 void FileProcessorsBase::start_collection(TFile* file__)
 {
   
   m_outputl = std::make_shared<rootEventRunOutput>("out", file__->GetDirectory("/"));
+}
+
+ std::unique_ptr<FileProcessorsBase> create_processor(const FileProcessorsBase::MainType& type, FileProcessorsBase::Parameter_ref param_)
+{
+  return Class_factory_Utilities::Factory<FileProcessorsBase>::Create(type, param_);
 }
