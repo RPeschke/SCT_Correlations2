@@ -115,6 +115,7 @@ xml_globalConfig::xml_globalConfig(const xml_globalConfig& rhs)
   Position_value = rhs.Position_value;
   residual_cut = rhs.residual_cut;
   gearFile = rhs.gearFile;
+  m_cut = rhs.m_cut;
 }
 
 xml_globalConfig& xml_globalConfig::operator=(const xml_globalConfig& rhs)
@@ -133,6 +134,7 @@ xml_globalConfig& xml_globalConfig::operator=(const xml_globalConfig& rhs)
   Position_value = rhs.Position_value;
   residual_cut = rhs.residual_cut;
   gearFile = rhs.gearFile;
+  m_cut = rhs.m_cut;
   return *this;
 }
 
