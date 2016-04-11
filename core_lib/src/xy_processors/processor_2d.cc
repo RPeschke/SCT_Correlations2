@@ -3,6 +3,7 @@
 #include "sct/axis.hh"
 #include "sct/predef/plane.hh"
 #include "sct/collection.h"
+#include <iostream>
 
 
 init_returns processor_2d::init()
@@ -14,6 +15,11 @@ init_returns processor_2d::init()
 end_returns processor_2d::end()
 {
   return e_success;
+}
+
+processor_2d::~processor_2d()
+{
+ 
 }
 
 processor_2d::processor_2d(const axis& x_, const  axis& y_, processor_prob& pprob) :m_prob(pprob.setAxis(xy_names()).setProcessorCollection(x_.get_ProcessorCollection())) {

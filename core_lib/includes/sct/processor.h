@@ -23,7 +23,7 @@ enum end_returns {
 class DllExport processor {
 public:
   virtual init_returns init() =0;
-  
+  virtual ~processor() {}
   virtual process_returns processEvent() = 0;
   virtual process_returns fill() = 0;
   virtual end_returns end() = 0;

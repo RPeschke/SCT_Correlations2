@@ -46,6 +46,7 @@ public:
   virtual EUTFile* getGenericFile() =0;
   virtual ProcessorCollection* getProcessorCollection() = 0;
   virtual bool isOpen() const = 0;
+  virtual ~fitterFile() {}
 };
 
 class DllExport FFile {

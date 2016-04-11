@@ -13,6 +13,7 @@ class processor_2d :public processor {
 public:
   virtual init_returns init();
   virtual end_returns end() ;
+  virtual ~processor_2d();
   processor_2d(const axis& x_,const axis& y_, processor_prob& pprob);
   virtual process_returns processEvent();
   virtual process_returns processCurrentEvent() = 0;

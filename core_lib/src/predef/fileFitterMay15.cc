@@ -5,11 +5,13 @@
 #include "sct/predef/hit.hh"
 #include "sct/collection.h"
 #include <memory>
+#include <iostream>
 
 
 class fitterFileMay15 : public fitterFile{
 public:
   fitterFileMay15(fitterFile::Parameter_ref params);
+  virtual ~fitterFileMay15();
   virtual xy_plane  apix_hit_local() const ;
   virtual xy_plane  apix_hit() const ;
   virtual xy_plane  apix_zs_data() const ;
@@ -64,6 +66,11 @@ fitterFileMay15::fitterFileMay15(fitterFile::Parameter_ref params)
 
 }
 
+
+fitterFileMay15::~fitterFileMay15()
+{
+
+}
 
 static const char*  local_hits = "local_hit";
 static const char*  global_hits = "hit";
