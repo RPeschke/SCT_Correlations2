@@ -34,6 +34,7 @@ public:
 
   virtual EUTFile* getGenericFile();
   virtual ProcessorCollection* getProcessorCollection();
+  virtual bool isOpen() const;
   std::shared_ptr<TFile> m_file;
   std::shared_ptr<ProcessorCollection> m_pc;
   std::shared_ptr<EUTFile> m_generic;
@@ -167,4 +168,9 @@ EUTFile* fitterFileMay15::getGenericFile()
 ProcessorCollection* fitterFileMay15::getProcessorCollection()
 {
   return m_pc.get();
+}
+
+bool fitterFileMay15::isOpen() const
+{
+  return m_file->IsOpen();
 }

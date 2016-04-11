@@ -45,7 +45,7 @@ public:
 
   virtual EUTFile* getGenericFile() =0;
   virtual ProcessorCollection* getProcessorCollection() = 0;
-  
+  virtual bool isOpen() const = 0;
 };
 
 class DllExport FFile {
@@ -82,6 +82,7 @@ public:
   EUTFile* getGenericFile();
   ProcessorCollection* getProcessorCollection() ;
   fitterFile* get_file();
+  bool isOpen() const;
 private:
 #ifndef __CINT__
   std::shared_ptr <fitterFile> m_file;

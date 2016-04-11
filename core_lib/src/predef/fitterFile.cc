@@ -123,3 +123,8 @@ fitterFile* FFile::get_file()
 {
   return m_file.get();
 }
+
+bool FFile::isOpen() const
+{
+  return m_file->isOpen();
+}
