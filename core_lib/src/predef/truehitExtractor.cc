@@ -41,7 +41,7 @@ TH_param& TH_param::set_fitterFile(FFile& file_)
   return *this;
 }
 
-TH_param& TH_param::set_gear(Xgear* gear_)
+TH_param& TH_param::set_gear(const Xgear* gear_)
 {
   m_gear = gear_;
   return *this;
@@ -58,7 +58,7 @@ fitterFile* TH_param::get_fitterFile()
   return m_file;
 }
 
-Xgear* TH_param::get_gear()
+const Xgear* TH_param::get_gear() const 
 {
   return m_gear;
 }

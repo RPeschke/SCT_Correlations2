@@ -21,7 +21,7 @@ D2T_prob& D2T_prob::set_DUTHits(const xy_plane& DUT_hits)
   return *this;
 }
 
-D2T_prob& D2T_prob::set_xmlFile(XML_imput_file* xml_file_)
+D2T_prob& D2T_prob::set_xmlFile(const XML_imput_file& xml_file_)
 {
   m_xml_file_ = xml_file_;
   return *this;
@@ -33,13 +33,13 @@ D2T_prob& D2T_prob::set_processor_pro(const processor_prob& pprob)
   return *this;
 }
 
-D2T_prob& D2T_prob::set_gear(Xgear* gear_)
+D2T_prob& D2T_prob::set_gear(const Xgear* gear_)
 {
   m_gear = gear_;
   return *this;
 }
 
-Xgear* D2T_prob::get_gear() const
+const Xgear* D2T_prob::get_gear() const
 {
   return m_gear;
 }
@@ -59,7 +59,7 @@ xy_plane D2T_prob::get_DUT_Hits() const
   return m_DUT_hits;
 }
 
-XML_imput_file* D2T_prob::get_xmlFile() const
+XML_imput_file D2T_prob::get_xmlFile() const
 {
   return m_xml_file_;
 }

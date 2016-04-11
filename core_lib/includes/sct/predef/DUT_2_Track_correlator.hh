@@ -18,19 +18,19 @@ public:
   D2T_prob();
   D2T_prob& set_trueHits(const xy_plane& trueHits_);
   D2T_prob& set_DUTHits(const xy_plane& DUT_hits);
-  D2T_prob& set_xmlFile( XML_imput_file* xml_file_);
+  D2T_prob& set_xmlFile(const XML_imput_file& xml_file_);
   D2T_prob& set_processor_pro(const processor_prob& pprob);
-  D2T_prob& set_gear(Xgear* gear_);
-  Xgear*    get_gear() const;
+  D2T_prob& set_gear(const Xgear* gear_);
+  const Xgear*    get_gear() const;
   processor_prob get_processor_pro() const;
   xy_plane get_trueHits() const;
   xy_plane get_DUT_Hits() const;
-  XML_imput_file* get_xmlFile() const;
+  XML_imput_file get_xmlFile() const;
 
 private:
-  Xgear* m_gear;
+ const Xgear* m_gear;
   xy_plane m_DUT_hits, m_trueHits;
-  XML_imput_file* m_xml_file_;
+  XML_imput_file m_xml_file_;
   processor_prob m_prob;
 };
 

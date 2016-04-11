@@ -36,14 +36,14 @@ DUT_2_Track_correlatorMAY15::DUT_2_Track_correlatorMAY15(DUT_2_Track_correlator:
 
   auto dut_rotated = xy_pro::rotate(
     trueHitsInStrips,
-    param_.get_xmlFile()->globalConfig.Rotation,
+    param_.get_xmlFile().globalConfig.Rotation,
     DontsaveWithRandomName()
     );
 
   std::string trueHitsInStrips_name = param_.get_processor_pro().name + "_true";
   auto dut_rotated_moved = xy_pro::transform_move(
     dut_rotated,
-    param_.get_xmlFile()->globalConfig.Position_value,
+    param_.get_xmlFile().globalConfig.Position_value,
     0,
     processor_prob(param_.get_processor_pro()).setName(trueHitsInStrips_name)
     );
@@ -51,7 +51,7 @@ DUT_2_Track_correlatorMAY15::DUT_2_Track_correlatorMAY15(DUT_2_Track_correlator:
   std::string trueHitsInStrips_name_cutted = param_.get_processor_pro().name + "_true_cutted";
   m_totalTrueHit_afterCut = xy_pro::cut_xy(
     dut_rotated_moved,
-    param_.get_xmlFile()->globalConfig.cut(),
+    param_.get_xmlFile().globalConfig.cut(),
     processor_prob(param_.get_processor_pro()).setName(trueHitsInStrips_name)
     );
 
@@ -62,7 +62,7 @@ DUT_2_Track_correlatorMAY15::DUT_2_Track_correlatorMAY15(DUT_2_Track_correlator:
     m_totalTrueHit_afterCut,
     param_.get_DUT_Hits(),
     x_axis_def,
-    param_.get_xmlFile()->globalConfig.residual_cut,
+    param_.get_xmlFile().globalConfig.residual_cut,
     processor_prob(param_.get_processor_pro()).setName(find_closest_name)
     );
 

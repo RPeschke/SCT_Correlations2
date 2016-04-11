@@ -19,13 +19,13 @@ public:
   TH_param();
   TH_param& set_fitterFile(fitterFile* file_);
   TH_param& set_fitterFile(FFile& file_);
-  TH_param& set_gear(Xgear* gear_);
+  TH_param& set_gear(const Xgear* gear_);
   TH_param& set_processor_pro(processor_prob& pprob);
   fitterFile* get_fitterFile();
   processor_prob& get_processor_pro();
-  Xgear* get_gear();
+  const Xgear* get_gear() const;
 private:
-  Xgear* m_gear;
+  const Xgear* m_gear;
   fitterFile* m_file;
   processor_prob m_pprob;
 };
