@@ -26,6 +26,26 @@ XML_imput_file::XML_imput_file(const char* name)
   m_files = xml_util::getVectorOfT<xml_file>(doc_.first_node("RunCollection")->first_node("fileList"));
 }
 
+XML_imput_file::XML_imput_file()
+{
+
+}
+
+XML_imput_file::XML_imput_file(const XML_imput_file& rhs)
+{
+  globalConfig =rhs.globalConfig;
+
+  m_files =rhs.m_files;
+}
+
+XML_imput_file& XML_imput_file::operator=(const XML_imput_file& rhs)
+{
+  globalConfig = rhs.globalConfig;
+
+  m_files = rhs.m_files;
+  return *this;
+}
+
 xml_file& XML_imput_file::get_File(int id)
 {
   return m_files.at(id);
@@ -79,6 +99,43 @@ xml_globalConfig::xml_globalConfig()
 
 }
 
+xml_globalConfig::xml_globalConfig(const xml_globalConfig& rhs)
+{
+ CollectionName = rhs.CollectionName;
+
+  NumberOfBins = rhs.NumberOfBins;
+  NumberOfStrips = rhs.NumberOfStrips;
+
+  Device = rhs.Device;
+
+  AvtiveStrips = rhs.AvtiveStrips;
+  Rotation = rhs.Rotation;
+
+  Position_name = rhs.Position_name;
+  Position_value = rhs.Position_value;
+  residual_cut = rhs.residual_cut;
+  gearFile = rhs.gearFile;
+}
+
+xml_globalConfig& xml_globalConfig::operator=(const xml_globalConfig& rhs)
+{
+  CollectionName = rhs.CollectionName;
+
+  NumberOfBins = rhs.NumberOfBins;
+  NumberOfStrips = rhs.NumberOfStrips;
+
+  Device = rhs.Device;
+
+  AvtiveStrips = rhs.AvtiveStrips;
+  Rotation = rhs.Rotation;
+
+  Position_name = rhs.Position_name;
+  Position_value = rhs.Position_value;
+  residual_cut = rhs.residual_cut;
+  gearFile = rhs.gearFile;
+  return *this;
+}
+
 xml_file::xml_file(rapid_xml_node* xIn)
 {
   name = xml_util::getAtribute_string(xIn->value->first_node("name"), "value");
@@ -93,6 +150,25 @@ xml_file::xml_file(rapid_xml_node* xIn)
 xml_file::xml_file()
 {
 
+}
+
+xml_file::xml_file(const xml_file& rhs)
+{
+  name =rhs.name;
+  threshold = rhs.threshold;
+
+  HV =rhs.HV;
+  runNumber = rhs.runNumber;
+}
+
+xml_file& xml_file::operator=(const xml_file& rhs)
+{
+  name = rhs.name;
+  threshold = rhs.threshold;
+
+  HV = rhs.HV;
+  runNumber = rhs.runNumber;
+  return *this;
 }
 
 MinMaxRange::MinMaxRange() :m_min(0), m_max(0), m_stepSize(0)

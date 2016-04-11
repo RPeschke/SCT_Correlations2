@@ -30,6 +30,8 @@ private:
 class DllExport xml_globalConfig {
 public:
   xml_globalConfig(rapid_xml_node* xIn);
+  xml_globalConfig(const xml_globalConfig& rhs);
+  xml_globalConfig& operator=(const xml_globalConfig& rhs);
   xml_globalConfig();
   std::string CollectionName;
 
@@ -55,22 +57,22 @@ private:
 class DllExport xml_file {
 public:
   xml_file(rapid_xml_node* xIn);
+  xml_file(const xml_file&);
+  xml_file& operator=(const xml_file& rhs);
   static const char* NodeName();
   xml_file();
   std::string name;
-//    return xml_util::getAtribute_string(m_node->first_node("name"), "value");
   double threshold;
-//    return xml_util::getAtribute<double>(m_node->first_node("threshold"), "value");
   
   double HV;
-//    return xml_util::getAtribute<double>(m_node->first_node("HV"), "value");
   int runNumber;
-//    return xml_util::getAtribute<int>(m_node->first_node("runNumber"), "value");
 };
 class DllExport XML_imput_file {
 public:
   XML_imput_file(const char* name);
-
+  XML_imput_file();
+  XML_imput_file(const XML_imput_file&);
+  XML_imput_file& operator=(const XML_imput_file&);
   xml_file& get_File(int id);
 
   const xml_file& get_File(int id) const;
