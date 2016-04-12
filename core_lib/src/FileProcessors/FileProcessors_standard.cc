@@ -230,6 +230,7 @@ bool FileProcessors_standard::process_file(FileProberties* fileP)
 
 
 
+
   std::cout << fileP->m_fileName << std::endl;
 
 
@@ -241,7 +242,6 @@ bool FileProcessors_standard::process_file(FileProberties* fileP)
   }
   m_outputfile->cd();
   xml_print("fileName", fileP->m_fileName);
-  m_outputl->reset();
 
   xml_print("m_runNumber", fileP->m_runNumber);
   m_outputl->set_RunNumber(fileP->m_runNumber);
@@ -267,9 +267,7 @@ bool FileProcessors_standard::process_file(FileProberties* fileP)
   m_efficiency = std::make_shared<efficiency>(d2t.getTotalTrueHits(), d2t.getTrueHitsWithDUT());
   m_ResidualVsMissing = d2t.getResidualVsMissing();
 
-  //   efficiency m(d2t.getTotalTrueHits(), d2t.getTrueHitsWithDUT());
-  //    m.DrawTrueHits();
-  residual_efficiency rr(d2t.getTotalTrueHits(), m_input_file.DUT_zs_data(), 400, x_axis_def);
+
 
   m_residual = xy_pro::residual(
     m_input_file.DUT_fitted_local_GBL().get_x(),
@@ -294,9 +292,7 @@ bool FileProcessors_standard::process_file(FileProberties* fileP)
   
   return true;
 }
-double BinNomialSigma(double totalHits, double DUTHits) {
-  return sqrt((DUTHits / totalHits)*(1 - (DUTHits / totalHits))*(1 / totalHits));
-}
+
 void FileProcessors_standard::extract_efficiency()
 {
   double totalHits = (double)Draw(m_totalTrue_hits,
@@ -331,19 +327,9 @@ void FileProcessors_standard::extract_hitMap()
 {
   auto eff = m_efficiency->DrawEfficiency(get_xml_input()->globalConfig.NumberOfBins, 0, get_xml_input()->globalConfig.NumberOfBins);
   auto true_hits = m_efficiency->DrawTrueHits(get_xml_input()->globalConfig.NumberOfBins, 0, get_xml_input()->globalConfig.NumberOfBins);
-  for (Int_t i = 0; i < eff->GetNbinsX(); ++i) {
 
-    m_outputl->push(
-      eff->GetBinCenter(i),        //xPosition
-      1,                               //yPosition   
-      eff->GetBinContent(i),       //Efficiency
-      BinNomialSigma(
-        true_hits->GetBinContent(i),
-        eff->GetBinContent(i)
-        ),
-      true_hits->GetBinContent(i)    //Total True Hits
-      );
-  }
+  push2outputEvent(*m_outputl, *eff, *true_hits, 0);
+ 
 }
 
 void FileProcessors_standard::extract_residual()
