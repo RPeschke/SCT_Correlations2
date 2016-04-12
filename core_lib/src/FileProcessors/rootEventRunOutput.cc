@@ -43,10 +43,10 @@ rootEventRunOutput::rootEventRunOutput(const std::string& collectionName, TDirec
 
  m_plane = m_collection.getPlane(0);
  m_plane.setHitAxisAdress("x", &m_runOut->x);
- m_plane.setHitAxisAdress("y", &m_runOut->x);
- m_plane.setHitAxisAdress("Occupancy", &m_runOut->x);
- m_plane.setHitAxisAdress("Occupancy_error", &m_runOut->x);
- m_plane.setHitAxisAdress("NumOfEvents", &m_runOut->x);
+ m_plane.setHitAxisAdress("y", &m_runOut->y);
+ m_plane.setHitAxisAdress("Occupancy", &m_runOut->Occupancy);
+ m_plane.setHitAxisAdress("Occupancy_error", &m_runOut->Occupancy_error);
+ m_plane.setHitAxisAdress("NumOfEvents", &m_runOut->NumOfEvents);
 
 
 
@@ -54,6 +54,76 @@ rootEventRunOutput::rootEventRunOutput(const std::string& collectionName, TDirec
 
 
 
+
+rootEventRunOutput::rootEventRunOutput(const rootEventRunOutput& rhs):m_collection(rhs.m_collection)
+{
+  m_rotation = std::make_shared<double>(0);
+  m_totalNumOfEvents = std::make_shared<double>(0);
+  m_total_efficiency = std::make_shared<double>(0);
+  m_error_efficiency = std::make_shared<double>(0);
+  m_residual = std::make_shared<double>(0);
+  m_offset = std::make_shared<double>(0);
+  m_Threshold = std::make_shared<double>(0);
+  m_RunNumber = std::make_shared<double>(0);
+  m_HV = std::make_shared<double>(0);
+
+
+  auto outputTree = m_collection.get_tree();
+
+  outputTree->Branch("totalNumOfEvents", m_totalNumOfEvents.get());
+  outputTree->Branch("total_efficiency", m_total_efficiency.get());
+  outputTree->Branch("error_efficiency", m_error_efficiency.get());
+  outputTree->Branch("residual", m_residual.get());
+  outputTree->Branch("rotation", m_rotation.get());
+  outputTree->Branch("offset", m_offset.get());
+  outputTree->Branch("Threshold", m_Threshold.get());
+  outputTree->Branch("RunNumber", m_RunNumber.get());
+  outputTree->Branch("HV", m_HV.get());
+
+
+  m_plane = m_collection.getPlane(0);
+  m_plane.setHitAxisAdress("x", &m_runOut->x);
+  m_plane.setHitAxisAdress("y", &m_runOut->y);
+  m_plane.setHitAxisAdress("Occupancy", &m_runOut->Occupancy);
+  m_plane.setHitAxisAdress("Occupancy_error", &m_runOut->Occupancy_error);
+  m_plane.setHitAxisAdress("NumOfEvents", &m_runOut->NumOfEvents);
+}
+
+rootEventRunOutput& rootEventRunOutput::operator=(const rootEventRunOutput& rhs)
+{
+  m_collection = rhs.m_collection;
+  m_rotation = std::make_shared<double>(0);
+  m_totalNumOfEvents = std::make_shared<double>(0);
+  m_total_efficiency = std::make_shared<double>(0);
+  m_error_efficiency = std::make_shared<double>(0);
+  m_residual = std::make_shared<double>(0);
+  m_offset = std::make_shared<double>(0);
+  m_Threshold = std::make_shared<double>(0);
+  m_RunNumber = std::make_shared<double>(0);
+  m_HV = std::make_shared<double>(0);
+
+
+  auto outputTree = m_collection.get_tree();
+
+  outputTree->Branch("totalNumOfEvents", m_totalNumOfEvents.get());
+  outputTree->Branch("total_efficiency", m_total_efficiency.get());
+  outputTree->Branch("error_efficiency", m_error_efficiency.get());
+  outputTree->Branch("residual", m_residual.get());
+  outputTree->Branch("rotation", m_rotation.get());
+  outputTree->Branch("offset", m_offset.get());
+  outputTree->Branch("Threshold", m_Threshold.get());
+  outputTree->Branch("RunNumber", m_RunNumber.get());
+  outputTree->Branch("HV", m_HV.get());
+
+
+  m_plane = m_collection.getPlane(0);
+  m_plane.setHitAxisAdress("x", &m_runOut->x);
+  m_plane.setHitAxisAdress("y", &m_runOut->y);
+  m_plane.setHitAxisAdress("Occupancy", &m_runOut->Occupancy);
+  m_plane.setHitAxisAdress("Occupancy_error", &m_runOut->Occupancy_error);
+  m_plane.setHitAxisAdress("NumOfEvents", &m_runOut->NumOfEvents);
+  return *this;
+}
 
 rootEventRunOutput::~rootEventRunOutput()
 {
@@ -124,7 +194,7 @@ void rootEventRunOutput::fill()
   m_collection.save();
 }
 
-void rootEventRunOutput::push(double x, double y, double occ, double occ_err, double numOfEfents)
+void rootEventRunOutput::push(double x, double y, double occ, double occ_err, double numOfEfents, double ID)
 {
   m_runOut->NumOfEvents = numOfEfents;
   m_runOut->Occupancy = occ;
@@ -132,5 +202,5 @@ void rootEventRunOutput::push(double x, double y, double occ, double occ_err, do
   m_runOut->x = x;
   m_runOut->y = y;
   
-  m_plane.push(0);
+  m_plane.push(ID);
 }

@@ -16,7 +16,8 @@ class rootEventRunOutput {
 public:
 
   rootEventRunOutput(const std::string& collectionName, TDirectory* dir);
-
+  rootEventRunOutput(const rootEventRunOutput& rhs);
+  rootEventRunOutput& operator=(const rootEventRunOutput& rhs);
   virtual ~rootEventRunOutput();
 //  virtual std::shared_ptr<plane> createPlane(double ID) override;
 
@@ -31,7 +32,7 @@ public:
   void set_RunNumber(double RunNum);
   virtual void reset();
   void fill();
-  void push(double x, double y, double occ, double occ_err, double numOfEfents);
+  void push(double x, double y, double occ, double occ_err, double numOfEfents,double ID = 0);
 private:
   std::shared_ptr<double> m_rotation;
   std::shared_ptr<double> m_totalNumOfEvents;
