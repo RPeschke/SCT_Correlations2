@@ -44,6 +44,8 @@ add_subdirectory(core_lib)
 add_subdirectory(bin_processFile)
 
 add_subdirectory(bin_processCollection)
+add_subdirectory(bin_apix_tel_correlations)
+add_subdirectory(bin_sz_correlations)
 
 #######################################################
 # Print out system information useful for bug reports #
