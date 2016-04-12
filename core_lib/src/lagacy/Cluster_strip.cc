@@ -179,3 +179,13 @@ xy_plane Cluster_strip::get_plane()
 {
   return m_cluster_size_vs_pos;
 }
+
+TProfile* Cluster_strip::get_profile()
+{
+  return m_profile.get();
+}
+
+TH2D* Cluster_strip::get_histogram()
+{
+  return m_cluster_size_hist.get();
+}

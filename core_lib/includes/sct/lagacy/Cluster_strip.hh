@@ -26,6 +26,8 @@ public:
   int Draw_ClusterSize();
 
   xy_plane get_plane();
+  TProfile* get_profile();
+  TH2D* get_histogram();
 private:
 #ifndef __CINT__
 
