@@ -2,6 +2,8 @@
 #include <iostream>
 #include "TCanvas.h"
 #include "sct/internal/factoryDef.hh"
+#include "TH1.h"
+#include "TProfile.h"
 registerBaseClassDef(FileProcessorsBase);
 
 
@@ -147,3 +149,37 @@ void FileProcessorsBase::start_collection(TFile* file__)
 {
   return Class_factory_Utilities::Factory<FileProcessorsBase>::Create(type, param_);
 }
+
+ double BinNomialSigma(double totalHits, double DUTHits) {
+   return sqrt((DUTHits / totalHits)*(1 - (DUTHits / totalHits))*(1 / totalHits));
+ }
+
+
+
+ void push2outputEvent(rootEventRunOutput& outEvent, const TH1D& quantity, const TH1D& numOfEvents, double ID)
+ {
+   for (Int_t i = 0; i < quantity.GetNbinsX(); ++i) {
+  
+     outEvent.push(quantity.GetBinCenter(i),
+       1,
+       quantity.GetBinContent(i),
+       BinNomialSigma(numOfEvents.GetBinContent(i), quantity.GetBinContent(i)),
+       numOfEvents.GetBinContent(i),
+       ID
+       );
+   }
+ }
+
+ DllExport void push2outputEvent(rootEventRunOutput& outEvent, const TProfile& quantity, double ID)
+ {
+   for (Int_t i = 0; i <quantity.GetNbinsX(); ++i) {
+
+     outEvent.push(quantity.GetBinCenter(i),
+       1,
+       quantity.GetBinContent(i),
+       quantity.GetBinError(i),
+       0,
+       ID
+       );
+   }
+ }

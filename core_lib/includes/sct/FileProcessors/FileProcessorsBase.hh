@@ -12,6 +12,8 @@
 #include "sct/internal/factory.hh"
 #endif
 
+class TH1D;
+class TProfile;
 template <typename T>
 void xml_print(const std::string& tag, const T& value) {
   std::cout << tag << ":  " << value << std::endl;
@@ -68,5 +70,10 @@ private:
 };
 
 
+DllExport double BinNomialSigma(double totalHits, double DUTHits);
+#ifndef __CINT__
+DllExport void push2outputEvent(rootEventRunOutput& outEvent, const TH1D& quantity, const TH1D& numOfEvents, double ID);
+DllExport void push2outputEvent(rootEventRunOutput& outEvent, const TProfile& quantity, double ID);
 DllExport std::unique_ptr<FileProcessorsBase> create_processor(const FileProcessorsBase::MainType& type ="standard",FileProcessorsBase::Parameter_ref param_="");
+#endif
 #endif // FileProcessorsBase_h__
