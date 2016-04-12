@@ -4,7 +4,7 @@
 #include "sct/predef/plane.hh"
 #include "sct/processor_prob.hh"
 #include "sct/axis.hh"
-#include "sct/lagacy/s_cuts.h"
+#include "sct/legacy/s_cuts.h"
 
 class DllExport xy_pro {
 public:

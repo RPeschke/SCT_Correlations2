@@ -1,7 +1,7 @@
-#include "sct/lagacy/SCT_helpers.hh"
+#include "sct/legacy/SCT_helpers.hh"
 #include <iostream>
 #include "TH2.h"
-#include "sct/lagacy/s_cuts.h"
+#include "sct/legacy/s_cuts.h"
 #include "TF1.h"
 #include "TProfile.h"
 #include "sct/xy_processors/find_nearest_strip.hh"

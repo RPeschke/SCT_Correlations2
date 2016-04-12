@@ -1,4 +1,4 @@
-#include "sct/lagacy/Draw.h"
+#include "sct/legacy/Draw.h"
 #include "TTree.h"
 #include "TH1.h"
 #include "TGraph.h"

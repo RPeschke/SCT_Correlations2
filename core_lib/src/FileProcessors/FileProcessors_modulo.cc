@@ -7,7 +7,7 @@
 #include "sct/predef/fitterFile.hh"
 #include <iostream>
 #include "sct/analysis/residual_efficiency.hh"
-#include "sct/lagacy/Cluster_strip.hh"
+#include "sct/legacy/Cluster_strip.hh"
 
 class DllExport FileProcessorsBase_modulo : public FileProcessorsBase {
 public:
@@ -29,14 +29,14 @@ private:
   std::shared_ptr<Cluster_strip> m_cluster_size;
   xy_plane m_trueHits, m_totalTrue_hits, m_truehits_withDUT;
   FFile m_input_file;
-
+  
 
 };
 register_file_processor(FileProcessorsBase_modulo, "Modulo");
 
 FileProcessorsBase_modulo::FileProcessorsBase_modulo(Parameter_ref par)
 {
-
+  m_dummy = new TFile("dummy.root", "recreate");
 }
 
 FileProcessorsBase_modulo::~FileProcessorsBase_modulo()
@@ -75,13 +75,12 @@ bool FileProcessorsBase_modulo::process_file(FileProberties* fileP)
   std::cout << fileP->m_fileName << std::endl;
 
 
-
   m_input_file = FFile(fileP->m_fileName, "MAY15");
   if (!m_input_file.isOpen())
   {
     return false;
   }
-  m_outputfile->cd();
+  m_dummy->cd();
   xml_print("fileName", fileP->m_fileName);
 
   xml_print("m_runNumber", fileP->m_runNumber);

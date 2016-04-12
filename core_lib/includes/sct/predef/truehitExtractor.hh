@@ -5,7 +5,7 @@
 #include <string>
 #include "sct/platform.hh"
 #include "sct/processor_prob.hh"
-#include "sct/lagacy/setup_description.hh"
+#include "sct/legacy/setup_description.hh"
 
 #ifndef __CINT__
 #include "sct/internal/factory.hh"

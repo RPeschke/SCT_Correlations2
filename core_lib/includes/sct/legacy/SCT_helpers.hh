@@ -2,7 +2,7 @@
 #define SCT_helpers_h__
 #include "sct/platform.hh"
 #include "TF1.h"
-#include "sct/lagacy/s_cuts.h"
+#include "sct/legacy/s_cuts.h"
 #include "sct/xy_processors/find_nearest_strip.hh"
 class TObject;
 class TH1;

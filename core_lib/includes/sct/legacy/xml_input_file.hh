@@ -6,7 +6,7 @@
 #include <vector>
 
 #include "sct/platform.hh"
-#include "sct/lagacy/s_cuts.h"
+#include "sct/legacy/s_cuts.h"
 
 
 class rapid_xml_node;

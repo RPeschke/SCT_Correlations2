@@ -3,14 +3,14 @@
 #include "TError.h"
 #include "TFile.h"
 #include "TH2D.h"
-#include "sct/lagacy/s_cuts.h"
+#include "sct/legacy/s_cuts.h"
 #include "sct/predef/fitterFile.hh"
 #include "sct/processor_prob.hh"
 #include "sct/xy_processors/xy_pro.hh"
-#include "sct/lagacy/SCT_helpers.hh"
+#include "sct/legacy/SCT_helpers.hh"
 
 #include "sct/ProcessorCollection.h"
-#include "sct/lagacy/Draw.h"
+#include "sct/legacy/Draw.h"
 
 
 

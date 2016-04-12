@@ -1,4 +1,4 @@
-#include "sct/lagacy/s_cuts.h"
+#include "sct/legacy/s_cuts.h"
 
 
 S_XCut::S_XCut(double min_, double max_) :S_Cut_min_max(min_, max_)

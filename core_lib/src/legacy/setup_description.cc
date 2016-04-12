@@ -1,5 +1,5 @@
-#include "sct/lagacy/setup_description.hh"
-#include "sct/lagacy/xml_util.hh"
+#include "sct/legacy/setup_description.hh"
+#include "sct/legacy/xml_util.hh"
 #include "rapidxml_utils.hpp"
 #include <iostream>
 #define  sct_corr_XML_ERROR_DEFAULT_VALUE  double(-666666.666666)

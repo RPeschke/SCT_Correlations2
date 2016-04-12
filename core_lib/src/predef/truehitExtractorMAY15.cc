@@ -1,6 +1,6 @@
 #include "sct/predef/truehitExtractor.hh"
 #include "sct/xy_processors/converters.hh"
-#include "sct/lagacy/setup_description.hh"
+#include "sct/legacy/setup_description.hh"
 #include "sct/predef/fitterFile.hh"
 #include "sct/xy_processors/find_nearest.hh"
 #include "sct/processor_prob.hh"

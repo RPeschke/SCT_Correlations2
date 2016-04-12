@@ -1,7 +1,7 @@
 #include "sct/analysis/instrip_efficiency.hh"
 #include "sct/xy_processors/xy_pro.hh"
-#include "sct/lagacy/Draw.h"
-#include "sct/lagacy/SCT_helpers.hh"
+#include "sct/legacy/Draw.h"
+#include "sct/legacy/SCT_helpers.hh"
 
 instrip_efficiency::instrip_efficiency(const xy_plane& trueHits, const xy_plane& trueHits_with_dut, double x_mod, double y_mod, processor_prob& plot_prob_ /*= saveWithRandomName("instrip_efficiency__") */)
 {

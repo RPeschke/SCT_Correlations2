@@ -1,6 +1,6 @@
 #include "sct/analysis/efficiency.hh"
-#include "sct/lagacy/Draw.h"
-#include "sct/lagacy/SCT_helpers.hh"
+#include "sct/legacy/Draw.h"
+#include "sct/legacy/SCT_helpers.hh"
 
 efficiency::efficiency(const xy_plane& trueHits, const xy_plane& trueHitsWithDUT)
 {

@@ -3,10 +3,10 @@
 
 
 #include "sct/predef/plane.hh"
-#include "sct/lagacy/xml_input_file.hh"
+#include "sct/legacy/xml_input_file.hh"
 #include "sct/processor_prob.hh"
 #include <string>
-#include "sct/lagacy/setup_description.hh"
+#include "sct/legacy/setup_description.hh"
 
 #ifndef __CINT__
 #include "sct/internal/factory.hh"

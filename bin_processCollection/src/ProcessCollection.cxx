@@ -8,7 +8,7 @@
 
 
 #include "tclap/CmdLine.h"
-#include "sct/lagacy/xml_input_file.hh"
+#include "sct/legacy/xml_input_file.hh"
 #include <thread>
 
 

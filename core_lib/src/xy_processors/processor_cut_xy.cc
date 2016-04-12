@@ -1,5 +1,5 @@
 #include "sct/xy_processors/processor_cut_xy.hh"
-#include "sct/lagacy/s_cuts.h"
+#include "sct/legacy/s_cuts.h"
 #include "sct/predef/plane.hh"
 #include "sct/ProcessorCollection.h"
 #include "sct/xy_processors/xy_pro.hh"

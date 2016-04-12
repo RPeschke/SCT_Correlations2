@@ -1,7 +1,7 @@
 #ifndef FileProcessorsBase_h__
 #define FileProcessorsBase_h__
-#include "sct/lagacy/xml_input_file.hh"
-#include "sct/lagacy/setup_description.hh"
+#include "sct/legacy/xml_input_file.hh"
+#include "sct/legacy/setup_description.hh"
 #include "TFile.h"
 #include "sct/platform.hh"
 

@@ -1,7 +1,7 @@
 #ifndef converters_h__
 #define converters_h__
 #include "sct/predef/plane.hh"
-#include "sct/lagacy/setup_description.hh"
+#include "sct/legacy/setup_description.hh"
 #include "sct/processor_prob.hh"
 #include "sct/platform.hh"
 

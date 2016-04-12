@@ -1,12 +1,12 @@
-#include "sct/lagacy/Cluster_strip.hh"
+#include "sct/legacy/Cluster_strip.hh"
 #include "sct/xy_processors/processor_hit2d.hh"
-#include "sct/lagacy/cluster.hh"
+#include "sct/legacy/cluster.hh"
 #include "sct/ProcessorCollection.h"
 #include "sct/xy_processors/xy_pro.hh"
-#include "sct/lagacy/s_cuts.h"
+#include "sct/legacy/s_cuts.h"
 #include "sct/xy_processors/find_nearest_strip.hh"
 #include <iostream>
-#include "sct/lagacy/Draw.h"
+#include "sct/legacy/Draw.h"
 
 class processor_Cluster_strip : public processor_hit2d {
 public:

@@ -3,8 +3,8 @@
 #include "sct/predef/plane.hh"
 #include "sct/xy_processors/find_nearest_strip.hh"
 #include "sct/ProcessorCollection.h"
-#include "sct/lagacy/Draw.h"
-#include "sct/lagacy/SCT_helpers.hh"
+#include "sct/legacy/Draw.h"
+#include "sct/legacy/SCT_helpers.hh"
 #include "TMath.h"
 #define TrueResiduals_DEF 0
 #define  REFERENCE_RESIDUALS_DEF 1

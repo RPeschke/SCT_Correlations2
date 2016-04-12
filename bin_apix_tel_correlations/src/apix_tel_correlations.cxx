@@ -1,18 +1,18 @@
 
-#include "sct/lagacy/xml_input_file.hh"
+#include "sct/legacy/xml_input_file.hh"
 #include "TFile.h"
 #include "TError.h"
 #include "TCanvas.h"
 #include "tclap/CmdLine.h"
 #include "TH2.h"
 #include "sct/predef/fitterFile.hh"
-#include "sct/lagacy/setup_description.hh"
+#include "sct/legacy/setup_description.hh"
 #include "sct/xy_processors/converters.hh"
 #include "sct/processor_prob.hh"
 #include "sct/xy_processors/xy_pro.hh"
 #include "sct/ProcessorCollection.h"
-#include "sct/lagacy/Draw.h"
-#include "sct/lagacy/SCT_helpers.hh"
+#include "sct/legacy/Draw.h"
+#include "sct/legacy/SCT_helpers.hh"
 
 
 std::vector<TCanvas*> gCanvas;

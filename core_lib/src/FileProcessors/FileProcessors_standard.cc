@@ -2,7 +2,7 @@
 #include "sct//FileProcessors/FileProcessors_standard.hh"
 #include "TH2D.h"
 #include <iostream>
-#include "sct/lagacy/Draw.h"
+#include "sct/legacy/Draw.h"
 #include "TVirtualPad.h"
 #include "TCanvas.h"
 #include "sct/predef/DUT_2_Track_correlator.hh"
@@ -14,7 +14,7 @@
 #include "TF1.h"
 #include "sct/xy_processors/xy_pro.hh"
 #include "TMath.h"
-#include "sct/lagacy/SCT_helpers.hh"
+#include "sct/legacy/SCT_helpers.hh"
 #include "sct/analysis/residual_efficiency.hh"
 
 #define  SCT_THROW(X)  std::cout<<X<<std::endl
@@ -240,7 +240,7 @@ bool FileProcessors_standard::process_file(FileProberties* fileP)
   {
     return false;
   }
-  m_outputfile->cd();
+  m_dummy->cd();
   xml_print("fileName", fileP->m_fileName);
 
   xml_print("m_runNumber", fileP->m_runNumber);

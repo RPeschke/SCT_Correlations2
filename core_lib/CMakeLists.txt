@@ -19,10 +19,10 @@ ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/ProcessorCollection.h
 ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/xy_processors/processorPlaneVSPlane.h  
 ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/predef/hit.hh 
 ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/predef/plane.hh 
-${PROJECT_SOURCE_DIR}/core_lib/includes/sct/lagacy/setup_description.hh 
-${PROJECT_SOURCE_DIR}/core_lib/includes/sct/lagacy/s_cuts.h 
-${PROJECT_SOURCE_DIR}/core_lib/includes/sct/lagacy/xml_input_file.hh 
-${PROJECT_SOURCE_DIR}/core_lib/includes/sct/lagacy/Draw.h  
+${PROJECT_SOURCE_DIR}/core_lib/includes/sct/legacy/setup_description.hh 
+${PROJECT_SOURCE_DIR}/core_lib/includes/sct/legacy/s_cuts.h 
+${PROJECT_SOURCE_DIR}/core_lib/includes/sct/legacy/xml_input_file.hh 
+${PROJECT_SOURCE_DIR}/core_lib/includes/sct/legacy/Draw.h  
 ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/xy_processors/xy_pro.hh
 ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/xy_processors/find_nearest.hh
 ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/xy_processors/find_nearest_strip.hh
@@ -31,12 +31,12 @@ ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/predef/DUT_2_Track_correlator.hh
 ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/predef/fitterFile.hh
 ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/FileProcessors/FileProcessors_standard.hh
 ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/FileProcessors/FileProcessorsBase.hh
-${PROJECT_SOURCE_DIR}/core_lib/includes/sct/lagacy/SCT_helpers.hh
+${PROJECT_SOURCE_DIR}/core_lib/includes/sct/legacy/SCT_helpers.hh
 ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/xy_processors/converters.hh
 ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/analysis/efficiency.hh
 ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/analysis/residual_efficiency.hh
 ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/analysis/instrip_efficiency.hh
-${PROJECT_SOURCE_DIR}/core_lib/includes/sct/lagacy/Cluster_strip.hh
+${PROJECT_SOURCE_DIR}/core_lib/includes/sct/legacy/Cluster_strip.hh
  )
 
 

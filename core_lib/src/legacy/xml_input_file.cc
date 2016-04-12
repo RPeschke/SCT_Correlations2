@@ -1,5 +1,5 @@
-#include "sct//lagacy/xml_input_file.hh"
-#include "sct/lagacy/xml_util.hh"
+#include "sct//legacy/xml_input_file.hh"
+#include "sct/legacy/xml_util.hh"
 #include "rapidxml_utils.hpp"
 
 const S_Cut& xml_globalConfig::cut() const
