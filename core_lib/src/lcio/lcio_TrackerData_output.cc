@@ -1,3 +1,8 @@
+#ifdef USE_LCIO
+
+
+
+
 #include "sct/lcio/lcio_output.hh"
 #include "EVENT/LCIO.h"
 #include <iostream>
@@ -61,3 +66,5 @@ public:
 
 
 register_lcio_output(TrackerData_output, LCIO::TRACKERDATA);
+
+#endif // USE_LCIO

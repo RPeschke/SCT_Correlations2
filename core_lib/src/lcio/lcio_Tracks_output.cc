@@ -1,3 +1,5 @@
+#ifdef USE_LCIO
+
 #include "sct/lcio/lcio_output.hh"
 #include "EVENT/Track.h"
 #include "EVENT/LCIO.h"
@@ -34,3 +36,6 @@ public:
 };
 
 register_lcio_output(Tracks_output, LCIO::TRACK);
+
+
+#endif // USE_LCIO

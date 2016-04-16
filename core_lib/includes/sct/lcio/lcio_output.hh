@@ -31,9 +31,9 @@ public:
   typedef std::string MainType;
   typedef lcio_output_prob Parameter_t;
   typedef const Parameter_t& Parameter_ref;
-  virtual void eventStart(int eventNR);
+  void eventStart(int eventNR);
   virtual void pushEvent(const EVENT::LCEvent* col) = 0;
-  virtual void eventEnd();
+  void eventEnd();
   lcio_output(Parameter_ref param_);
   virtual ~lcio_output();
 

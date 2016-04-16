@@ -1,3 +1,6 @@
+#ifdef USE_LCIO
+
+
 #include "sct/lcio/lcio_output.hh"
 #include "EVENT/TrackerPulse.h"
 #include "EVENT/LCIO.h"
@@ -58,3 +61,6 @@ public:
 };
 
 register_lcio_output(TrackerPulse_Output, LCIO::TRACKERPULSE);
+
+
+#endif // USE_LCIO

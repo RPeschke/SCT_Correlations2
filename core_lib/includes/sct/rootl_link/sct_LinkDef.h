@@ -80,5 +80,6 @@
 #pragma link C++ function Print;
 #pragma link C++ class instrip_efficiency;
 #pragma link C++ class Cluster_strip;
+#pragma link C++ class lcio_reader;
 
 #endif

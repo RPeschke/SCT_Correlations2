@@ -7,6 +7,7 @@
 #endif
 #include "sct/platform.hh"
 #include <string>
+#include "sct/predef/plane.hh"
 
 
 class ProcessorCollection;
@@ -20,13 +21,16 @@ class DllExport lcio_reader {
 public:
 
   lcio_reader(const std::string& inputFile, ProcessorCollection* pc);
+  lcio_reader(const std::string& inputFile);
   ~lcio_reader();
-  lcio_collection* getCollection(const char* name);
   ProcessorCollection* getProcessorCollection();
-private:
+  xy_plane getPlane(const std::string& CollectionName, int planeID);
 #ifndef __CINT__
+  lcio_collection* getCollection(const std::string& name);
+private:
   lcio_reader_processor* m_reader_processor = nullptr;
   ProcessorCollection* m_pc;
+  std::shared_ptr<ProcessorCollection> m_owned_pc;
   std::vector<collection*> m_collections;
   IO::LCReader* m_reader;
 #endif

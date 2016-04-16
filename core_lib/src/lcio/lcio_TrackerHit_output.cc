@@ -1,3 +1,8 @@
+#ifdef USE_LCIO
+
+
+
+
 #include "sct/lcio/lcio_output.hh"
 #include "UTIL/CellIDDecoder.h"
 
@@ -42,3 +47,5 @@ public:
 };
 
 register_lcio_output(TrackerHit_output, LCIO::TRACKERHIT);
+
+#endif // USE_LCIO

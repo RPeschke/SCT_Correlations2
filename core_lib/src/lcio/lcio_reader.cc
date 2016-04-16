@@ -1,4 +1,6 @@
 #include "sct/lcio/lcio_reader.hh"
+#include <iostream>
+#ifdef USE_LCIO
 #include "lcio.h"
 #include "IO/LCReader.h"
 #include "IMPL/LCTOOLS.h"
@@ -20,6 +22,7 @@
 #include "EVENT/LCEvent.h"
 #include "sct/lcio/lcio_output.hh"
 #include <algorithm>
+
 
 
 
@@ -92,6 +95,9 @@ void remove_element(std::vector<std::string>& vec, const std::string& name) {
 }
 
 void lcio_reader_processor::pushMissingOutputCollection(LCEvent* evt) {
+  if (m_requested_collections_found == true) {
+    return;
+  }
   const std::vector<std::string>*  names = evt->getCollectionNames();
 
   for (auto&e : *names) {
@@ -120,34 +126,24 @@ lcio_collection* lcio_reader_processor::get_collection(const std::string& name)
 
   return nullptr;
 }
-
+bool isEndOfRunEvent(LCEvent* evt) {
+  return evt->getDetectorName().find("kEORE") != std::string::npos;
+}
 process_returns lcio_reader_processor::processEvent() {
-  try {
-  if (++m_eventNR % 1000 == 0) {
-    std::cout << "event nr " << m_eventNR << std::endl;
-  }
-  if (m_eventNR > 100040)
-  {
-    std::cout << "event nr " << m_eventNR << std::endl;
-  }
     auto evt = m_reader->readNextEvent();
     if (!evt) {
       return p_stop;
     }
-    if (m_requested_collections_found == false) {
-      pushMissingOutputCollection(evt);
+    if (isEndOfRunEvent(evt)){
+      return p_stop;
     }
+    pushMissingOutputCollection(evt);
     for (auto&e : m_out) {
       e->eventStart(evt->getEventNumber());
       e->pushEvent(evt);
       e->eventEnd();
     }
-
-
     return p_sucess;
-  } catch (...) {
-    return p_stop;
-  }
 }
 
 process_returns lcio_reader_processor::fill() {
@@ -178,18 +174,29 @@ std::string lcio_reader_processor::get_name()
 lcio_reader::lcio_reader(const std::string& inputFile, ProcessorCollection* pc) :m_pc(pc)
 {
   auto ret = std::shared_ptr<lcio_reader_processor>(new lcio_reader_processor(inputFile, m_pc));
-  pc->addProcessor(ret);
+  m_pc->addProcessor(ret);
 
   m_reader_processor = ret.get();
 
 
 }
 
+lcio_reader::lcio_reader(const std::string& inputFile)
+{
+
+  m_owned_pc = std::make_shared<ProcessorCollection>();
+  m_pc = m_owned_pc.get();
+  auto ret = std::shared_ptr<lcio_reader_processor>(new lcio_reader_processor(inputFile, m_pc));
+  m_pc->addProcessor(ret);
+
+  m_reader_processor = ret.get();
+}
+
 lcio_reader::~lcio_reader() {
 
 }
 
-lcio_collection* lcio_reader::getCollection(const char* name) {
+lcio_collection* lcio_reader::getCollection(const std::string& name) {
 
   auto ret = m_reader_processor->get_collection(name);
   if (ret) {
@@ -205,3 +212,44 @@ ProcessorCollection* lcio_reader::getProcessorCollection()
 {
   return m_pc;
 }
+
+xy_plane lcio_reader::getPlane(const std::string& CollectionName, int planeID)
+{
+  return xy_plane(getCollection(CollectionName)->getPlane(planeID));
+}
+#else
+
+
+
+
+lcio_reader::lcio_reader(const std::string& inputFile, ProcessorCollection* pc) :lcio_reader(inputFile)
+{
+
+}
+
+lcio_reader::lcio_reader(const std::string& inputFile)
+{
+
+  std::cout << "LCIO reader not supported " << std::endl;
+}
+
+lcio_reader::~lcio_reader() {
+
+}
+
+lcio_collection* lcio_reader::getCollection(const std::string& name) {
+  return nullptr;
+
+}
+
+ProcessorCollection* lcio_reader::getProcessorCollection()
+{
+  return nullptr;
+}
+
+xy_plane lcio_reader::getPlane(const std::string& CollectionName, int planeID)
+{
+  return xy_plane();
+}
+
+#endif // USE_LCIO
