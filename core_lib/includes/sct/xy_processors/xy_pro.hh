@@ -6,6 +6,8 @@
 #include "sct/axis.hh"
 #include "sct/legacy/s_cuts.h"
 
+class TH1;
+class TH2;
 class DllExport xy_pro {
 public:
   static xy_plane correlations(
@@ -14,6 +16,16 @@ public:
     processor_prob& pprob = saveWithRandomName("correlation_")
     );
 
+  static void fill2Hist(
+    const axis& x_,
+    TH1* h1,
+    processor_prob& pprob = DontsaveWithRandomName("fill2hist1d__")
+    );
+  static void fill2Hist(
+    const xy_plane& x_,
+    TH2* h2,
+    processor_prob& pprob = DontsaveWithRandomName("fill2hist2d__")
+    );
   static xy_plane cut_xy(
     const xy_plane& pl, 
     const S_Cut& cut_, 
