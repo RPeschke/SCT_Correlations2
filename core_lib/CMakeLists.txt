@@ -1,6 +1,6 @@
 FIND_PACKAGE( ROOT REQUIRED)
 FIND_PACKAGE(RapidXML REQUIRED)
-
+FIND_PACKAGE(LCIO )
 INCLUDE_DIRECTORIES( . inc ${ROOT_INCLUDE_DIR} )
 
 
@@ -37,6 +37,7 @@ ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/analysis/efficiency.hh
 ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/analysis/residual_efficiency.hh
 ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/analysis/instrip_efficiency.hh
 ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/legacy/Cluster_strip.hh
+${PROJECT_SOURCE_DIR}/core_lib/includes/sct/lcio/lcio_reader.hh
  )
 
 
@@ -58,7 +59,22 @@ ADD_LIBRARY( ${PROJECT_NAME} SHARED ${SOURCES} ${SCT_DICTIONARY})
 
 INCLUDE_DIRECTORIES(${RAPIDXML_INCLUDE_DIRS})
 
-target_link_libraries(${PROJECT_NAME}  ${ROOT_LIBRARIES} ${ADDITIONAL_LIBRARIES}  ${RAPIDXML_INCLUDE_DIRS})
+
+IF(LCIO_FOUND)
+ 
+    INCLUDE_DIRECTORIES(${RAPIDXML_INCLUDE_DIRS} ${LCIO_INCLUDE_DIRS})
+    add_definitions(-DUSE_LCIO)
+    target_link_libraries(${PROJECT_NAME}  ${ROOT_LIBRARIES} ${ADDITIONAL_LIBRARIES}  ${LCIO_LIBRARIES})
+MESSAGE(STATUS "using LCIO")
+ELSE(LCIO_FOUND)
+    INCLUDE_DIRECTORIES(${RAPIDXML_INCLUDE_DIRS})
+    target_link_libraries(${PROJECT_NAME}  ${ROOT_LIBRARIES} ${ADDITIONAL_LIBRARIES}  )
+MESSAGE(STATUS "not using LCIO")
+
+ENDIF(LCIO_FOUND)
+
+
+
 
 
 INSTALL(TARGETS ${PROJECT_NAME}
