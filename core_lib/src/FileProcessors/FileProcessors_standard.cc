@@ -36,7 +36,7 @@ FileProcessors_standard::~FileProcessors_standard()
 {
   if (m_dummy) {
     m_dummy->Write();
-    m_dummy->Close("R");
+   // m_dummy->Close("R");
   }
 
 }
