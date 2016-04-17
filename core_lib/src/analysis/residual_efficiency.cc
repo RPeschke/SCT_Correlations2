@@ -6,8 +6,8 @@
 #include "sct/legacy/Draw.h"
 #include "sct/legacy/SCT_helpers.hh"
 #include "TMath.h"
-#define TrueResiduals_DEF 0
-#define  REFERENCE_RESIDUALS_DEF 1
+#define TrueResiduals_DEF ID_t(0)
+#define  REFERENCE_RESIDUALS_DEF ID_t(1)
 
 class residual_efficiency_processor :public processorPlaneVSPlane {
 public:

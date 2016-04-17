@@ -21,5 +21,5 @@ xy_plane xy_pro::modulo(const xy_plane& hits, modulo_x x_mod, modulo_y y_mod, pr
   
   hits.get_ProcessorCollection()->addProcessor(p);
 
-  return dynamic_cast<modulo_processor*>(p.get())->get_output_collection()->getPlane(0);
+  return dynamic_cast<modulo_processor*>(p.get())->get_output_collection()->getPlane(ID_t(0));
 }

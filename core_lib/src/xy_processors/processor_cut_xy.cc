@@ -24,5 +24,5 @@ void processor_cut_xy::processHit(double x, double y){
   std::shared_ptr<processor> p(new processor_cut_xy(cut_,pl.get_x(), pl.get_y(), pprob));
   pl.get_ProcessorCollection()->addProcessor(p);
 
-  return dynamic_cast<processor_cut_xy*>(p.get())->get_output_collection()->getPlane(0);
+  return dynamic_cast<processor_cut_xy*>(p.get())->get_output_collection()->getPlane(ID_t(0));
 }

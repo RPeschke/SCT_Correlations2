@@ -4,7 +4,7 @@
 double zero = 0;
 
 
-std::vector<double> *getAxisByName(const std::string& name,const std::vector<storage>& data) {
+std::vector<double> *getAxisByName(const axesName_t& name,const std::vector<storage>& data) {
   for (auto&e : data) {
     if (e.axisName == name) {
       return e.vec;
@@ -13,7 +13,7 @@ std::vector<double> *getAxisByName(const std::string& name,const std::vector<sto
   return nullptr;
 }
 
-generic_plane::generic_plane(double planeID, std::vector<double> *ID, ProcessorCollection*pc, TTree* tree):plane_id(planeID),m_id(ID),m_pc(pc),m_tree(tree){
+generic_plane::generic_plane(ID_t planeID, std::vector<double> *ID, ProcessorCollection*pc, TTree* tree):plane_id(planeID),m_id(ID),m_pc(pc),m_tree(tree){
  
 }
 
@@ -37,12 +37,12 @@ generic_plane& generic_plane::operator=(const generic_plane& pl)  {
   return *this;
 }
 
-void generic_plane::add_axis(const std::string& axisName, std::vector<double> *axis_) {
+void generic_plane::add_axis(const axesName_t& axisName, std::vector<double> *axis_) {
 
   m_storage.push_back(storage( axis_, axisName));
 }
 
-bool generic_plane::setHitAxisAdress(const std::string& name, double* outVar) {
+bool generic_plane::setHitAxisAdress(const axesName_t& name, double* outVar) {
 
 
   for (auto&e : m_storage) {
@@ -58,7 +58,7 @@ bool generic_plane::setHitAxisAdress(const std::string& name, double* outVar) {
 
 bool generic_plane::next() {
   while (++curr < m_id->size()) {
-    if (m_id->at(curr) == plane_id){
+    if (m_id->at(curr) ==  necessary_CONVERSION(plane_id)){
       for (auto& e : m_usedstorage) {
         *(e.value) = e.vec->at(curr);
       }
@@ -74,14 +74,14 @@ void generic_plane::push() {
   push(plane_id);
 }
 
-void generic_plane::push(double planeID){
-  m_id->push_back(planeID);
+void generic_plane::push(ID_t planeID){
+  m_id->push_back(necessary_CONVERSION( planeID));
   for (auto& e : m_storage) {
     e.vec->push_back(*e.value);
   }
 }
 
-axis generic_plane::get_axis(const std::string& axisName)const {
+axis generic_plane::get_axis(const axesName_t& axisName)const {
   auto axis_ = getAxisByName(axisName, m_storage);
   
  return axis(plane_id,m_id, axisName, axis_, get_ProcessorCollection(),m_tree);
@@ -96,14 +96,14 @@ TTree* generic_plane::get_tree(){
   return m_tree;
 }
 
-double generic_plane::get_ID() const
+ID_t generic_plane::get_ID() const
 {
   return plane_id;
 }
 
 
 
-storage::storage(std::vector<double>* vec_, const std::string& axisName_) :vec(vec_), axisName(axisName_), value(&zero)
+storage::storage(std::vector<double>* vec_, const axesName_t& axisName_) :vec(vec_), axisName(axisName_), value(&zero)
 {
 
 }

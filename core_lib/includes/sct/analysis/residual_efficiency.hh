@@ -13,7 +13,7 @@ public:
     const xy_plane& sz_data,
     int  strips,
     axis_def search_axis,
-    processor_prob& plot_prob_ = saveWithRandomName("residual_efficiency__")
+    processor_prob& plot_prob_ = saveWithRandomName(processorName_t ("residual_efficiency__"))
     );
 
   TH1D* Draw_true_residuals();

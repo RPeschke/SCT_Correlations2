@@ -17,10 +17,10 @@ public:
   Cluster_strip(
     const xy_plane& trueHits_with_dut,
     const xy_plane& sz_data,
-    double max_cluster_size,
+    max_cl_t max_cluster_size,
     axis_def search_axis,
     modulo_t modulo_,
-    processor_prob& plot_prob_ = saveWithRandomName("Cluster_strip__")
+    processor_prob& plot_prob_ = saveWithRandomName(processorName_t("Cluster_strip__"))
     );
 
 
@@ -34,7 +34,7 @@ private:
 
 
   std::shared_ptr<TProfile> m_profile;
-  double   m_max_cluster_size;
+  max_cl_t   m_max_cluster_size;
   modulo_t m_mod;
   std::shared_ptr<TH2D> m_cluster_size_hist;
   xy_plane m_cluster_size_vs_pos;

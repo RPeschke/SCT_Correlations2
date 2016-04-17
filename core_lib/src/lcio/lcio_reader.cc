@@ -39,13 +39,13 @@ public:
 
   virtual end_returns end() override;
 
-  virtual std::string get_name() override;
+  virtual processorName_t get_name() override;
   void pushMissingOutputCollection(LCEvent* evt);
   IO::LCReader* m_reader = nullptr;
   std::string m_name;
 
   std::vector<std::shared_ptr<lcio_collection>> m_requested_collections;
-  lcio_collection* get_collection(const std::string& name);
+  lcio_collection* get_collection(const collectionName_t& name);
   std::vector<std::string> m_missingCollection;
 
 
@@ -71,7 +71,7 @@ init_returns lcio_reader_processor::init() {
   m_requested_collections_found = false;
   for (auto&e : m_requested_collections)
   {
-    m_missingCollection.push_back(e->m_name);
+    m_missingCollection.push_back(necessary_CONVERSION(e->m_name));
   }
   if (m_reader) {
     m_reader->close();
@@ -104,7 +104,7 @@ void lcio_reader_processor::pushMissingOutputCollection(LCEvent* evt) {
     if (contains(m_missingCollection, e)) {
 
 
-      m_out.push_back(create_lcio_ouput(lcio_output_prob().setName(e).setType(evt->getCollection(e)->getTypeName()).set_lcio_collection(get_collection(e))));
+      m_out.push_back(create_lcio_ouput(lcio_output_prob().setName(e).setType(evt->getCollection(e)->getTypeName()).set_lcio_collection(get_collection(collectionName_t(e)))));
 
       remove_element(m_missingCollection, e);
     }
@@ -116,7 +116,7 @@ void lcio_reader_processor::pushMissingOutputCollection(LCEvent* evt) {
 
 }
 
-lcio_collection* lcio_reader_processor::get_collection(const std::string& name)
+lcio_collection* lcio_reader_processor::get_collection(const collectionName_t& name)
 {
   for (auto&e : m_requested_collections) {
     if (e->m_name == name) {
@@ -159,9 +159,9 @@ end_returns lcio_reader_processor::end()
   return e_success;
 }
 
-std::string lcio_reader_processor::get_name()
+processorName_t lcio_reader_processor::get_name()
 {
-  return "lcio_reder";
+  return processorName_t("lcio_reder");
 }
 
 
@@ -196,7 +196,7 @@ lcio_reader::~lcio_reader() {
 
 }
 
-lcio_collection* lcio_reader::getCollection(const std::string& name) {
+lcio_collection* lcio_reader::getCollection(const collectionName_t& name) {
 
   auto ret = m_reader_processor->get_collection(name);
   if (ret) {
@@ -213,7 +213,7 @@ ProcessorCollection* lcio_reader::getProcessorCollection()
   return m_pc;
 }
 
-xy_plane lcio_reader::getPlane(const std::string& CollectionName, int planeID)
+xy_plane lcio_reader::getPlane(const collectionName_t& CollectionName, ID_t planeID)
 {
   return xy_plane(getCollection(CollectionName)->getPlane(planeID));
 }
@@ -237,7 +237,7 @@ lcio_reader::~lcio_reader() {
 
 }
 
-lcio_collection* lcio_reader::getCollection(const std::string& name) {
+lcio_collection* lcio_reader::getCollection(const collectionName_t& name) {
   return nullptr;
 
 }
@@ -247,7 +247,7 @@ ProcessorCollection* lcio_reader::getProcessorCollection()
   return nullptr;
 }
 
-xy_plane lcio_reader::getPlane(const std::string& CollectionName, int planeID)
+xy_plane lcio_reader::getPlane(const collectionName_t& CollectionName, int planeID)
 {
   return xy_plane();
 }

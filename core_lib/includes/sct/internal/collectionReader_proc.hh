@@ -20,7 +20,7 @@ public:
   virtual process_returns processEvent() override;
   virtual process_returns fill() override;
   virtual end_returns end() override;
-  virtual std::string get_name() override;
+  virtual processorName_t get_name() override;
 
 
   collection* get_collection();

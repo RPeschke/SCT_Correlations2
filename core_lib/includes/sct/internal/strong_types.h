@@ -15,13 +15,13 @@ class DllExport name { \
 public: \
   explicit name(const type& param_) :value(param_) {}\
   type value; \
+  friend bool operator==(const name& lhs, const name& rhs) { return lhs.value == rhs.value;} \
+  friend bool operator!=(const name& lhs, const name& rhs) { return lhs.value != rhs.value;} \
+  friend bool operator<(const name& lhs, const name& rhs) { return lhs.value < rhs.value;} \
+  friend bool operator>(const name& lhs, const name& rhs) { return lhs.value > rhs.value;} \
+  friend name operator+(const name& lhs, const name& rhs) { return name(lhs.value + rhs.value);} \
 }
-#define TYPE_CLASS_PTR(name,type) \
-class DllExport name { \
-public: \
-  explicit name(type param_) :value(param_) {}\
-  type value; \
-}
+
 
 
 #else 
@@ -30,20 +30,20 @@ public: \
 
 #define TYPE_CLASS(name,type) \
 typedef  type name
-#define TYPE_CLASS_PTR(name,type) \
-typedef  type name
+
 
 #endif // _DEBUG
 
+
 template <typename out_t, typename in_t>
-out_t strong_cast(const in_t& in_) {
+out_t strong_cast(const in_t& in_)  {
   return out_t(necessary_CONVERSION(in_));
 }
-
 
   TYPE_CLASS(modulo_x, double);
   TYPE_CLASS(modulo_y, double);
   TYPE_CLASS(modulo_t, double);
+  TYPE_CLASS(max_cl_t, double); // maximum cluster size 
 
 
   TYPE_CLASS(ID_t, double);
@@ -53,7 +53,8 @@ out_t strong_cast(const in_t& in_) {
 
   TYPE_CLASS(move_t, double);
   TYPE_CLASS(collectionName_t, std::string);
-  TYPE_CLASS(AxesName_t, std::string);
+  TYPE_CLASS(axesName_t, std::string);
+  TYPE_CLASS(processorName_t, std::string);
   TYPE_CLASS(procent_t, double);
 
 

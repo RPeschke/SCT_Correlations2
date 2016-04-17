@@ -1,16 +1,24 @@
 #include "sct/FileProcessors/rootEventRunOutput.hh"
 #include "TTree.h"
+#define  X_DEF axesName_t("x")
+#define  Y_DEF axesName_t("y")
+#define  Occupancy_DEF axesName_t("Occupancy")
+#define  Occupancy_error_DEF axesName_t("Occupancy_error")
+#define  NumOfEvents_DEF axesName_t("NumOfEvents")
+#define  ID_DEF axesName_t("ID")
+
+
 RunOutput::RunOutput(): x(0), y(0), Occupancy(0), Occupancy_error(0), NumOfEvents(0), ID(0)
 {
 
 }
 
-std::vector<std::string> getNames() {
+std::vector<axesName_t> getNames() {
   return {
-    "x","y","Occupancy","Occupancy_error","NumOfEvents","ID"
+    X_DEF,Y_DEF,Occupancy_DEF,Occupancy_error_DEF,NumOfEvents_DEF,ID_DEF
   };
 }
-rootEventRunOutput::rootEventRunOutput(const std::string& collectionName, TDirectory* dir):m_collection(collectionName ,getNames(),&m_pc , save2Disk)
+rootEventRunOutput::rootEventRunOutput(const collectionName_t& collectionName, TDirectory* dir):m_collection(collectionName ,getNames(),&m_pc , save2Disk)
 {
  m_collection.get_tree()->SetDirectory(dir);
  
@@ -41,12 +49,12 @@ rootEventRunOutput::rootEventRunOutput(const std::string& collectionName, TDirec
 
 
 
- m_plane = m_collection.getPlane(0);
- m_plane.setHitAxisAdress("x", &m_runOut->x);
- m_plane.setHitAxisAdress("y", &m_runOut->y);
- m_plane.setHitAxisAdress("Occupancy", &m_runOut->Occupancy);
- m_plane.setHitAxisAdress("Occupancy_error", &m_runOut->Occupancy_error);
- m_plane.setHitAxisAdress("NumOfEvents", &m_runOut->NumOfEvents);
+ m_plane = m_collection.getPlane(ID_t(0));
+ m_plane.setHitAxisAdress(X_DEF, &m_runOut->x);
+ m_plane.setHitAxisAdress(Y_DEF, &m_runOut->y);
+ m_plane.setHitAxisAdress(Occupancy_DEF, &m_runOut->Occupancy);
+ m_plane.setHitAxisAdress(Occupancy_error_DEF , &m_runOut->Occupancy_error);
+ m_plane.setHitAxisAdress(NumOfEvents_DEF, &m_runOut->NumOfEvents);
 
 
 
@@ -81,12 +89,12 @@ rootEventRunOutput::rootEventRunOutput(const rootEventRunOutput& rhs):m_collecti
   outputTree->Branch("HV", m_HV.get());
 
 
-  m_plane = m_collection.getPlane(0);
-  m_plane.setHitAxisAdress("x", &m_runOut->x);
-  m_plane.setHitAxisAdress("y", &m_runOut->y);
-  m_plane.setHitAxisAdress("Occupancy", &m_runOut->Occupancy);
-  m_plane.setHitAxisAdress("Occupancy_error", &m_runOut->Occupancy_error);
-  m_plane.setHitAxisAdress("NumOfEvents", &m_runOut->NumOfEvents);
+  m_plane = m_collection.getPlane(ID_t(0));
+  m_plane.setHitAxisAdress(X_DEF, &m_runOut->x);
+  m_plane.setHitAxisAdress(Y_DEF, &m_runOut->y);
+  m_plane.setHitAxisAdress(Occupancy_DEF, &m_runOut->Occupancy);
+  m_plane.setHitAxisAdress(Occupancy_error_DEF, &m_runOut->Occupancy_error);
+  m_plane.setHitAxisAdress(NumOfEvents_DEF, &m_runOut->NumOfEvents);
 }
 
 rootEventRunOutput& rootEventRunOutput::operator=(const rootEventRunOutput& rhs)
@@ -116,12 +124,12 @@ rootEventRunOutput& rootEventRunOutput::operator=(const rootEventRunOutput& rhs)
   outputTree->Branch("HV", m_HV.get());
 
 
-  m_plane = m_collection.getPlane(0);
-  m_plane.setHitAxisAdress("x", &m_runOut->x);
-  m_plane.setHitAxisAdress("y", &m_runOut->y);
-  m_plane.setHitAxisAdress("Occupancy", &m_runOut->Occupancy);
-  m_plane.setHitAxisAdress("Occupancy_error", &m_runOut->Occupancy_error);
-  m_plane.setHitAxisAdress("NumOfEvents", &m_runOut->NumOfEvents);
+  m_plane = m_collection.getPlane(ID_t(0));
+  m_plane.setHitAxisAdress(X_DEF, &m_runOut->x);
+  m_plane.setHitAxisAdress(Y_DEF, &m_runOut->y);
+  m_plane.setHitAxisAdress(Occupancy_DEF, &m_runOut->Occupancy);
+  m_plane.setHitAxisAdress(Occupancy_error_DEF, &m_runOut->Occupancy_error);
+  m_plane.setHitAxisAdress(NumOfEvents_DEF, &m_runOut->NumOfEvents);
   return *this;
 }
 
@@ -194,7 +202,7 @@ void rootEventRunOutput::fill()
   m_collection.save();
 }
 
-void rootEventRunOutput::push(double x, double y, double occ, double occ_err, double numOfEfents, double ID)
+void rootEventRunOutput::push(double x, double y, double occ, double occ_err, double numOfEfents, ID_t ID)
 {
   m_runOut->NumOfEvents = numOfEfents;
   m_runOut->Occupancy = occ;

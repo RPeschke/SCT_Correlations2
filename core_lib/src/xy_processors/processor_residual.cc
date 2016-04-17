@@ -17,5 +17,5 @@ xy_plane xy_pro::residual(const axis& x_, const axis& y_, processor_prob& pprob)
   std::shared_ptr<processor> p(new processor_residual(x_, y_, pprob));
   x_.get_ProcessorCollection()->addProcessor(p);
 
-  return dynamic_cast<processor_residual*>(p.get())->get_output_collection()->getPlane(0);
+  return dynamic_cast<processor_residual*>(p.get())->get_output_collection()->getPlane(ID_t(0));
 }

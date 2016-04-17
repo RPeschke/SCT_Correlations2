@@ -108,7 +108,7 @@ bool FileProcessorsBase_modulo::process_file(FileProberties* fileP)
 
   m_res_efficiency = std::make_shared<residual_efficiency>(d2t.getTotalTrueHits(), m_input_file.DUT_zs_data(), 5, x_axis_def);
 
-  m_cluster_size = std::make_shared<Cluster_strip>(d2t.getTrueHitsWithDUT(), m_input_file.DUT_zs_data(), 8, x_axis_def, modulo_t(3));
+  m_cluster_size = std::make_shared<Cluster_strip>(d2t.getTrueHitsWithDUT(), m_input_file.DUT_zs_data(), max_cl_t(8), x_axis_def, modulo_t(3));
 
 
 
@@ -121,9 +121,9 @@ bool FileProcessorsBase_modulo::process_file(FileProberties* fileP)
   m_cluster_size->Draw_ClusterSize();
 
 
-  push2outputEvent(*m_outputl, *m_efficiency->Draw_Efficiency(), *m_efficiency->Draw_true_hits(), 0);
-  push2outputEvent(*m_outputl, *m_res_efficiency->Draw_residual_efficiency(), *m_res_efficiency->Draw_true_residuals(), 1);
-  push2outputEvent(*m_outputl, *m_cluster_size->get_profile(), 2);
+  push2outputEvent(*m_outputl, *m_efficiency->Draw_Efficiency(), *m_efficiency->Draw_true_hits(), ID_t(0));
+  push2outputEvent(*m_outputl, *m_res_efficiency->Draw_residual_efficiency(), *m_res_efficiency->Draw_true_residuals(), ID_t(1));
+  push2outputEvent(*m_outputl, *m_cluster_size->get_profile(), ID_t(2));
   m_outputl->fill();
 
   return true;

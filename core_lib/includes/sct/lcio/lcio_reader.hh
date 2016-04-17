@@ -8,6 +8,7 @@
 #include "sct/platform.hh"
 #include <string>
 #include "sct/predef/plane.hh"
+#include "sct/internal/strong_types.h"
 
 
 class ProcessorCollection;
@@ -24,9 +25,9 @@ public:
   lcio_reader(const std::string& inputFile);
   ~lcio_reader();
   ProcessorCollection* getProcessorCollection();
-  xy_plane getPlane(const std::string& CollectionName, int planeID);
+  xy_plane getPlane(const collectionName_t& CollectionName, ID_t planeID);
 #ifndef __CINT__
-  lcio_collection* getCollection(const std::string& name);
+  lcio_collection* getCollection(const collectionName_t& name);
 private:
   lcio_reader_processor* m_reader_processor = nullptr;
   ProcessorCollection* m_pc;

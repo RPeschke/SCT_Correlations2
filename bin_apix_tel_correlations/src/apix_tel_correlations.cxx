@@ -13,6 +13,8 @@
 #include "sct/ProcessorCollection.h"
 #include "sct/legacy/Draw.h"
 #include "sct/legacy/SCT_helpers.hh"
+#include "TApplication.h"
+#include "sct/internal/strong_types.h"
 
 
 std::vector<TCanvas*> gCanvas;
@@ -75,17 +77,17 @@ int main(int argc, char **argv) {
   auto apix_local = convert::zs_data_to_hits_GBL(
     fitter_file_.apix_zs_data(),
     *gear.detector.layer_by_ID(20),
-    DontsaveWithRandomName("apix_local")
+    DontsaveWithRandomName(processorName_t("apix_local"))
     );
   auto apix_global = convert::local_to_global(
     apix_local,
     *gear.detector.layer_by_ID(20),
-    DontsaveWithRandomName("apix_global")
+    DontsaveWithRandomName(processorName_t("apix_global"))
     );
   auto apix_local_8 = convert::global_to_local(
     apix_global,
     *gear.detector.layer_by_ID(8),
-    DontsaveWithRandomName("apix_local_8")
+    DontsaveWithRandomName(processorName_t("apix_local_8"))
     );
   
   auto corr_xx = xy_pro::correlations(apix_local_8.get_x(), fitter_file_.DUT_fitted_local_GBL().get_x());
@@ -99,7 +101,7 @@ int main(int argc, char **argv) {
 
 //   auto h =SCT_helpers::Draw<TH2>(corr_xx,S_DrawOption());
 //   auto h_local = (TH2*)h->Clone("corr_xx");
-   auto p = SCT_helpers::LinearFit_Of_Profile(&h_local, 20);
+   auto p = SCT_helpers::LinearFit_Of_Profile(&h_local, procent_t(20));
    h_local.Draw("colz");
    p.Draw("same");
    p.Print();
@@ -111,7 +113,7 @@ int main(int argc, char **argv) {
   Draw(corr_yy,DrawOption().output_object(&h1_local));
 //   auto h1 = SCT_helpers::Draw<TH2>(corr_yy, S_DrawOption());
 //   auto h1_local = (TH2*)h1->Clone("corr_yy");
-   auto p1 = SCT_helpers::LinearFit_Of_Profile(&h1_local, 20);
+   auto p1 = SCT_helpers::LinearFit_Of_Profile(&h1_local, procent_t(20));
    h1_local.Draw("colz");
    p1.Draw("same");
    p1.Print();

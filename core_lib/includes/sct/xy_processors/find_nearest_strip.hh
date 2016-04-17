@@ -16,7 +16,7 @@ public:
     const xy_plane& planeB,
     axis_def search_axis,
     double cutOfff,
-    processor_prob& plot_prob_ = saveWithRandomName("find_nearest_strip__"));
+    processor_prob& plot_prob_ = saveWithRandomName(processorName_t("find_nearest_strip__")));
 
   xy_plane getResidual() const;
   xy_plane getHitOnPlaneA() const;

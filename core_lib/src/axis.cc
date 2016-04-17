@@ -1,6 +1,6 @@
 #include "sct/axis.hh"
 
-axis::axis(double planeID, std::vector<double> *ID, const std::string& axisName, std::vector<double> *axis_, ProcessorCollection* pc,TTree* tree):plane_id(planeID),m_id(ID),m_axis(axis_),m_name(axisName),m_pc(pc),m_tree(tree){
+axis::axis(ID_t planeID, std::vector<double> *ID, const axesName_t& axisName, std::vector<double> *axis_, ProcessorCollection* pc,TTree* tree):plane_id(planeID),m_id(ID),m_axis(axis_),m_name(axisName),m_pc(pc),m_tree(tree){
 
 }
 
@@ -19,7 +19,7 @@ axis& axis::operator=(const axis& ax){
   return *this;
 }
 
-std::string axis::getName() const {
+axesName_t axis::getName() const {
   return m_name;
 }
 
@@ -29,7 +29,7 @@ double axis::getValue() const{
 
 bool axis::next(){
   while (++curr < m_id->size()) {
-    if (m_id->at(curr) == plane_id) {
+    if (m_id->at(curr) == necessary_CONVERSION(plane_id)) {
       return true;
     }
 
@@ -48,7 +48,7 @@ TTree* axis::get_tree() const{
   return m_tree;
 }
 
-double axis::get_ID() const{
+ID_t axis::get_ID() const{
 
   return plane_id;
 }

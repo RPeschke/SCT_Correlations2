@@ -8,7 +8,7 @@ instrip_efficiency::instrip_efficiency(const xy_plane& trueHits, const xy_plane&
   m_true_hits_plane = xy_pro::modulo(trueHits,  x_mod, y_mod, plot_prob_);
   
   
-  plot_prob_.setName(plot_prob_.name + "_with_DUT");
+  plot_prob_.setName(plot_prob_.name + processorName_t("_with_DUT"));
   
     
   m_true_w_dut_plane = xy_pro::modulo(trueHits_with_dut, x_mod, y_mod, plot_prob_);

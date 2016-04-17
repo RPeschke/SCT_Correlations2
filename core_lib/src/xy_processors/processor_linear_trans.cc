@@ -24,7 +24,7 @@ xy_plane xy_pro::linear_trans(const xy_plane& pl, double a11, double a12, double
   std::shared_ptr<processor> p(new processor_linear_trans(a11, a12, a21, a22, pl.get_x(), pl.get_y(), pprob));
   pl.get_ProcessorCollection()->addProcessor(p);
 
-  return dynamic_cast<processor_linear_trans*>(p.get())->get_output_collection()->getPlane(0);
+  return dynamic_cast<processor_linear_trans*>(p.get())->get_output_collection()->getPlane(ID_t(0));
 }
 
 xy_plane xy_pro::rotate(const xy_plane& pl, double angle, processor_prob pprob /*= saveWithRandomName("rotate__")*/)

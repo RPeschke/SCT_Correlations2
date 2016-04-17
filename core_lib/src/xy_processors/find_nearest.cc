@@ -5,9 +5,9 @@
 #include "sct/predef/plane.hh"
 #include "sct/collection.h"
 #include "sct/ProcessorCollection.h"
-#define  RESIDUAL_DEF 0
-#define  FIRST_PLANE_DEF 1
-#define  SECOND_PLANE_DEF 2
+#define  RESIDUAL_DEF  ID_t(0)
+#define  FIRST_PLANE_DEF ID_t(1)
+#define  SECOND_PLANE_DEF ID_t(2)
 
 
 

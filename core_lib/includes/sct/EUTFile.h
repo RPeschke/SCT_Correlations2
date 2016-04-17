@@ -6,6 +6,7 @@
 #include <vector>
 #endif
 #include "sct/platform.hh"
+#include "sct/internal/strong_types.h"
 class TTree;
 class TFile;
 class ProcessorCollection;
@@ -15,7 +16,7 @@ class DllExport EUTFile {
 public:
 
   EUTFile(TFile *inputFile, ProcessorCollection* pc);
-  collection* getCollection(const char* name);
+  collection* getCollection(const collectionName_t& name);
   ProcessorCollection* getProcessorCollection();
 private:
 #ifndef __CINT__

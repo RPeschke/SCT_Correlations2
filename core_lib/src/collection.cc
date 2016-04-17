@@ -7,17 +7,17 @@
 #include "sct/processor_prob.hh"
 
 
-std::vector<double> *getAxisByName(const std::string& name, std::vector<std::shared_ptr<TTreeVectorExtractor>>& data) {
+std::vector<double> *getAxisByName(const axesName_t& name, std::vector<std::shared_ptr<TTreeVectorExtractor>>& data) {
   for (auto&e : data) {
-    if (e->getName() == name) {
+    if (axesName_t(e->getName()) == name) {
       return e->getVec();
     }
   }
   return nullptr;
 }
-collection::collection(TTree* tree, ProcessorCollection* pc) :m_pc(pc),m_tree(tree) {
+collection::collection(TTree* tree, ProcessorCollection* pc) :m_pc(pc),m_tree(tree), m_collectionName(collectionName_t( tree->GetName())) {
   auto entries = tree->GetListOfBranches()->GetEntries();
-  m_collectionName = tree->GetName();
+  
   for (int i = 0; i < entries; i++)
   {
     auto br = dynamic_cast<TBranch*>(tree->GetListOfBranches()->At(i));
@@ -37,14 +37,14 @@ collection::collection(TTree* tree, ProcessorCollection* pc) :m_pc(pc),m_tree(tr
 
 }
 
-collection::collection(const std::string& collectionName, const std::vector<std::string>& axis_list, ProcessorCollection* pc, SaveOption save) :m_collectionName(collectionName), m_pc(pc) {
+collection::collection(const collectionName_t& collectionName, const std::vector<axesName_t>& axis_list, ProcessorCollection* pc, SaveOption save) :m_collectionName(collectionName), m_pc(pc) {
   for (auto&e : axis_list) {
-    m_data.push_back(std::make_shared<TTreeVectorExtractor>(e));
+    m_data.push_back(std::make_shared<TTreeVectorExtractor>(necessary_CONVERSION(e)));
   }
   m_event_nr = std::make_shared<int>(0);
 
   if (save == save2Disk) {
-    outPutTree = std::make_shared<TTree>(collectionName.c_str(), collectionName.c_str());
+    outPutTree = std::make_shared<TTree>(necessary_CONVERSION(collectionName).c_str(), necessary_CONVERSION(collectionName).c_str());
     for (auto& e : m_data) {
       e->push2TTree(outPutTree.get());
     }
@@ -59,7 +59,7 @@ collection::collection(const collection& coll) :
 
 }
 
-collection::collection(const processor_prob& pprob):collection(pprob.name,pprob.axisNames,pprob.ProcessorColl,pprob.save)
+collection::collection(const processor_prob& pprob):collection(strong_cast<collectionName_t>( pprob.name),pprob.axisNames,pprob.ProcessorColl,pprob.save)
 {
 
 }
@@ -76,22 +76,22 @@ collection& collection::operator=(const collection& coll)
     return *this;
 }
 
-generic_plane collection::getPlane(double planeID) {
-  auto ID = getAxisByName("ID", m_data);
+generic_plane collection::getPlane(ID_t planeID) {
+  auto ID = getAxisByName(axesName_t("ID"), m_data);
 
   auto ret = generic_plane(planeID, ID, m_pc, get_tree());
 
   for (auto&e : m_data) {
     if (e->getName() != "ID") {
-      ret.add_axis(e->getName(), e->getVec());
+      ret.add_axis(axesName_t(e->getName()), e->getVec());
     }
   }
 
   return ret;
 }
 
-axis collection::getAxis(double planeID, const std::string& axis_name) {
-  auto ID = getAxisByName("ID", m_data);
+axis collection::getAxis(ID_t planeID, const axesName_t& axis_name) {
+  auto ID = getAxisByName(axesName_t("ID"), m_data);
   auto axis_ = getAxisByName(axis_name, m_data);
   return axis(planeID, ID, axis_name, axis_, m_pc,get_tree());
 }
@@ -140,7 +140,7 @@ void collection::save() {
   }
 }
 
-std::string collection::get_name() {
+collectionName_t collection::get_name() {
   return m_collectionName;
 
 }

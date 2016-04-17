@@ -1,11 +1,11 @@
 #include "sct/predef/plane.hh"
 
-#define  X_DEF "x"
-#define  Y_DEF "y"
-#define  ID_DEF "ID"
+#define  X_DEF axesName_t( "x")
+#define  Y_DEF axesName_t("y")
+#define  ID_DEF axesName_t("ID")
 
-std::vector<std::string> xy_names() {
-  std::vector<std::string> ret;
+std::vector<axesName_t> xy_names() {
+  std::vector<axesName_t> ret;
   ret.push_back(X_DEF);
   ret.push_back(Y_DEF);
   ret.push_back(ID_DEF);
@@ -90,10 +90,10 @@ axis xy_plane::get_y() const
 FitterPlane::FitterPlane(const generic_plane& pl) :xy_plane(pl) {
   m_plane.setHitAxisAdress(X_DEF, &F_Hit->x);
   m_plane.setHitAxisAdress(Y_DEF, &F_Hit->y);
-  m_plane.setHitAxisAdress("chi2", &F_Hit->chi2);
-  m_plane.setHitAxisAdress("ndf", &F_Hit->ndf);
-  m_plane.setHitAxisAdress("phi", &F_Hit->phi);
-  m_plane.setHitAxisAdress("theta", &F_Hit->theta);
+  m_plane.setHitAxisAdress( axesName_t("chi2"), &F_Hit->chi2);
+  m_plane.setHitAxisAdress( axesName_t("ndf"), &F_Hit->ndf);
+  m_plane.setHitAxisAdress( axesName_t("phi"), &F_Hit->phi);
+  m_plane.setHitAxisAdress( axesName_t("theta"), &F_Hit->theta);
 }
 
 FitterPlane::FitterPlane()
@@ -106,10 +106,10 @@ FitterPlane::FitterPlane(const FitterPlane& rhs) :xy_plane(rhs)
   F_Hit = std::make_shared<fitterHit>();
   m_plane.setHitAxisAdress(X_DEF, &F_Hit->x);
   m_plane.setHitAxisAdress(Y_DEF, &F_Hit->y);
-  m_plane.setHitAxisAdress("chi2", &F_Hit->chi2);
-  m_plane.setHitAxisAdress("ndf", &F_Hit->ndf);
-  m_plane.setHitAxisAdress("phi", &F_Hit->phi);
-  m_plane.setHitAxisAdress("theta", &F_Hit->theta);
+  m_plane.setHitAxisAdress( axesName_t("chi2"), &F_Hit->chi2);
+  m_plane.setHitAxisAdress( axesName_t("ndf"), &F_Hit->ndf);
+  m_plane.setHitAxisAdress( axesName_t("phi"), &F_Hit->phi);
+  m_plane.setHitAxisAdress( axesName_t("theta"), &F_Hit->theta);
 }
 
 FitterPlane& FitterPlane::operator=(const FitterPlane& rhs)
@@ -118,10 +118,10 @@ FitterPlane& FitterPlane::operator=(const FitterPlane& rhs)
   F_Hit = std::make_shared<fitterHit>();
   m_plane.setHitAxisAdress(X_DEF, &F_Hit->x);
   m_plane.setHitAxisAdress(Y_DEF, &F_Hit->y);
-  m_plane.setHitAxisAdress("chi2", &F_Hit->chi2);
-  m_plane.setHitAxisAdress("ndf", &F_Hit->ndf);
-  m_plane.setHitAxisAdress("phi", &F_Hit->phi);
-  m_plane.setHitAxisAdress("theta", &F_Hit->theta);
+  m_plane.setHitAxisAdress( axesName_t("chi2"), &F_Hit->chi2);
+  m_plane.setHitAxisAdress( axesName_t("ndf"), &F_Hit->ndf);
+  m_plane.setHitAxisAdress( axesName_t("phi"), &F_Hit->phi);
+  m_plane.setHitAxisAdress( axesName_t("theta"), &F_Hit->theta);
   return *this;
 }
 

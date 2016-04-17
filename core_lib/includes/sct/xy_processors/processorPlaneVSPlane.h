@@ -5,6 +5,7 @@
 #include "sct/predef/plane.hh"
 #include "sct/collection.h"
 #include "sct/processor_prob.hh"
+#include "sct/internal/strong_types.h"
 
 
 
@@ -18,7 +19,7 @@ public:
   virtual process_returns fill() ;
   virtual end_returns end();
   
-  virtual std::string get_name();
+  virtual processorName_t get_name();
 
   virtual void processEventStart() {}
   virtual void processHit(const hit&  p1, const hit&  p2) {};
@@ -26,8 +27,8 @@ public:
   virtual void processHit_2(const hit&  p2) {}
   virtual process_returns processEventEnd();
 
-  void pushHit(double x, double y, double ID=0);
-  void pushHit(const hit& hit, double ID);
+  void pushHit(double x, double y, ID_t ID= ID_t(0));
+  void pushHit(const hit& hit, ID_t ID);
   int m_size_x = 0, m_size_y = 0;
   int m_current = 0;
   collection* get_output_collection();

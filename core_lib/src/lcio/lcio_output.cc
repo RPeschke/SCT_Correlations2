@@ -1,7 +1,9 @@
 #include "sct/lcio/lcio_output.hh"
 #include "sct/lcio/lcio_collection.hh"
 #include "sct/internal/factoryDef.hh"
-
+#define  X_DEF axesName_t("x")
+#define  Y_DEF axesName_t("y")
+#define  ID_DEF axesName_t("ID")
 registerBaseClassDef(lcio_output);
 void lcio_output::eventEnd()
 {
@@ -28,9 +30,9 @@ void lcio_output::push_hit(double x, double y, double ID)
 
 lcio_output::lcio_output(Parameter_ref param_):m_prob(param_)
 {
-  m_x = m_prob.m_coll->m_storage["x"].get();
-  m_y = m_prob.m_coll->m_storage["y"].get();
-  m_id = m_prob.m_coll->m_storage["ID"].get();
+  m_x = m_prob.m_coll->m_storage[X_DEF].get();
+  m_y = m_prob.m_coll->m_storage[Y_DEF].get();
+  m_id = m_prob.m_coll->m_storage[ID_DEF].get();
 }
 
 lcio_output::~lcio_output()

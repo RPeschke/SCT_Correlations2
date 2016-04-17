@@ -7,13 +7,14 @@
 #include "sct/collection.h"
 #include "sct/internal/collectionReader_proc.hh"
 #include "sct/ProcessorCollection.h"
+#include "sct/internal/strong_types.h"
 
 
-collection* get_known_collection(const char* name, std::vector<collection*>& collections) {
+collection* get_known_collection(const collectionName_t& name, std::vector<collection*>& collections) {
 
-  std::string name_(name);
+  
   for (auto& e:collections)  {
-    if (e->get_name()==name_) {
+    if (e->get_name()==name) {
       return e;
     }
 
@@ -25,13 +26,13 @@ EUTFile::EUTFile(TFile *inputFile, ProcessorCollection* pc):m_inputFile(inputFil
 
 }
 
-collection* EUTFile::getCollection(const char* name){
+collection* EUTFile::getCollection(const collectionName_t&  name){
   collection* ret = get_known_collection(name, m_collections);
   if (ret){
     return ret;
   }
 
-  auto tree = dynamic_cast<TTree*>(m_inputFile->Get(name));
+  auto tree = dynamic_cast<TTree*>(m_inputFile->Get(necessary_CONVERSION(name).c_str()));
   if (!tree) {
     return nullptr;
   }

@@ -272,7 +272,7 @@ bool FileProcessors_standard::process_file(FileProberties* fileP)
   m_residual = xy_pro::residual(
     m_input_file.DUT_fitted_local_GBL().get_x(),
     m_input_file.DUT_hit_local().get_x(),
-    processor_prob().setName("residualVSEvent").save2Disk()
+    processor_prob().setName(processorName_t("residualVSEvent")).save2Disk()
     );
 
 
@@ -328,7 +328,7 @@ void FileProcessors_standard::extract_hitMap()
   auto eff = m_efficiency->DrawEfficiency(get_xml_input()->globalConfig.NumberOfBins, 0, get_xml_input()->globalConfig.NumberOfBins);
   auto true_hits = m_efficiency->DrawTrueHits(get_xml_input()->globalConfig.NumberOfBins, 0, get_xml_input()->globalConfig.NumberOfBins);
 
-  push2outputEvent(*m_outputl, *eff, *true_hits, 0);
+  push2outputEvent(*m_outputl, *eff, *true_hits, ID_t(0));
  
 }
 
@@ -356,7 +356,7 @@ void FileProcessors_standard::extract_rotation()
 {
   DrawResidualVsMissingCordinate(-10, 10);
   auto h = getResidualVsMissingCordinate();
-  auto f1 = SCT_helpers::LinearFit_Of_Profile(h, 1);
+  auto f1 = SCT_helpers::LinearFit_Of_Profile(h, procent_t(1));
   auto rot = TMath::ATan(f1.GetParameter("p1"));
   m_outputl->set_rotation(rot);
   xml_print("rotation", rot);

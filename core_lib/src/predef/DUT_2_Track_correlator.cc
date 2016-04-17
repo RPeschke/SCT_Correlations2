@@ -4,7 +4,7 @@
 #include "sct/internal/factoryDef.hh"
 registerBaseClassDef(DUT_2_Track_correlator);
 
-D2T_prob::D2T_prob():m_prob(saveWithRandomName("DUT2Track__"))
+D2T_prob::D2T_prob():m_prob(saveWithRandomName(processorName_t("DUT2Track__")))
 {
 
 }

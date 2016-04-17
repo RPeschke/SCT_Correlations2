@@ -50,8 +50,8 @@ end_returns collectionReader_proc::end() {
   return end_returns::e_success;
 }
 
-std::string collectionReader_proc::get_name() {
-  return m_tree->GetName();
+processorName_t collectionReader_proc::get_name() {
+  return processorName_t(m_tree->GetName());
 }
 
 

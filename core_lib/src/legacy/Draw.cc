@@ -397,9 +397,9 @@ TCut DrawOption::getCut() const
 
 int Draw(const axis& ax, DrawOption drawOp)
 {
-  drawOp.draw_axis(ax.getName());
+  drawOp.draw_axis(necessary_CONVERSION(ax.getName()));
   std::string s("ID==");
-  s += std::to_string(ax.get_ID());
+  s += std::to_string(necessary_CONVERSION(ax.get_ID()));
   drawOp.cut_add(s.c_str());
 
 
@@ -412,7 +412,7 @@ int Draw(const axis& ax, DrawOption drawOp)
  int Draw(generic_plane& gp, DrawOption drawOp /*= DrawOption()*/)
 {
   std::string s("ID==");
-  s += std::to_string(gp.get_ID());
+  s += std::to_string(necessary_CONVERSION(gp.get_ID()));
   drawOp.cut_add(s.c_str());
   auto tree = gp.get_tree();
   return drawOp.Draw(tree);
@@ -426,12 +426,12 @@ int Draw(const axis& ax, DrawOption drawOp)
 
  void Print( axis& ax)
  {
-   std::cout << "< "<< ax.getName()<< " >" << std::endl;
+   std::cout << "< "<< necessary_CONVERSION(ax.getName())<< " >" << std::endl;
    while (ax.next())
    {
      std::cout << ax.getValue() <<  std::endl;
    }
-   std::cout << "</ " << ax.getName() << " >" << std::endl;
+   std::cout << "</ " << necessary_CONVERSION(ax.getName() )<< " >" << std::endl;
  }
 
 

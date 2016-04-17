@@ -128,11 +128,11 @@
 
 
 
-  TF1 SCT_helpers::LinearFit_Of_Profile(TH2* h2, double cut_prozent) {
+  TF1 SCT_helpers::LinearFit_Of_Profile(TH2* h2, procent_t cut_prozent) {
 
 
     auto max_ = h2->GetMaximum();
-    SCT_helpers::CutTH2(h2, S_Cut_BinContent(max_* cut_prozent / 100));
+    SCT_helpers::CutTH2(h2, S_Cut_BinContent(max_* necessary_CONVERSION(cut_prozent) / 100));
     TProfile* p1 = h2->ProfileX();
     TF1 f("f1", "pol1", h2->GetXaxis()->GetBinCenter(0), h2->GetXaxis()->GetBinCenter(h2->GetNbinsX()));
 

@@ -82,4 +82,21 @@
 #pragma link C++ class Cluster_strip;
 #pragma link C++ class lcio_reader;
 
-#endif
+
+#pragma link C++ typedef  modulo_x;
+#pragma link C++ typedef modulo_y;
+#pragma link C++ typedef modulo_t;
+#pragma link C++ typedef max_cl_t;
+
+
+#pragma link C++ typedef ID_t;
+#pragma link C++ typedef stripNr_t;
+#pragma link C++ typedef residualCut_t;
+#pragma link C++ typedef rot_angle_t;
+
+#pragma link C++ typedef move_t;
+#pragma link C++ typedef collectionName_t;
+#pragma link C++ typedef axesName_t;
+#pragma link C++ typedef processorName_t;
+#pragma link C++ typedef procent_t;
+#endif //__CINT__

@@ -11,7 +11,8 @@
 
 #include "sct/ProcessorCollection.h"
 #include "sct/legacy/Draw.h"
-
+#include "TApplication.h"
+#include "TBrowser.h"
 
 
 
@@ -60,27 +61,27 @@ int main(int argc, char **argv) {
 
   FFile file_(FileNameArg.getValue());
 
-  TFile * file_1 = new TFile(outFileNameArg.getValue().c_str(),"recreate");
+  TFile * file_1 = new TFile(outFileNameArg.getValue().c_str(), "recreate");
 
 
-  
+
 
   auto sz_dut = file_.DUT_zs_data();
-  auto sz_tel = file_.tel_zs_data(3);
+  auto sz_tel = file_.tel_zs_data(ID_t(3));
   auto apix = file_.apix_zs_data();
-  auto cuted = xy_pro::cut_xy(sz_tel, S_XCut(300) + S_YCut(300),DontsaveWithRandomName("cutted"));
+  auto cuted = xy_pro::cut_xy(sz_tel, S_XCut(300) + S_YCut(300), DontsaveWithRandomName(processorName_t("cutted")));
 
 
-  auto corr = xy_pro::correlations(sz_dut.get_x(), apix.get_y(), processor_prob().setName("correlation_x_y").save2Disk());
-  auto corryx = xy_pro::correlations(sz_dut.get_y(), apix.get_x(), processor_prob().setName("correlation_x_y").save2Disk());
-  auto corrxx = xy_pro::correlations(sz_dut.get_x(), apix.get_x(), processor_prob().setName("correlation_x_y").save2Disk());
-  auto corryy = xy_pro::correlations(sz_dut.get_y(), apix.get_y(), processor_prob().setName("correlation_x_y").save2Disk());
+  auto corr = xy_pro::correlations(sz_dut.get_x(), apix.get_y(), processor_prob().setName(processorName_t("correlation_x_y")).save2Disk());
+  auto corryx = xy_pro::correlations(sz_dut.get_y(), apix.get_x(), processor_prob().setName(processorName_t("correlation_x_y")).save2Disk());
+  auto corrxx = xy_pro::correlations(sz_dut.get_x(), apix.get_x(), processor_prob().setName(processorName_t("correlation_x_y")).save2Disk());
+  auto corryy = xy_pro::correlations(sz_dut.get_y(), apix.get_y(), processor_prob().setName(processorName_t("correlation_x_y")).save2Disk());
 
 
 
 
-  auto sz_dut_normalized = xy_pro::transform(sz_dut, 0.0745, 0, 1, 0, DontsaveWithRandomName("sz_dut_normalized"));
-  auto sz_tel_normalized = xy_pro::transform(apix, 2.500000000e-01, 0, 5.000000000e-02, 0, DontsaveWithRandomName("sz_tel_normalized"));
+  auto sz_dut_normalized = xy_pro::transform(sz_dut, 0.0745, 0, 1, 0, DontsaveWithRandomName(processorName_t("sz_dut_normalized")));
+  auto sz_tel_normalized = xy_pro::transform(apix, 2.500000000e-01, 0, 5.000000000e-02, 0, DontsaveWithRandomName(processorName_t("sz_tel_normalized")));
   auto res = xy_pro::residual(sz_dut_normalized.get_x(), sz_tel_normalized.get_x());
   file_.getProcessorCollection()->loop();
   new TCanvas();

@@ -25,14 +25,14 @@ public:
   virtual xy_plane  DUT_fitted_local() const ;
 
 
-  virtual xy_plane  tel_hit_local(double ID) const ;
-  virtual xy_plane  tel_hit(double ID) const ;
-  virtual xy_plane  tel_zs_data(double ID) const ;
-  virtual xy_plane  tel_fitted(double ID) const ;
-  virtual xy_plane  tel_fitted_local(double ID) const ;
+  virtual xy_plane  tel_hit_local(ID_t ID) const ;
+  virtual xy_plane  tel_hit(ID_t ID) const ;
+  virtual xy_plane  tel_zs_data(ID_t ID) const ;
+  virtual xy_plane  tel_fitted(ID_t ID) const ;
+  virtual xy_plane  tel_fitted_local(ID_t ID) const ;
 
   virtual FitterPlane DUT_fitted_local_GBL() const ;
-  virtual FitterPlane tel_fitted_local_GBL(double ID) const ;
+  virtual FitterPlane tel_fitted_local_GBL(ID_t ID) const ;
 
   virtual EUTFile* getGenericFile();
   virtual ProcessorCollection* getProcessorCollection();
@@ -72,97 +72,96 @@ fitterFileMay15::~fitterFileMay15()
 
 }
 
-static const char*  local_hits = "local_hit";
-static const char*  global_hits = "hit";
-
-static const char*  zsdata_m26 = "zsdata_m26";
-static const char*  zsdata_apix = "zsdata_apix";
-static const char*  fitpoints   ="fitpoints";
-static const char*  fitpoints_local = "fitpoints_local";
-static const char*  GBL_tracks = "GBL_tracks";
-static const char*  zsdata_strip = "zsdata_strip";
+static const collectionName_t  local_hits = collectionName_t("local_hit");
+static const collectionName_t  global_hits = collectionName_t("hit");
+static const collectionName_t  zsdata_m26 = collectionName_t("zsdata_m26");
+static const collectionName_t  zsdata_apix = collectionName_t("zsdata_apix");
+static const collectionName_t  fitpoints   = collectionName_t("fitpoints");
+static const collectionName_t  fitpoints_local = collectionName_t("fitpoints_local");
+static const collectionName_t  GBL_tracks = collectionName_t("GBL_tracks");
+static const collectionName_t  zsdata_strip = collectionName_t("zsdata_strip");
 
 xy_plane fitterFileMay15::apix_hit_local() const
 {
-  return xy_plane(m_generic->getCollection(local_hits)->getPlane(20));
+  return xy_plane(m_generic->getCollection(local_hits)->getPlane(ID_t(20)));
 }
 
 xy_plane fitterFileMay15::apix_hit() const
 {
-  return xy_plane(m_generic->getCollection(global_hits)->getPlane(20));
+  return xy_plane(m_generic->getCollection(global_hits)->getPlane(ID_t(20)));
 }
 
 xy_plane fitterFileMay15::apix_zs_data() const
 {
-  return xy_plane(m_generic->getCollection(zsdata_apix)->getPlane(20));
+  return xy_plane(m_generic->getCollection(zsdata_apix)->getPlane(ID_t(20)));
 }
 
 xy_plane fitterFileMay15::apix_fitted() const
 {
-  return xy_plane(m_generic->getCollection(fitpoints)->getPlane(20));
+  return xy_plane(m_generic->getCollection(fitpoints)->getPlane(ID_t(20)));
 }
 
 xy_plane fitterFileMay15::apix_fitted_local() const
 {
-  return xy_plane(m_generic->getCollection(fitpoints_local)->getPlane(20));
+  return xy_plane(m_generic->getCollection(fitpoints_local)->getPlane(ID_t(20)));
 }
 
 xy_plane fitterFileMay15::DUT_hit_local() const
 {
-  return xy_plane(m_generic->getCollection(local_hits)->getPlane(8));
+  return xy_plane(m_generic->getCollection(local_hits)->getPlane(ID_t(8)));
 }
 
 xy_plane fitterFileMay15::DUT_hit() const
 {
-  return xy_plane(m_generic->getCollection(global_hits)->getPlane(8));
+  return xy_plane(m_generic->getCollection(global_hits)->getPlane(ID_t(8)));
 }
 
 xy_plane fitterFileMay15::DUT_zs_data() const
 {
-  return xy_plane(m_generic->getCollection(zsdata_strip)->getPlane(8));
+  return xy_plane(m_generic->getCollection(zsdata_strip)->getPlane(ID_t(8)));
 }
 
 xy_plane fitterFileMay15::DUT_fitted() const
 {
-  return xy_plane(m_generic->getCollection(fitpoints)->getPlane(8));
+  return xy_plane(m_generic->getCollection(fitpoints)->getPlane(ID_t(8)));
 }
 
 xy_plane fitterFileMay15::DUT_fitted_local() const
 {
-  return xy_plane(m_generic->getCollection(fitpoints_local)->getPlane(8));
+  return xy_plane(m_generic->getCollection(fitpoints_local)->getPlane(ID_t(8)));
 }
 
-xy_plane fitterFileMay15::tel_hit_local(double ID) const
+xy_plane fitterFileMay15::tel_hit_local(ID_t ID) const
 {
   return xy_plane(m_generic->getCollection(local_hits)->getPlane(ID));
 }
 
-xy_plane fitterFileMay15::tel_hit(double ID) const
+xy_plane fitterFileMay15::tel_hit(ID_t ID) const
 {
   return xy_plane(m_generic->getCollection(global_hits)->getPlane(ID));
 }
 
-xy_plane fitterFileMay15::tel_zs_data(double ID) const
+xy_plane fitterFileMay15::tel_zs_data(ID_t ID) const
 {
   return xy_plane(m_generic->getCollection(zsdata_m26)->getPlane(ID));
 }
 
-xy_plane fitterFileMay15::tel_fitted(double ID) const
+xy_plane fitterFileMay15::tel_fitted(ID_t ID) const
 {
   return xy_plane(m_generic->getCollection(fitpoints)->getPlane(ID));
 }
 
-xy_plane fitterFileMay15::tel_fitted_local(double ID) const
+xy_plane fitterFileMay15::tel_fitted_local(ID_t ID) const
 {
   return xy_plane(m_generic->getCollection(fitpoints_local)->getPlane(ID));
 }
 
 FitterPlane fitterFileMay15::DUT_fitted_local_GBL() const
 {
-  return FitterPlane(m_generic->getCollection(GBL_tracks)->getPlane(8));
+  return FitterPlane(m_generic->getCollection(GBL_tracks)->getPlane(ID_t(8)));
 }
 
-FitterPlane fitterFileMay15::tel_fitted_local_GBL(double ID) const
+FitterPlane fitterFileMay15::tel_fitted_local_GBL(ID_t ID) const
 {
   return FitterPlane(m_generic->getCollection(GBL_tracks)->getPlane(ID));
 }

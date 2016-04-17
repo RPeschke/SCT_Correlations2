@@ -74,27 +74,27 @@ xy_plane FFile::DUT_fitted_local() const
   return m_file->DUT_fitted_local();
 }
 
-xy_plane FFile::tel_hit_local(double ID) const
+xy_plane FFile::tel_hit_local(ID_t ID) const
 {
   return m_file->tel_hit_local(ID);
 }
 
-xy_plane FFile::tel_hit(double ID) const
+xy_plane FFile::tel_hit(ID_t ID) const
 {
   return m_file->tel_hit(ID);
 }
 
-xy_plane FFile::tel_zs_data(double ID) const
+xy_plane FFile::tel_zs_data(ID_t ID) const
 {
   return m_file->tel_zs_data(ID);
 }
 
-xy_plane FFile::tel_fitted(double ID) const
+xy_plane FFile::tel_fitted(ID_t ID) const
 {
   return m_file->tel_fitted(ID);
 }
 
-xy_plane FFile::tel_fitted_local(double ID) const
+xy_plane FFile::tel_fitted_local(ID_t ID) const
 {
   return m_file->tel_fitted_local(ID);
 }
@@ -104,7 +104,7 @@ FitterPlane FFile::DUT_fitted_local_GBL() const
   return m_file->DUT_fitted_local_GBL();
 }
 
-FitterPlane FFile::tel_fitted_local_GBL(double ID) const
+FitterPlane FFile::tel_fitted_local_GBL(ID_t ID) const
 {
   return m_file->tel_fitted_local_GBL(ID);
 }

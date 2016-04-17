@@ -41,7 +41,7 @@ public:
 
   }
 
-  virtual std::string get_name() override
+  virtual processorName_t get_name() override
   {
     return m_pprob.name;
   }

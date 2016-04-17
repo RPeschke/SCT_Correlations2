@@ -38,6 +38,7 @@ ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/analysis/residual_efficiency.hh
 ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/analysis/instrip_efficiency.hh
 ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/legacy/Cluster_strip.hh
 ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/lcio/lcio_reader.hh
+${PROJECT_SOURCE_DIR}/core_lib/includes/sct/internal/strong_types.h
  )
 
 
@@ -48,14 +49,10 @@ set(LINKDEF_FILE  ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/rootl_link/sct_Lin
  
  set(SCT_DICTIONARY ${CMAKE_CURRENT_BINARY_DIR}/SCT_DICTIONARY.cxx) 
  
-
-
-ADD_CUSTOM_COMMAND(OUTPUT ${SCT_DICTIONARY}
-      COMMAND ${ROOT_CINT_EXECUTABLE}
-      ARGS -f ${SCT_DICTIONARY} -c -p -I${MY_INCLUDE_DIRECTORIES} ${SCT_ROOT_HEADERS} ${LINKDEF_FILE} 
-)
-
  set(SCT_DICTIONARY_handle ${CMAKE_CURRENT_BINARY_DIR}/SCT_DICTIONARY_handle.cxx) 
+
+
+
 
 FILE(WRITE ${SCT_DICTIONARY_handle} "#ifndef _DEBUG \n")
 FILE(APPEND ${SCT_DICTIONARY_handle} "#include \"")
@@ -63,6 +60,10 @@ FILE(APPEND ${SCT_DICTIONARY_handle} ${SCT_DICTIONARY})
 FILE(APPEND ${SCT_DICTIONARY_handle} "\" \n")
 FILE(APPEND ${SCT_DICTIONARY_handle} "#endif // !_DEBUG \n")
 
+ADD_CUSTOM_COMMAND(OUTPUT ${SCT_DICTIONARY_handle}
+      COMMAND ${ROOT_CINT_EXECUTABLE}
+      ARGS -f ${SCT_DICTIONARY} -c -p -I${MY_INCLUDE_DIRECTORIES} ${SCT_ROOT_HEADERS} ${LINKDEF_FILE} 
+)
 
 ADD_LIBRARY( ${PROJECT_NAME} SHARED ${SOURCES} ${SCT_DICTIONARY_handle})
 

@@ -142,7 +142,7 @@ void FileProcessorsBase::process_set_run_prob(const FileProberties& fileP)
 void FileProcessorsBase::start_collection(TFile* file__)
 {
   
-  m_outputl = std::make_shared<rootEventRunOutput>("out", file__->GetDirectory("/"));
+  m_outputl = std::make_shared<rootEventRunOutput>(collectionName_t("out"), file__->GetDirectory("/"));
 }
 
  std::unique_ptr<FileProcessorsBase> create_processor(const FileProcessorsBase::MainType& type, FileProcessorsBase::Parameter_ref param_)
@@ -156,7 +156,7 @@ void FileProcessorsBase::start_collection(TFile* file__)
 
 
 
- void push2outputEvent(rootEventRunOutput& outEvent, const TH1D& quantity, const TH1D& numOfEvents, double ID)
+ void push2outputEvent(rootEventRunOutput& outEvent, const TH1D& quantity, const TH1D& numOfEvents, ID_t ID)
  {
    for (Int_t i = 0; i < quantity.GetNbinsX(); ++i) {
   
@@ -170,7 +170,7 @@ void FileProcessorsBase::start_collection(TFile* file__)
    }
  }
 
- DllExport void push2outputEvent(rootEventRunOutput& outEvent, const TProfile& quantity, double ID)
+ DllExport void push2outputEvent(rootEventRunOutput& outEvent, const TProfile& quantity, ID_t ID)
  {
    for (Int_t i = 0; i <quantity.GetNbinsX(); ++i) {
 

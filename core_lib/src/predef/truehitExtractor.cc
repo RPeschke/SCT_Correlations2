@@ -24,7 +24,7 @@ void register_truehitExtractor(const truehitExtractor::MainType& name, truehitEx
   Class_factory_Utilities::Factory<truehitExtractor>::do_register(name, fun);
 }
 
-TH_param::TH_param():m_pprob(saveWithRandomName("truehits_"))
+TH_param::TH_param():m_pprob(saveWithRandomName(processorName_t("truehits_")))
 {
 
 }

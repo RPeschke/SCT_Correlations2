@@ -33,14 +33,14 @@ public:
   virtual xy_plane  DUT_fitted_local() const = 0;
                    
                    
-  virtual xy_plane  tel_hit_local(double ID) const = 0;
-  virtual xy_plane  tel_hit(double ID) const = 0;
-  virtual xy_plane  tel_zs_data(double ID) const = 0;
-  virtual xy_plane  tel_fitted(double ID) const = 0;
-  virtual xy_plane  tel_fitted_local(double ID) const = 0;
+  virtual xy_plane  tel_hit_local(ID_t ID) const = 0;
+  virtual xy_plane  tel_hit(ID_t ID) const = 0;
+  virtual xy_plane  tel_zs_data(ID_t ID) const = 0;
+  virtual xy_plane  tel_fitted(ID_t ID) const = 0;
+  virtual xy_plane  tel_fitted_local(ID_t ID) const = 0;
 
   virtual FitterPlane DUT_fitted_local_GBL() const = 0;
-  virtual FitterPlane tel_fitted_local_GBL(double ID) const = 0;
+  virtual FitterPlane tel_fitted_local_GBL(ID_t ID) const = 0;
 
 
   virtual EUTFile* getGenericFile() =0;
@@ -70,14 +70,14 @@ public:
   xy_plane  DUT_fitted_local() const ;
 
 
-  xy_plane  tel_hit_local(double ID) const ;
-  xy_plane  tel_hit(double ID) const ;
-  xy_plane  tel_zs_data(double ID) const ;
-  xy_plane  tel_fitted(double ID) const ;
-  xy_plane  tel_fitted_local(double ID) const ;
+  xy_plane  tel_hit_local(ID_t ID) const ;
+  xy_plane  tel_hit(ID_t ID) const ;
+  xy_plane  tel_zs_data(ID_t ID) const ;
+  xy_plane  tel_fitted(ID_t ID) const ;
+  xy_plane  tel_fitted_local(ID_t ID) const ;
 
   FitterPlane DUT_fitted_local_GBL() const ;
-  FitterPlane tel_fitted_local_GBL(double ID) const ;
+  FitterPlane tel_fitted_local_GBL(ID_t ID) const ;
 
 
   EUTFile* getGenericFile();

@@ -40,7 +40,7 @@ DUT_2_Track_correlatorMAY15::DUT_2_Track_correlatorMAY15(DUT_2_Track_correlator:
     DontsaveWithRandomName()
     );
 
-  std::string trueHitsInStrips_name = param_.get_processor_pro().name + "_true";
+  auto trueHitsInStrips_name = param_.get_processor_pro().name + processorName_t("_true");
   auto dut_rotated_moved = xy_pro::transform_move(
     dut_rotated,
     param_.get_xmlFile().globalConfig.Position_value,
@@ -48,7 +48,7 @@ DUT_2_Track_correlatorMAY15::DUT_2_Track_correlatorMAY15(DUT_2_Track_correlator:
     processor_prob(param_.get_processor_pro()).setName(trueHitsInStrips_name)
     );
 
-  std::string trueHitsInStrips_name_cutted = param_.get_processor_pro().name + "_true_cutted";
+  auto trueHitsInStrips_name_cutted = param_.get_processor_pro().name + processorName_t("_true_cutted");
   m_totalTrueHit_afterCut = xy_pro::cut_xy(
     dut_rotated_moved,
     param_.get_xmlFile().globalConfig.cut(),
@@ -57,7 +57,7 @@ DUT_2_Track_correlatorMAY15::DUT_2_Track_correlatorMAY15(DUT_2_Track_correlator:
 
 
 
-  std::string find_closest_name = param_.get_processor_pro().name + "_closest";
+auto find_closest_name = param_.get_processor_pro().name + processorName_t("_closest");
   auto find_closest = find_nearest_strip(
     m_totalTrueHit_afterCut,
     param_.get_DUT_Hits(),
@@ -66,7 +66,7 @@ DUT_2_Track_correlatorMAY15::DUT_2_Track_correlatorMAY15(DUT_2_Track_correlator:
     processor_prob(param_.get_processor_pro()).setName(find_closest_name)
     );
 
-  std::string res_vs_missing_name = param_.get_processor_pro().name + "_res_vs_missing";
+  auto res_vs_missing_name = param_.get_processor_pro().name + processorName_t("_res_vs_missing");
   m_residualVsMissing = xy_pro::hitmap(
     find_closest.getResidual().get_x(),
     find_closest.getHitOnPlaneA().get_y(),

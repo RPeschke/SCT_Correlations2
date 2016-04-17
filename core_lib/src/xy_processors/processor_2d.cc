@@ -27,7 +27,7 @@ processor_2d::processor_2d(const axis& x_, const  axis& y_, processor_prob& ppro
   m_y = std::make_shared<axis>(y_);
   m_output_coll = std::make_shared<collection>(m_prob);
   
-  m_outputPlane = std::make_shared<xy_plane>(m_output_coll->getPlane(0));
+  m_outputPlane = std::make_shared<xy_plane>(m_output_coll->getPlane(ID_t(0)));
   m_outhit = m_outputPlane->get_hit();
 }
 
@@ -39,16 +39,16 @@ process_returns processor_2d::processEvent(){
 }
 
 void processor_2d::pushHit(double x, double y) {
-  pushHit(x, y, 0);
+  pushHit(x, y, ID_t(0));
 }
 
-void processor_2d::pushHit(double x, double y, double ID){
+void processor_2d::pushHit(double x, double y, ID_t ID){
   m_outhit->x = x;
   m_outhit->y = y;
   m_outputPlane->get_generic_plane()->push(ID);
 }
 
-void processor_2d::pushHit(const hit& hit, double ID){
+void processor_2d::pushHit(const hit& hit, ID_t ID){
   m_outhit->x = hit.x;
   m_outhit->y = hit.y;
   m_outputPlane->get_generic_plane()->push(ID);
@@ -64,7 +64,7 @@ collection* processor_2d::get_output_collection() {
   return m_output_coll.get();
 }
 
-std::string processor_2d::get_name(){
+processorName_t processor_2d::get_name(){
   return m_prob.name;
 }
 

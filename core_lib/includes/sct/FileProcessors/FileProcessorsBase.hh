@@ -72,8 +72,8 @@ private:
 
 DllExport double BinNomialSigma(double totalHits, double DUTHits);
 #ifndef __CINT__
-DllExport void push2outputEvent(rootEventRunOutput& outEvent, const TH1D& quantity, const TH1D& numOfEvents, double ID);
-DllExport void push2outputEvent(rootEventRunOutput& outEvent, const TProfile& quantity, double ID);
+DllExport void push2outputEvent(rootEventRunOutput& outEvent, const TH1D& quantity, const TH1D& numOfEvents, ID_t ID);
+DllExport void push2outputEvent(rootEventRunOutput& outEvent, const TProfile& quantity, ID_t ID);
 DllExport std::unique_ptr<FileProcessorsBase> create_processor(const FileProcessorsBase::MainType& type ="standard",FileProcessorsBase::Parameter_ref param_="");
 #endif
 #endif // FileProcessorsBase_h__

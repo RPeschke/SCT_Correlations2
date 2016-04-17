@@ -11,7 +11,7 @@ processorPlaneVSPlane::processorPlaneVSPlane(
 {
 
   m_output_coll= std::make_shared<collection>(plot_prob.setAxis(xy_names()).setProcessorCollection(plane_A.get_ProcessorCollection()));
-  m_outputPlane=std::make_shared<xy_plane>(m_output_coll->getPlane(0));
+  m_outputPlane=std::make_shared<xy_plane>(m_output_coll->getPlane(ID_t(0)));
   m_inputHit_A = m_input_plane_A.get_hit();
   m_inputHit_B = m_input_plane_B.get_hit();
   m_outhit = m_outputPlane->get_hit();
@@ -70,7 +70,7 @@ end_returns processorPlaneVSPlane::end(){
 
 
 
-std::string processorPlaneVSPlane::get_name()
+processorName_t processorPlaneVSPlane::get_name()
 {
   return m_plot_prob.name;
 }
@@ -87,14 +87,14 @@ process_returns processorPlaneVSPlane::processEventEnd()
 
 
 
-void processorPlaneVSPlane::pushHit(double x, double y, double ID)
+void processorPlaneVSPlane::pushHit(double x, double y, ID_t ID)
 {
   m_outhit->x = x;
   m_outhit->y = y;
   m_outputPlane->get_generic_plane()->push(ID);
 }
 
-void processorPlaneVSPlane::pushHit(const hit& hit, double ID)
+void processorPlaneVSPlane::pushHit(const hit& hit, ID_t ID)
 {
   m_outhit->x = hit.x;
   m_outhit->y = hit.y;

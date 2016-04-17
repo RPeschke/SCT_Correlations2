@@ -18,7 +18,7 @@ xy_plane xy_pro::transform(const xy_plane& pl, double x_slope, double x_offset, 
   std::shared_ptr<processor> p(new processor_transform( x_slope,  x_offset,  y_slope,  y_offset, pl.get_x(), pl.get_y(), pprob));
   pl.get_ProcessorCollection()->addProcessor(p);
 
-  return dynamic_cast<processor_transform*>(p.get())->get_output_collection()->getPlane(0);
+  return dynamic_cast<processor_transform*>(p.get())->get_output_collection()->getPlane(ID_t(0));
 }
 
  xy_plane xy_pro::transform_move(const xy_plane& pl, double x_offset, double y_offset, processor_prob& pprob /*= saveWithRandomName("transform__")*/)

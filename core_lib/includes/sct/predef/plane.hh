@@ -10,7 +10,7 @@
 #include <vector>
 #include <string>
 
-DllExport std::vector<std::string> xy_names();
+DllExport std::vector<axesName_t> xy_names();
 
 class DllExport plane {
 public:

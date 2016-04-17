@@ -2,6 +2,7 @@
 #define processor_h__
 #include <string>
 #include "sct/platform.hh"
+#include "sct/internal/strong_types.h"
 class ProcessorCollection;
 enum init_returns{
   i_sucess,
@@ -27,7 +28,7 @@ public:
   virtual process_returns processEvent() = 0;
   virtual process_returns fill() = 0;
   virtual end_returns end() = 0;
-  virtual std::string get_name() = 0;
+  virtual processorName_t get_name() = 0;
   
   std::string get_lastError();
   void addError(const std::string& error_discription);

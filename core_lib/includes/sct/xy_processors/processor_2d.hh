@@ -18,12 +18,12 @@ public:
   virtual process_returns processEvent();
   virtual process_returns processCurrentEvent() = 0;
   void pushHit(double x, double y);
-  void pushHit(double x, double y, double ID);
-  void pushHit(const hit& hit, double ID);
+  void pushHit(double x, double y, ID_t ID);
+  void pushHit(const hit& hit, ID_t ID);
   virtual process_returns fill();
 
   collection* get_output_collection();
-  virtual std::string get_name() ;
+  virtual processorName_t get_name() ;
   int getEventNr();
 protected:
   int m_current = 0;
