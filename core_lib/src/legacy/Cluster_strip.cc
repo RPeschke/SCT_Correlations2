@@ -77,18 +77,18 @@ xy_plane create_cluster_size(const xy_plane& sz_data, double max_cluster_distanc
 
 
 
-Cluster_strip::Cluster_strip(const xy_plane& trueHits_with_dut, const xy_plane& sz_data, double max_cluster_size, axis_def search_axis, double modulo_, processor_prob& plot_prob_ /*= saveWithRandomName("Cluster_strip__") */):m_mod(modulo_), m_max_cluster_size(max_cluster_size)
+Cluster_strip::Cluster_strip(const xy_plane& trueHits_with_dut, const xy_plane& sz_data, double max_cluster_size, axis_def search_axis, modulo_t modulo_, processor_prob& plot_prob_ /*= saveWithRandomName("Cluster_strip__") */):m_mod(modulo_), m_max_cluster_size(max_cluster_size)
 {
 
 
-  double mod_x = 10000000;
-  double mod_y = 10000000;
+  modulo_x mod_x = modulo_x(10000000);
+  modulo_y mod_y = modulo_y(10000000);
   if (search_axis == x_axis_def) {
-    mod_x = modulo_;
+    mod_x = strong_cast<modulo_x>( modulo_);
   }
 
   if (search_axis == y_axis_def) {
-    mod_y = modulo_;
+    mod_y =strong_cast<modulo_y>(modulo_);
   }
   auto cluster_ = create_cluster_size(
     sz_data,
@@ -151,7 +151,7 @@ int Cluster_strip::Draw_ClusterSize()
   m_cluster_size_hist = std::make_shared<TH2D>(
     "hist",
     "hist",
-    100, 0, m_mod,
+    100, 0,necessary_CONVERSION( m_mod),
     m_max_cluster_size * 100, -0.5, m_max_cluster_size - 0.5
     );
 
@@ -165,7 +165,7 @@ int Cluster_strip::Draw_ClusterSize()
   m_cluster_size_hist = std::make_shared<TH2D>(
     "hist",
     "hist",
-    100, 0, m_mod,
+    100, 0, necessary_CONVERSION( m_mod),
     m_max_cluster_size, -0.5, m_max_cluster_size - 0.5
     );
   auto ret = Draw(m_cluster_size_vs_pos, DrawOption().draw_y_VS_x().opt_colz().output_object(m_cluster_size_hist.get()));

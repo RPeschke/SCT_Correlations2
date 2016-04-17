@@ -6,6 +6,8 @@
 #include "sct/collection.h"
 #include "sct/processor_prob.hh"
 #include "sct/platform.hh"
+#include "sct/internal/strong_types.h"
+
 
 class DllExport instrip_efficiency {
 public:
@@ -14,8 +16,8 @@ public:
   instrip_efficiency(
     const xy_plane& trueHits,
     const xy_plane& trueHits_with_dut,
-    double x_mod,
-    double y_mod,
+    modulo_x x_mod,
+    modulo_y y_mod,
     processor_prob& plot_prob_ = saveWithRandomName("instrip_efficiency__")
     );
 

@@ -104,11 +104,11 @@ bool FileProcessorsBase_modulo::process_file(FileProberties* fileP)
   D2T d2t("MAY15", D2T_prob().set_gear(get_gear()).set_xmlFile(*get_xml_input()).set_trueHits(m_trueHits).set_DUTHits(m_input_file.DUT_zs_data()));
   m_totalTrue_hits = d2t.getTotalTrueHits();
   m_truehits_withDUT = d2t.getTrueHitsWithDUT();
-  m_efficiency = std::make_shared<instrip_efficiency>(d2t.getTotalTrueHits(), d2t.getTrueHitsWithDUT(), 3, 100000);
+  m_efficiency = std::make_shared<instrip_efficiency>(d2t.getTotalTrueHits(), d2t.getTrueHitsWithDUT(), modulo_x( 3), modulo_y(100000));
 
   m_res_efficiency = std::make_shared<residual_efficiency>(d2t.getTotalTrueHits(), m_input_file.DUT_zs_data(), 5, x_axis_def);
 
-  m_cluster_size = std::make_shared<Cluster_strip>(d2t.getTrueHitsWithDUT(), m_input_file.DUT_zs_data(), 8, x_axis_def, 3);
+  m_cluster_size = std::make_shared<Cluster_strip>(d2t.getTrueHitsWithDUT(), m_input_file.DUT_zs_data(), 8, x_axis_def, modulo_t(3));
 
 
 

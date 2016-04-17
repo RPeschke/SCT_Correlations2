@@ -9,6 +9,7 @@
 #ifndef __CINT__
 #include <memory>
 #endif
+#include "sct/internal/strong_types.h"
 
 
 class DllExport Cluster_strip {
@@ -18,7 +19,7 @@ public:
     const xy_plane& sz_data,
     double max_cluster_size,
     axis_def search_axis,
-    double modulo_,
+    modulo_t modulo_,
     processor_prob& plot_prob_ = saveWithRandomName("Cluster_strip__")
     );
 
@@ -33,7 +34,8 @@ private:
 
 
   std::shared_ptr<TProfile> m_profile;
-  double m_mod , m_max_cluster_size;
+  double   m_max_cluster_size;
+  modulo_t m_mod;
   std::shared_ptr<TH2D> m_cluster_size_hist;
   xy_plane m_cluster_size_vs_pos;
 #endif // !__CINT__

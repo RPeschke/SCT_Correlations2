@@ -5,6 +5,7 @@
 #include "sct/processor_prob.hh"
 #include "sct/axis.hh"
 #include "sct/legacy/s_cuts.h"
+#include "sct/internal/strong_types.h"
 
 class TH1;
 class TH2;
@@ -73,8 +74,8 @@ public:
  
   static xy_plane modulo(
     const xy_plane& hits,
-    double x_mod,
-    double y_mod,
+    modulo_x x_mod,
+    modulo_y y_mod,
     processor_prob& pprob_ = saveWithRandomName("modulo__")
     );
 };
