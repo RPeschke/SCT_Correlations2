@@ -11,7 +11,7 @@
 
 class residual_efficiency_processor :public processorPlaneVSPlane {
 public:
-  residual_efficiency_processor(const xy_plane & plane_A, const  xy_plane& plane_b, int strips, axis_def search_axis, processor_prob& plot_prob);
+  residual_efficiency_processor(const xy_plane & plane_A, const  xy_plane& plane_b, residualCut_t strips, axis_def search_axis, processor_prob& plot_prob);
   virtual void processHit(const hit&  p1, const hit&  p2) override;
 
 
@@ -22,12 +22,12 @@ public:
 
 
 
-  const int m_strips;
+  const residualCut_t m_strips;
   const axis_def m_axis;
 
 };
 
-residual_efficiency_processor::residual_efficiency_processor(const xy_plane & plane_A, const xy_plane& plane_b, int strips, axis_def search_axis, processor_prob& plot_prob):processorPlaneVSPlane(plane_A,plane_b,plot_prob),m_axis(search_axis),m_strips(strips)
+residual_efficiency_processor::residual_efficiency_processor(const xy_plane & plane_A, const xy_plane& plane_b, residualCut_t strips, axis_def search_axis, processor_prob& plot_prob):processorPlaneVSPlane(plane_A,plane_b,plot_prob),m_axis(search_axis),m_strips(strips)
 {
 
 }
@@ -60,8 +60,8 @@ void residual_efficiency_processor::processHit_1(const hit& p1)
     ay = p1.x;
   }
 
-  int start_ = TMath::Floor(ax - m_strips);
-  int end_ = TMath::Ceil(ax + m_strips);
+  int start_ = TMath::Floor(ax - necessary_CONVERSION(m_strips));
+  int end_ = TMath::Ceil(ax + necessary_CONVERSION(m_strips));
 
   for (int i = start_; i < end_; ++i) {
       auto r = make_residual(ax, i);
@@ -74,7 +74,7 @@ double residual_efficiency_processor::make_residual(double true_hit, double dut_
   return dut_hit - true_hit;
 }
 
-residual_efficiency::residual_efficiency(const xy_plane& trueHits, const xy_plane& sz_data, int strips, axis_def search_axis, processor_prob& plot_prob_ /*= saveWithRandomName("residual_efficiency__")*/)
+residual_efficiency::residual_efficiency(const xy_plane& trueHits, const xy_plane& sz_data, residualCut_t strips, axis_def search_axis, processor_prob& plot_prob_ /*= saveWithRandomName("residual_efficiency__")*/)
 {
   std::shared_ptr<processor> p(new residual_efficiency_processor(trueHits, sz_data, strips, search_axis, plot_prob_));
   trueHits.get_ProcessorCollection()->addProcessor(p);

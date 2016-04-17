@@ -60,15 +60,15 @@ public:
 
   static xy_plane transform(
     const xy_plane& pl, 
-    double x_slope, double x_offset, 
-    double y_slope, double y_offset, 
+    x_slope_t x_slope, x_offset_t x_offset,
+    y_slope_t y_slope, y_offset_t y_offset,
     processor_prob& pprob = saveWithRandomName(processorName_t("transform__"))
     );
 
   static xy_plane transform_move(
     const xy_plane& pl, 
-    double x_offset, 
-    double y_offset, 
+    x_offset_t x_offset,
+    y_offset_t y_offset,
     processor_prob& pprob = saveWithRandomName(processorName_t("transform_move__"))
     );
  

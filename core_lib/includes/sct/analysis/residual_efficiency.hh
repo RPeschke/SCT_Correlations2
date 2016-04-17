@@ -11,7 +11,7 @@ class DllExport residual_efficiency {
 public:
   residual_efficiency(const xy_plane& trueHits,
     const xy_plane& sz_data,
-    int  strips,
+    residualCut_t  strips,
     axis_def search_axis,
     processor_prob& plot_prob_ = saveWithRandomName(processorName_t ("residual_efficiency__"))
     );

@@ -48,6 +48,11 @@ out_t strong_cast(const in_t& in_)  {
 
   TYPE_CLASS(ID_t, double);
   TYPE_CLASS(stripNr_t, int);
+ 
+   TYPE_CLASS(x_offset_t, double);
+     TYPE_CLASS(x_slope_t, double);
+   TYPE_CLASS(y_offset_t, double);
+    TYPE_CLASS(y_slope_t, double);
   TYPE_CLASS(residualCut_t, double);
   TYPE_CLASS(rot_angle_t, double);
 
