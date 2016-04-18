@@ -74,7 +74,7 @@ double residual_efficiency_processor::make_residual(double true_hit, double dut_
   return dut_hit - true_hit;
 }
 
-residual_efficiency::residual_efficiency(const xy_plane& trueHits, const xy_plane& sz_data, residualCut_t strips, axis_def search_axis, processor_prob& plot_prob_ /*= saveWithRandomName("residual_efficiency__")*/)
+residual_efficiency::residual_efficiency(const xy_plane& trueHits, const xy_plane& sz_data, residualCut_t strips, axis_def search_axis, processor_prob plot_prob_ /*= saveWithRandomName("residual_efficiency__")*/)
 {
   std::shared_ptr<processor> p(new residual_efficiency_processor(trueHits, sz_data, strips, search_axis, plot_prob_));
   trueHits.get_ProcessorCollection()->addProcessor(p);
