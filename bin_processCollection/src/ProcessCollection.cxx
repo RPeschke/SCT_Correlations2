@@ -11,7 +11,7 @@
 #include "sct/legacy/xml_input_file.hh"
 #include <thread>
 
-
+#include "sct/legacy/xml_print.hh"
 
 
 

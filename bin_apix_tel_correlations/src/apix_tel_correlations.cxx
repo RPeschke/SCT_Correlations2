@@ -15,7 +15,7 @@
 #include "sct/legacy/SCT_helpers.hh"
 #include "TApplication.h"
 #include "sct/internal/strong_types.h"
-
+#include "sct/legacy/xml_print.hh"
 
 std::vector<TCanvas*> gCanvas;
 TBrowser* gBrowser = NULL;

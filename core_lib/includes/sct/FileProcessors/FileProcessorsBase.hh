@@ -10,15 +10,13 @@
 #include "sct/FileProcessors/FileProberties.hh"
 #include <memory>
 #include "sct/internal/factory.hh"
+#include "sct/legacy/xml_print.hh"
 #endif
 #include <iostream>
 
 class TH1D;
 class TProfile;
-template <typename T>
-void xml_print(const std::string& tag, const T& value) {
-  std::cout << tag << ":  " << value << std::endl;
-}
+
 #define register_file_processor(class_type,class_name) registerClass(FileProcessorsBase,class_type,class_name)
 
 class DllExport FileProcessorsBase {
