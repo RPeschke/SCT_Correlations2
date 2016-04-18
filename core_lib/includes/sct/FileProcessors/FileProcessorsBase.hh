@@ -11,6 +11,7 @@
 #include <memory>
 #include "sct/internal/factory.hh"
 #endif
+#include <iostream>
 
 class TH1D;
 class TProfile;
