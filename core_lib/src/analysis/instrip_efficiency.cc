@@ -3,7 +3,7 @@
 #include "sct/legacy/Draw.h"
 #include "sct/legacy/SCT_helpers.hh"
 
-instrip_efficiency::instrip_efficiency(const xy_plane& trueHits, const xy_plane& trueHits_with_dut, modulo_x x_mod, modulo_y y_mod, processor_prob& plot_prob_ /*= saveWithRandomName("instrip_efficiency__") */)
+instrip_efficiency::instrip_efficiency(const xy_plane& trueHits, const xy_plane& trueHits_with_dut, modulo_x x_mod, modulo_y y_mod, processor_prob plot_prob_ /*= saveWithRandomName("instrip_efficiency__") */)
 {
   m_true_hits_plane = xy_pro::modulo(trueHits,  x_mod, y_mod, plot_prob_);
   
