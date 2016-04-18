@@ -18,7 +18,7 @@ public:
     const xy_plane& trueHits_with_dut,
     modulo_x x_mod,
     modulo_y y_mod,
-    processor_prob& plot_prob_ = saveWithRandomName(processorName_t("instrip_efficiency__"))
+    processor_prob plot_prob_ = saveWithRandomName(processorName_t("instrip_efficiency__"))
     );
 
   TH1D* Draw_true_hits();

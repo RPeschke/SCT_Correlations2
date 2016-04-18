@@ -11,7 +11,7 @@ public:
     const xy_plane& plane_B,
     double x_cutoff,
     double y_cutoff,
-    processor_prob& pprob = saveWithRandomName(processorName_t("find_nearest__"))
+    processor_prob pprob = saveWithRandomName(processorName_t("find_nearest__"))
     );
   xy_plane getResidual() const;
   xy_plane getHitOnPlaneA() const;

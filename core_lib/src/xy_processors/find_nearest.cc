@@ -15,7 +15,7 @@
 
 class find_nearest_processor :public processorPlaneVSPlane {
 public:
-  find_nearest_processor(const xy_plane& plane_A, const xy_plane& plane_B, double x_cutOff, double y_cutOff, processor_prob& pprob);
+  find_nearest_processor(const xy_plane& plane_A, const xy_plane& plane_B, double x_cutOff, double y_cutOff, processor_prob pprob);
 
 
   virtual void processEventStart();
@@ -36,7 +36,7 @@ find_nearest_processor::find_nearest_processor(
   const xy_plane& plane_B, 
   double x_cutOff, 
   double y_cutOff, 
-  processor_prob& pprob)
+  processor_prob pprob)
   :processorPlaneVSPlane(plane_A,plane_B,pprob),
   m_x_cutOff(x_cutOff),
   m_y_cutOff(y_cutOff)
@@ -85,7 +85,7 @@ process_returns find_nearest_processor::processEventEnd()
   return p_sucess;
 }
 
-find_nearest::find_nearest(const xy_plane& plane_A, const xy_plane& plane_B, double x_cutoff, double y_cutoff, processor_prob& pprob /*= processor_prob() */)
+find_nearest::find_nearest(const xy_plane& plane_A, const xy_plane& plane_B, double x_cutoff, double y_cutoff, processor_prob pprob /*= processor_prob() */)
 {
   std::shared_ptr<processor> p(new find_nearest_processor(plane_A, plane_B, x_cutoff, y_cutoff, pprob));
   plane_A.get_ProcessorCollection()->addProcessor(p);
