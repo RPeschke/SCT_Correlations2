@@ -13,7 +13,7 @@ void processor_hitmap::processHit(double x, double y)
 
 
 
-xy_plane xy_pro::hitmap(const axis& x_, const axis& y_, processor_prob& pprob)
+xy_plane xy_pro::hitmap(const axis& x_, const axis& y_, processor_prob pprob)
 {
   std::shared_ptr<processor> p(new processor_hitmap(x_, y_, pprob));
   x_.get_ProcessorCollection()->addProcessor(p);

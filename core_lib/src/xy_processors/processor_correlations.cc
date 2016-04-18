@@ -11,7 +11,7 @@ void processor_correlations::processHit(double x, double y){
   pushHit(x, y);
 }
 
-xy_plane xy_pro::correlations(const axis& x_, const axis& y_, processor_prob& pprob /*= saveWithRandomName("correlation_")*/)
+xy_plane xy_pro::correlations(const axis& x_, const axis& y_, processor_prob pprob /*= saveWithRandomName("correlation_")*/)
 {
   std::shared_ptr<processor> p(new processor_correlations(x_, y_, pprob));
   x_.get_ProcessorCollection()->addProcessor(p);

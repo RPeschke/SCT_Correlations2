@@ -61,7 +61,7 @@ process_returns processor_Cluster_strip::processEventEnd()
 }
 
 
-xy_plane create_cluster_size(const xy_plane& sz_data, double max_cluster_distance, axis_def search_axis, processor_prob& plot_prob_ = saveWithRandomName(processorName_t("Cluster_strip_maker_"))) {
+xy_plane create_cluster_size(const xy_plane& sz_data, double max_cluster_distance, axis_def search_axis, processor_prob plot_prob_ = saveWithRandomName(processorName_t("Cluster_strip_maker_"))) {
   std::shared_ptr<processor> p(new processor_Cluster_strip(sz_data, max_cluster_distance, search_axis, plot_prob_));
   sz_data.get_ProcessorCollection()->addProcessor(p);
 
@@ -77,7 +77,7 @@ xy_plane create_cluster_size(const xy_plane& sz_data, double max_cluster_distanc
 
 
 
-Cluster_strip::Cluster_strip(const xy_plane& trueHits_with_dut, const xy_plane& sz_data, max_cl_t max_cluster_size, axis_def search_axis, modulo_t modulo_, processor_prob& plot_prob_ /*= saveWithRandomName("Cluster_strip__") */):m_mod(modulo_), m_max_cluster_size(max_cluster_size)
+Cluster_strip::Cluster_strip(const xy_plane& trueHits_with_dut, const xy_plane& sz_data, max_cl_t max_cluster_size, axis_def search_axis, modulo_t modulo_, processor_prob plot_prob_ /*= saveWithRandomName("Cluster_strip__") */):m_mod(modulo_), m_max_cluster_size(max_cluster_size)
 {
 
 

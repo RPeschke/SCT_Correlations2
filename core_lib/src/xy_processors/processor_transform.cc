@@ -13,7 +13,7 @@ void processor_transform::processHit(double x, double y)
   pushHit(x* necessary_CONVERSION(m_x_slope) + necessary_CONVERSION(m_x_offset), y* necessary_CONVERSION(m_y_slope) + necessary_CONVERSION(m_y_offset));
 }
 
-xy_plane xy_pro::transform(const xy_plane& pl, x_slope_t x_slope, x_offset_t x_offset, y_slope_t y_slope, y_offset_t y_offset, processor_prob& pprob /*= saveWithRandomName("transform__")*/)
+xy_plane xy_pro::transform(const xy_plane& pl, x_slope_t x_slope, x_offset_t x_offset, y_slope_t y_slope, y_offset_t y_offset, processor_prob pprob /*= saveWithRandomName("transform__")*/)
 {
   std::shared_ptr<processor> p(new processor_transform( x_slope,  x_offset,  y_slope,  y_offset, pl.get_x(), pl.get_y(), pprob));
   pl.get_ProcessorCollection()->addProcessor(p);
@@ -21,7 +21,7 @@ xy_plane xy_pro::transform(const xy_plane& pl, x_slope_t x_slope, x_offset_t x_o
   return dynamic_cast<processor_transform*>(p.get())->get_output_collection()->getPlane(ID_t(0));
 }
 
- xy_plane xy_pro::transform_move(const xy_plane& pl, x_offset_t x_offset, y_offset_t y_offset, processor_prob& pprob /*= saveWithRandomName("transform__")*/)
+ xy_plane xy_pro::transform_move(const xy_plane& pl, x_offset_t x_offset, y_offset_t y_offset, processor_prob pprob /*= saveWithRandomName("transform__")*/)
 {
   return transform(pl, x_slope_t(1), x_offset, y_slope_t(1), y_offset, pprob);
 }

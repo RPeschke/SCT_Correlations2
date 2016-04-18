@@ -15,7 +15,7 @@ void modulo_processor::processHit(double x, double y)
 }
 
 
-xy_plane xy_pro::modulo(const xy_plane& hits, modulo_x x_mod, modulo_y y_mod, processor_prob& pprob_ )
+xy_plane xy_pro::modulo(const xy_plane& hits, modulo_x x_mod, modulo_y y_mod, processor_prob pprob_ )
 {
   std::shared_ptr<processor> p(new modulo_processor(hits.get_x(), hits.get_y(), x_mod, y_mod, pprob_));
   

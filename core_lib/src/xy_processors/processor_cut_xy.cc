@@ -19,7 +19,7 @@ void processor_cut_xy::processHit(double x, double y){
 }
 
 
- xy_plane xy_pro::cut_xy(const xy_plane& pl, const S_Cut& cut_, processor_prob& pprob /*= saveWithRandomName("cut_xy_")*/)
+ xy_plane xy_pro::cut_xy(const xy_plane& pl, const S_Cut& cut_, processor_prob pprob /*= saveWithRandomName("cut_xy_")*/)
 {
   std::shared_ptr<processor> p(new processor_cut_xy(cut_,pl.get_x(), pl.get_y(), pprob));
   pl.get_ProcessorCollection()->addProcessor(p);

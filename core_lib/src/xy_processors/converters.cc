@@ -12,7 +12,7 @@ void convert::test()
   std::cout << "test" << std::endl;
 }
 
-xy_plane convert::local_to_global(const xy_plane& local_hits, const Xlayer& layer, processor_prob& pprob/*= saveWithRandomName("local2global__") */)
+xy_plane convert::local_to_global(const xy_plane& local_hits, const Xlayer& layer, processor_prob pprob/*= saveWithRandomName("local2global__") */)
 {
 
 
@@ -41,7 +41,7 @@ xy_plane convert::local_to_global(const xy_plane& local_hits, const Xlayer& laye
   return b;
 }
 
-xy_plane convert::global_to_local(const xy_plane& global_hits, const Xlayer& layer, processor_prob& pprob/*= saveWithRandomName("global2local__") */)
+xy_plane convert::global_to_local(const xy_plane& global_hits, const Xlayer& layer, processor_prob pprob/*= saveWithRandomName("global2local__") */)
 {
 
   auto b = xy_pro::transform_move(
@@ -78,7 +78,7 @@ xy_plane convert::global_to_local(const xy_plane& global_hits, const Xlayer& lay
   return local_hits;
 }
 
-xy_plane convert::hits_to_zs_data_GBL(const xy_plane& hits, const Xlayer& layer, processor_prob& pprob/*= saveWithRandomName("hits_to_zs_data_GBL__") */)
+xy_plane convert::hits_to_zs_data_GBL(const xy_plane& hits, const Xlayer& layer, processor_prob pprob/*= saveWithRandomName("hits_to_zs_data_GBL__") */)
 {
 
   return xy_pro::transform(
@@ -91,7 +91,7 @@ xy_plane convert::hits_to_zs_data_GBL(const xy_plane& hits, const Xlayer& layer,
     );
 }
 
-xy_plane convert::zs_data_to_hits_GBL(const xy_plane& sz_data, const Xlayer& layer, processor_prob& pprob/*= saveWithRandomName("zs_data_to_hits_GBL___") */)
+xy_plane convert::zs_data_to_hits_GBL(const xy_plane& sz_data, const Xlayer& layer, processor_prob pprob/*= saveWithRandomName("zs_data_to_hits_GBL___") */)
 {
   return xy_pro::transform(
     sz_data,
@@ -103,7 +103,7 @@ xy_plane convert::zs_data_to_hits_GBL(const xy_plane& sz_data, const Xlayer& lay
     );
 }
 
-xy_plane convert::zs_data_to_hits_DAF(const xy_plane& sz_data, const Xlayer& layer, processor_prob&  pprob/*= saveWithRandomName("zs_data_to_hits_DAF___") */)
+xy_plane convert::zs_data_to_hits_DAF(const xy_plane& sz_data, const Xlayer& layer, processor_prob  pprob/*= saveWithRandomName("zs_data_to_hits_DAF___") */)
 {
   return xy_pro::transform(
     sz_data,
@@ -115,7 +115,7 @@ xy_plane convert::zs_data_to_hits_DAF(const xy_plane& sz_data, const Xlayer& lay
     );
 }
 
-xy_plane convert::hits_to_zs_data_DAF(const xy_plane& hits, const Xlayer& layer, processor_prob& pprob/*= saveWithRandomName("hits_to_zs_data_DAF___") */)
+xy_plane convert::hits_to_zs_data_DAF(const xy_plane& hits, const Xlayer& layer, processor_prob pprob/*= saveWithRandomName("hits_to_zs_data_DAF___") */)
 {
   return xy_pro::transform(
     hits,

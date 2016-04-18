@@ -13,7 +13,7 @@ void processor_residual::processHit(double x, double y)
 }
 
 
-xy_plane xy_pro::residual(const axis& x_, const axis& y_, processor_prob& pprob) {
+xy_plane xy_pro::residual(const axis& x_, const axis& y_, processor_prob pprob) {
   std::shared_ptr<processor> p(new processor_residual(x_, y_, pprob));
   x_.get_ProcessorCollection()->addProcessor(p);
 

@@ -20,7 +20,7 @@ public:
     max_cl_t max_cluster_size,
     axis_def search_axis,
     modulo_t modulo_,
-    processor_prob& plot_prob_ = saveWithRandomName(processorName_t("Cluster_strip__"))
+    processor_prob plot_prob_ = saveWithRandomName(processorName_t("Cluster_strip__"))
     );
 
 

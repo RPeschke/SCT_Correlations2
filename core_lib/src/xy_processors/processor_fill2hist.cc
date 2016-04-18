@@ -97,14 +97,14 @@ public:
 
 
 
-void xy_pro::fill2Hist(const xy_plane& x_, TH2* h1, processor_prob& pprob /* = DontsaveWithRandomName("fill2hist2d__") */) {
+void xy_pro::fill2Hist(const xy_plane& x_, TH2* h1, processor_prob pprob /* = DontsaveWithRandomName("fill2hist2d__") */) {
   std::shared_ptr<processor> p(new processor_fill_2d_hist(x_, h1, pprob));
   x_.get_ProcessorCollection()->addProcessor(p);
 
   
 }
 
-void xy_pro::fill2Hist(const axis& x_, TH1* h1, processor_prob& pprob /* = DontsaveWithRandomName("fill2hist1d__") */) {
+void xy_pro::fill2Hist(const axis& x_, TH1* h1, processor_prob pprob /* = DontsaveWithRandomName("fill2hist1d__") */) {
   std::shared_ptr<processor> p(new processor_fill_1d_hist(x_, h1, pprob));
   x_.get_ProcessorCollection()->addProcessor(p);
 }
