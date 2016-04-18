@@ -45,7 +45,7 @@ namespace xml_util{
   }
   template<typename T>
   inline std::vector<T> getVectorOfT(rapid_xml_node* node_) {
-    return getVectorOfT(node_->value);
+    return getVectorOfT<T>(node_->value);
   }
   template <typename T>
 inline  T getAtribute(rapidxml::xml_node<char>* node_, const char * AtributeName, T default_){
