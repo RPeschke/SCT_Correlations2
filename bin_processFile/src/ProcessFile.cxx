@@ -17,7 +17,7 @@
 
 #include "TSystem.h"
 
-#include "sct/legacy/xml_print.hh"
+
 using namespace TCLAP;
 using namespace std;
 
