@@ -35,7 +35,7 @@ namespace Class_factory_Utilities{
 #ifdef WIN32
     using map_t = std::map <typename MainType,typename  Factory<baseClassType>::factoryfunc_raw > ;
 #else
-    using map_t = std::map < MainType, Factory<baseClassType>::factoryfunc >;
+    using map_t = std::map < MainType, Factory<baseClassType>::factoryfunc_raw >;
 #endif
 
 
