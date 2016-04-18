@@ -104,7 +104,7 @@ process_returns find_nearest_strip_processor::processEventEnd()
   return ret;
 }
 
-find_nearest_strip::find_nearest_strip(const xy_plane& planeA, const xy_plane& planeB, axis_def search_axis, double cutOfff,  processor_prob& plot_prob_ /*= processor_prob()*/)
+find_nearest_strip::find_nearest_strip(const xy_plane& planeA, const xy_plane& planeB, axis_def search_axis, double cutOfff,  processor_prob plot_prob_ /*= processor_prob()*/)
 {
   std::shared_ptr<processor> p(new find_nearest_strip_processor(planeA, planeB,search_axis,cutOfff, plot_prob_));
   planeA.get_ProcessorCollection()->addProcessor(p);
