@@ -38,8 +38,9 @@ set(SCT_PLOTS_INCLUDES ${PROJECT_SOURCE_DIR}/core_lib/includes)
 LIST( APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake )
 
 
-
+IF(WIN32)
 add_subdirectory(ReleaseVectorDef)
+ENDIF(WIN32)
 add_subdirectory(core_lib)
 add_subdirectory(bin_processFile)
 
