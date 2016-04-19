@@ -17,21 +17,21 @@
 
 #ifdef _DEBUG   
 TTreeVectorExtractor::TTreeVectorExtractor(const sct_type::AxesName_t& name, TTree* tree) :
-  m_vecRel(std::make_shared<ReleaseVectorDef>(name.c_str())),
+  m_vecRel(_MAKE_SHARED1(ReleaseVectorDef,name.c_str())),
   m_name(name)
 
 {
 
 
   m_vecRel->load_from_TTree(tree);
-  m_owend_vector = std::make_shared<std::vector<double> >();
+  m_owend_vector = _MAKE_SHARED0(std::vector<double>);
   m_vec = m_owend_vector.get();
 }
 
 
-TTreeVectorExtractor::TTreeVectorExtractor(const sct_type::AxesName_t& name) :m_vecRel(std::make_shared<ReleaseVectorDef>(name.c_str())), m_name(name)
+TTreeVectorExtractor::TTreeVectorExtractor(const sct_type::AxesName_t& name) :m_vecRel(_MAKE_SHARED1(ReleaseVectorDef,name.c_str())), m_name(name)
 {
-  m_owend_vector = std::make_shared<std::vector<double> >();
+  m_owend_vector = _MAKE_SHARED0(std::vector<double>);
   m_vec = m_owend_vector.get();
 }
 
@@ -94,7 +94,7 @@ TTreeVectorExtractor::TTreeVectorExtractor(const sct_type::AxesName_t&  name, TT
 
 TTreeVectorExtractor::TTreeVectorExtractor(const sct_type::AxesName_t&  name) : m_name(name)
 {
-  m_owend_vector = std::make_shared<std::vector<double>>();
+  m_owend_vector = _MAKE_SHARED0(std::vector<double>);
   m_vec = m_owend_vector.get();
 }
 TTreeVectorExtractor::~TTreeVectorExtractor()

@@ -7,9 +7,9 @@
 
 lcio_collection::lcio_collection(const collectionName_t& name, ProcessorCollection* pc):m_name(name),m_pc(pc)
 {
-  m_storage[ID_DEF] = std::make_shared< std::vector<double>>();
-  m_storage[X_DEF] = std::make_shared< std::vector<double>>();
-  m_storage[Y_DEF] = std::make_shared< std::vector<double>>();
+  m_storage[ID_DEF] = _MAKE_SHARED0(std::vector<double>);
+  m_storage[X_DEF] = _MAKE_SHARED0(std::vector<double>);
+  m_storage[Y_DEF] = _MAKE_SHARED0(std::vector<double>);
 }
 
 generic_plane lcio_collection::getPlane(ID_t planeID)

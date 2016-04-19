@@ -184,7 +184,7 @@ lcio_reader::lcio_reader(const std::string& inputFile, ProcessorCollection* pc) 
 lcio_reader::lcio_reader(const std::string& inputFile)
 {
 
-  m_owned_pc = std::make_shared<ProcessorCollection>();
+  m_owned_pc = _MAKE_SHARED0(ProcessorCollection);
   m_pc = m_owned_pc.get();
   auto ret = std::shared_ptr<lcio_reader_processor>(new lcio_reader_processor(inputFile, m_pc));
   m_pc->addProcessor(ret);
@@ -203,7 +203,7 @@ lcio_collection* lcio_reader::getCollection(const collectionName_t& name) {
     return ret;
   }
 
-  m_reader_processor->m_requested_collections.push_back(std::make_shared<lcio_collection>(name, m_pc));
+  m_reader_processor->m_requested_collections.push_back( _MAKE_SHARED1(lcio_collection,name, m_pc));
 
   return  m_reader_processor->get_collection(name);
 }

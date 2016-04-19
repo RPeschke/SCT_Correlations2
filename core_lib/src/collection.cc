@@ -29,9 +29,9 @@ collection::collection(TTree* tree, ProcessorCollection* pc) :m_pc(pc),m_tree(tr
       continue;
     }
 
-    m_data.push_back(std::make_shared<TTreeVectorExtractor>(sct_type::AxesName_t(br->GetName()), tree));
+    m_data.push_back(_MAKE_SHARED1(TTreeVectorExtractor, sct_type::AxesName_t(br->GetName()), tree));
   }
-  m_event_nr = std::make_shared<int>(0);
+  m_event_nr = _MAKE_SHARED1(int, 0);
 
   tree->SetBranchAddress("event_nr", m_event_nr.get());
 
@@ -39,12 +39,12 @@ collection::collection(TTree* tree, ProcessorCollection* pc) :m_pc(pc),m_tree(tr
 
 collection::collection(const collectionName_t& collectionName, const std::vector<axesName_t>& axis_list, ProcessorCollection* pc, SaveOption save) :m_collectionName(collectionName), m_pc(pc) {
   for (auto&e : axis_list) {
-    m_data.push_back(std::make_shared<TTreeVectorExtractor>(necessary_CONVERSION(e)));
+    m_data.push_back(_MAKE_SHARED1(TTreeVectorExtractor,necessary_CONVERSION(e)));
   }
-  m_event_nr = std::make_shared<int>(0);
+  m_event_nr = _MAKE_SHARED1(int,0);
 
   if (save == save2Disk) {
-    outPutTree = std::make_shared<TTree>(necessary_CONVERSION(collectionName).c_str(), necessary_CONVERSION(collectionName).c_str());
+    outPutTree = _MAKE_SHARED1(TTree, necessary_CONVERSION(collectionName).c_str(), necessary_CONVERSION(collectionName).c_str());
     for (auto& e : m_data) {
       e->push2TTree(outPutTree.get());
     }

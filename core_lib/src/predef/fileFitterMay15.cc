@@ -60,9 +60,9 @@ registerFitterFile(fitterFileMay15, "MAY15");
 // } reg_;
 fitterFileMay15::fitterFileMay15(fitterFile::Parameter_ref params)
 {
-  m_file = std::make_shared<TFile>(params.c_str());
-  m_pc = std::make_shared<ProcessorCollection>();
-  m_generic = std::make_shared<EUTFile>(m_file.get(), m_pc.get());
+  m_file = _MAKE_SHARED1(TFile, params.c_str());
+  m_pc = _MAKE_SHARED0(ProcessorCollection);
+  m_generic = _MAKE_SHARED1(EUTFile,m_file.get(), m_pc.get());
 
 }
 

@@ -86,7 +86,7 @@ residual_efficiency::residual_efficiency(const xy_plane& trueHits, const xy_plan
 
 TH1D* residual_efficiency::Draw_true_residuals()
 {
-  m_true_hits = std::make_shared<TH1D>(
+  m_true_hits = _MAKE_SHARED1(TH1D,
     "total",
     "total",
     100, -5, 5
@@ -103,7 +103,7 @@ TH1D* residual_efficiency::Draw_true_residuals()
 
 TH1D* residual_efficiency::Draw_reference_residuals()
 {
-  m_true_hits_with_dut = std::make_shared<TH1D>(
+  m_true_hits_with_dut = _MAKE_SHARED1(TH1D,
     "DUT",
     "DUT",
     100, -5, 5
@@ -120,7 +120,7 @@ TH1D* residual_efficiency::Draw_reference_residuals()
 
 TH1D* residual_efficiency::Draw_residual_efficiency()
 {
-  m_efficiency_trueHits = std::make_shared<TH1D>(
+  m_efficiency_trueHits = _MAKE_SHARED1(TH1D,
     "total",
     "total",
     100, -5, 5
@@ -133,7 +133,7 @@ TH1D* residual_efficiency::Draw_residual_efficiency()
     .output_object(m_efficiency_trueHits.get())
     );
 
-  m_efficiency = std::make_shared<TH1D>(
+  m_efficiency = _MAKE_SHARED1(TH1D,
     "Efficiency",
     "Efficiency",
     100, -5, 5

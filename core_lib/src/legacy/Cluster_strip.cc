@@ -148,7 +148,7 @@ Cluster_strip::Cluster_strip(const xy_plane& trueHits_with_dut, const xy_plane& 
 
 int Cluster_strip::Draw_ClusterSize()
 {
-  m_cluster_size_hist = std::make_shared<TH2D>(
+  m_cluster_size_hist = _MAKE_SHARED1(TH2D,
     "hist",
     "hist",
     100, 0,necessary_CONVERSION( m_mod),
@@ -162,7 +162,7 @@ int Cluster_strip::Draw_ClusterSize()
   m_profile = std::shared_ptr<TProfile>(dynamic_cast<TProfile*>(m_cluster_size_hist->ProfileX()));
 
 
-  m_cluster_size_hist = std::make_shared<TH2D>(
+  m_cluster_size_hist = _MAKE_SHARED1(TH2D,
     "hist",
     "hist",
     100, 0, necessary_CONVERSION( m_mod),

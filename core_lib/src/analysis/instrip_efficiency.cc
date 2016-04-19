@@ -17,7 +17,7 @@ instrip_efficiency::instrip_efficiency(const xy_plane& trueHits, const xy_plane&
 
 TH1D* instrip_efficiency::Draw_true_hits()
 {
-  m_true_hits = std::make_shared<TH1D>(
+  m_true_hits = _MAKE_SHARED1(TH1D,
     "total",
     "total",
     100, -5, 5
@@ -34,7 +34,7 @@ TH1D* instrip_efficiency::Draw_true_hits()
 
 TH1D* instrip_efficiency::Draw_true_hits_with_dut()
 {
-  m_true_hits_with_dut = std::make_shared<TH1D>(
+  m_true_hits_with_dut = _MAKE_SHARED1(TH1D,
     "DUT",
     "DUT",
     100, -5, 5
@@ -51,7 +51,7 @@ TH1D* instrip_efficiency::Draw_true_hits_with_dut()
 
 TH1D* instrip_efficiency::Draw_Efficiency()
 {
-  m_efficiency_trueHits = std::make_shared<TH1D>(
+  m_efficiency_trueHits = _MAKE_SHARED1(TH1D,
     "total",
     "total",
     100, -5, 5
@@ -64,7 +64,7 @@ TH1D* instrip_efficiency::Draw_Efficiency()
     .output_object(m_efficiency_trueHits.get())
     );
 
-  m_efficiency = std::make_shared<TH1D>(
+  m_efficiency = _MAKE_SHARED1(TH1D,
     "Efficiency",
     "Efficiency",
     100, -5, 5

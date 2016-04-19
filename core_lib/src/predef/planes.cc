@@ -59,7 +59,7 @@ xy_plane::xy_plane()
 
 xy_plane::xy_plane(const xy_plane& rhs) :plane(rhs)
 {
-  Hit = std::make_shared<hit>();
+  Hit = _MAKE_SHARED0(hit);
   m_plane.setHitAxisAdress(X_DEF, &Hit->x);
   m_plane.setHitAxisAdress(Y_DEF, &Hit->y);
 }
@@ -67,7 +67,7 @@ xy_plane::xy_plane(const xy_plane& rhs) :plane(rhs)
 xy_plane& xy_plane::operator=(const xy_plane& rhs)
 {
   plane::operator=(rhs);
-  Hit = std::make_shared<hit>();
+  Hit = _MAKE_SHARED0(hit);
   m_plane.setHitAxisAdress(X_DEF, &Hit->x);
   m_plane.setHitAxisAdress(Y_DEF, &Hit->y);
   return *this;
@@ -103,7 +103,7 @@ FitterPlane::FitterPlane()
 
 FitterPlane::FitterPlane(const FitterPlane& rhs) :xy_plane(rhs)
 {
-  F_Hit = std::make_shared<fitterHit>();
+  F_Hit = _MAKE_SHARED0(fitterHit);
   m_plane.setHitAxisAdress(X_DEF, &F_Hit->x);
   m_plane.setHitAxisAdress(Y_DEF, &F_Hit->y);
   m_plane.setHitAxisAdress( axesName_t("chi2"), &F_Hit->chi2);
@@ -115,7 +115,7 @@ FitterPlane::FitterPlane(const FitterPlane& rhs) :xy_plane(rhs)
 FitterPlane& FitterPlane::operator=(const FitterPlane& rhs)
 {
   xy_plane::operator=(rhs);
-  F_Hit = std::make_shared<fitterHit>();
+  F_Hit = _MAKE_SHARED0(fitterHit);
   m_plane.setHitAxisAdress(X_DEF, &F_Hit->x);
   m_plane.setHitAxisAdress(Y_DEF, &F_Hit->y);
   m_plane.setHitAxisAdress( axesName_t("chi2"), &F_Hit->chi2);

@@ -23,11 +23,11 @@ processor_2d::~processor_2d()
 }
 
 processor_2d::processor_2d(const axis& x_, const  axis& y_, processor_prob& pprob) :m_prob(pprob.setAxis(xy_names()).setProcessorCollection(x_.get_ProcessorCollection())) {
-  m_x = std::make_shared<axis>(x_);
-  m_y = std::make_shared<axis>(y_);
-  m_output_coll = std::make_shared<collection>(m_prob);
+  m_x = _MAKE_SHARED1(axis,x_);
+  m_y = _MAKE_SHARED1(axis,y_);
+  m_output_coll = _MAKE_SHARED1(collection,m_prob);
   
-  m_outputPlane = std::make_shared<xy_plane>(m_output_coll->getPlane(ID_t(0)));
+  m_outputPlane =_MAKE_SHARED1(xy_plane,m_output_coll->getPlane(ID_t(0)));
   m_outhit = m_outputPlane->get_hit();
 }
 

@@ -10,8 +10,8 @@ processorPlaneVSPlane::processorPlaneVSPlane(
      m_input_plane_B(*plane_b.get_generic_plane())
 {
 
-  m_output_coll= std::make_shared<collection>(plot_prob.setAxis(xy_names()).setProcessorCollection(plane_A.get_ProcessorCollection()));
-  m_outputPlane=std::make_shared<xy_plane>(m_output_coll->getPlane(ID_t(0)));
+  m_output_coll= _MAKE_SHARED1(collection, plot_prob.setAxis(xy_names()).setProcessorCollection(plane_A.get_ProcessorCollection()));
+  m_outputPlane= _MAKE_SHARED1(xy_plane,m_output_coll->getPlane(ID_t(0)));
   m_inputHit_A = m_input_plane_A.get_hit();
   m_inputHit_B = m_input_plane_B.get_hit();
   m_outhit = m_outputPlane->get_hit();

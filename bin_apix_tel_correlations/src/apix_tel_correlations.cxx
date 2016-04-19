@@ -63,7 +63,7 @@ int main(int argc, char **argv) {
   cmd.parse(argc, argv);  //terminates on error
 
 
-  auto m_input_files_xml = std::make_shared<XML_imput_file>(FileNameArg.getValue().c_str());
+  auto m_input_files_xml = _MAKE_SHARED1(XML_imput_file, FileNameArg.getValue().c_str());
 
 
   auto file_path = (inPath.getValue() + "/" + m_input_files_xml->get_File(element.getValue()).name);

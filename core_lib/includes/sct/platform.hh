@@ -14,6 +14,21 @@
 #endif // WIN32
 
 
+#ifdef _DEBUG
+
+
+#define _MAKE_SHARED0(x) std::shared_ptr<x>(new x())
+#define _MAKE_SHARED1(x,...) std::shared_ptr<x>(new x(__VA_ARGS__))
+
+
+#else
+#define _MAKE_SHARED0(x) std::make_shared<x>()
+#define _MAKE_SHARED1(x,...) std::make_shared<x>(__VA_ARGS__)
+
+
+
+#endif // _DEBUG
+
 
 
 #endif // platform_h__

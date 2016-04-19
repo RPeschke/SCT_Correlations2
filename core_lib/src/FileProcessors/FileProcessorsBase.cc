@@ -92,7 +92,7 @@ void FileProcessorsBase::setGearFile(const char* name)
 {
   
 
-  m_gear = std::make_shared<Xgear>(name);
+  m_gear = _MAKE_SHARED1(Xgear,name);
 }
 
 void FileProcessorsBase::setPrintout(bool print)
@@ -142,7 +142,7 @@ void FileProcessorsBase::process_set_run_prob(const FileProberties& fileP)
 void FileProcessorsBase::start_collection(TFile* file__)
 {
   
-  m_outputl = std::make_shared<rootEventRunOutput>(collectionName_t("out"), file__->GetDirectory("/"));
+  m_outputl = _MAKE_SHARED1(rootEventRunOutput,collectionName_t("out"), file__->GetDirectory("/"));
 }
 
  std::unique_ptr<FileProcessorsBase> create_processor(const FileProcessorsBase::MainType& type, FileProcessorsBase::Parameter_ref param_)

@@ -43,7 +43,7 @@ FileProcessors_standard::~FileProcessors_standard()
 
 int FileProcessors_standard::DrawResidual(Double_t min_X, Double_t max_X)
 {
-  m_Residual = std::make_shared<TH1D>(
+  m_Residual = _MAKE_SHARED1(TH1D,
     "residual",
     "residual",
     100,
@@ -75,7 +75,7 @@ int FileProcessors_standard::DrawResidual()
 
 int FileProcessors_standard::DrawResidualVsEvent(Double_t min_X, Double_t max_X)
 {
-  m_ResidualVsEvent = std::make_shared<TH2D>(
+  m_ResidualVsEvent = _MAKE_SHARED1(TH2D,
     "ResidualVsEvent",
     "Residual Vs Event",
     100, 0, 0,
@@ -107,7 +107,7 @@ int FileProcessors_standard::DrawResidualVsEvent()
 
 int FileProcessors_standard::DrawResidualVsMissingCordinate(Double_t min_X, Double_t max_X)
 {
-  m_resVSMissing = std::make_shared<TH2D>(
+  m_resVSMissing = _MAKE_SHARED1(TH2D,
     "ResidualVsMissingCordinate",
     "Residual Vs Missing Coordinate",
     100, 0, 0,
@@ -264,7 +264,7 @@ bool FileProcessors_standard::process_file(FileProberties* fileP)
   D2T d2t("MAY15", D2T_prob().set_gear(get_gear()).set_xmlFile(*get_xml_input()).set_trueHits(m_trueHits).set_DUTHits(m_input_file.DUT_zs_data()));
   m_totalTrue_hits = d2t.getTotalTrueHits();
   m_truehits_withDUT = d2t.getTrueHitsWithDUT();
-  m_efficiency = std::make_shared<efficiency>(d2t.getTotalTrueHits(), d2t.getTrueHitsWithDUT());
+  m_efficiency = _MAKE_SHARED1(efficiency, d2t.getTotalTrueHits(), d2t.getTrueHitsWithDUT());
   m_ResidualVsMissing = d2t.getResidualVsMissing();
 
 

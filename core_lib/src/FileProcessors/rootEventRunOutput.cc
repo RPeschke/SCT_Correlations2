@@ -24,15 +24,15 @@ rootEventRunOutput::rootEventRunOutput(const collectionName_t& collectionName, T
  
 
 
- m_rotation = std::make_shared<double>(0);
- m_totalNumOfEvents = std::make_shared<double>(0);
- m_total_efficiency = std::make_shared<double>(0);
- m_error_efficiency = std::make_shared<double>(0);
- m_residual = std::make_shared<double>(0);
- m_offset = std::make_shared<double>(0);
- m_Threshold = std::make_shared<double>(0);
- m_RunNumber = std::make_shared<double>(0);
- m_HV = std::make_shared<double>(0);
+ m_rotation =_MAKE_SHARED1(double,0);
+ m_totalNumOfEvents =_MAKE_SHARED1(double,0);
+ m_total_efficiency =_MAKE_SHARED1(double,0);
+ m_error_efficiency =_MAKE_SHARED1(double,0);
+ m_residual =_MAKE_SHARED1(double,0);
+ m_offset =_MAKE_SHARED1(double,0);
+ m_Threshold =_MAKE_SHARED1(double,0);
+ m_RunNumber =_MAKE_SHARED1(double,0);
+ m_HV =_MAKE_SHARED1(double,0);
 
 
  auto outputTree = m_collection.get_tree();
@@ -65,15 +65,15 @@ rootEventRunOutput::rootEventRunOutput(const collectionName_t& collectionName, T
 
 rootEventRunOutput::rootEventRunOutput(const rootEventRunOutput& rhs):m_collection(rhs.m_collection)
 {
-  m_rotation = std::make_shared<double>(0);
-  m_totalNumOfEvents = std::make_shared<double>(0);
-  m_total_efficiency = std::make_shared<double>(0);
-  m_error_efficiency = std::make_shared<double>(0);
-  m_residual = std::make_shared<double>(0);
-  m_offset = std::make_shared<double>(0);
-  m_Threshold = std::make_shared<double>(0);
-  m_RunNumber = std::make_shared<double>(0);
-  m_HV = std::make_shared<double>(0);
+  m_rotation =_MAKE_SHARED1(double,0);
+  m_totalNumOfEvents =_MAKE_SHARED1(double,0);
+  m_total_efficiency =_MAKE_SHARED1(double,0);
+  m_error_efficiency =_MAKE_SHARED1(double,0);
+  m_residual =_MAKE_SHARED1(double,0);
+  m_offset =_MAKE_SHARED1(double,0);
+  m_Threshold =_MAKE_SHARED1(double,0);
+  m_RunNumber =_MAKE_SHARED1(double,0);
+  m_HV =_MAKE_SHARED1(double,0);
 
 
   auto outputTree = m_collection.get_tree();
@@ -100,15 +100,15 @@ rootEventRunOutput::rootEventRunOutput(const rootEventRunOutput& rhs):m_collecti
 rootEventRunOutput& rootEventRunOutput::operator=(const rootEventRunOutput& rhs)
 {
   m_collection = rhs.m_collection;
-  m_rotation = std::make_shared<double>(0);
-  m_totalNumOfEvents = std::make_shared<double>(0);
-  m_total_efficiency = std::make_shared<double>(0);
-  m_error_efficiency = std::make_shared<double>(0);
-  m_residual = std::make_shared<double>(0);
-  m_offset = std::make_shared<double>(0);
-  m_Threshold = std::make_shared<double>(0);
-  m_RunNumber = std::make_shared<double>(0);
-  m_HV = std::make_shared<double>(0);
+  m_rotation = _MAKE_SHARED1(double,0);
+  m_totalNumOfEvents =_MAKE_SHARED1(double,0);
+  m_total_efficiency =_MAKE_SHARED1(double,0);
+  m_error_efficiency =_MAKE_SHARED1(double,0);
+  m_residual =_MAKE_SHARED1(double,0);
+  m_offset =_MAKE_SHARED1(double,0);
+  m_Threshold =_MAKE_SHARED1(double,0);
+  m_RunNumber =_MAKE_SHARED1(double,0);
+  m_HV =_MAKE_SHARED1(double,0);
 
 
   auto outputTree = m_collection.get_tree();

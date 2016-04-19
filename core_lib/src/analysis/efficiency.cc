@@ -11,7 +11,7 @@ efficiency::efficiency(const xy_plane& trueHits, const xy_plane& trueHitsWithDUT
 
 TH1D* efficiency::DrawTrueHits(Int_t nbinsx, Double_t xlow, Double_t xup)
 {
-  m_true_hits = std::make_shared<TH1D>(
+  m_true_hits = _MAKE_SHARED1(TH1D,
     "total",
     "total",
     nbinsx, xlow, xup
@@ -28,7 +28,7 @@ TH1D* efficiency::DrawTrueHits(Int_t nbinsx, Double_t xlow, Double_t xup)
 
 TH1D* efficiency::DrawDUTHits(Int_t nbinsx, Double_t xlow, Double_t xup)
 {
-  m_true_hits_with_dut = std::make_shared<TH1D>(
+  m_true_hits_with_dut = _MAKE_SHARED1(TH1D,
     "DUT",
     "DUT",
     nbinsx, xlow, xup
@@ -46,7 +46,7 @@ TH1D* efficiency::DrawDUTHits(Int_t nbinsx, Double_t xlow, Double_t xup)
 
 TH1D* efficiency::DrawEfficiency(Int_t nbinsx, Double_t xlow, Double_t xup)
 {
-  m_efficiency_trueHits = std::make_shared<TH1D>(
+  m_efficiency_trueHits = _MAKE_SHARED1(TH1D,
     "total",
     "total",
     nbinsx, xlow, xup
@@ -59,7 +59,7 @@ TH1D* efficiency::DrawEfficiency(Int_t nbinsx, Double_t xlow, Double_t xup)
     .output_object(m_efficiency_trueHits.get())
     );
 
-  m_efficiency = std::make_shared<TH1D>(
+  m_efficiency = _MAKE_SHARED1(TH1D,
     "Efficiency",
     "Efficiency",
     nbinsx, xlow, xup
@@ -92,7 +92,7 @@ efficiency2D::efficiency2D(const xy_plane& trueHits, const xy_plane& trueHitsWit
 TH2D* efficiency2D::DrawTrueHits(Int_t nbinsx, Double_t xlow, Double_t xup,
                                  Int_t nbinsy, Double_t ylow, Double_t yup)
 {
-  m_true_hits = std::make_shared<TH2D>(
+  m_true_hits = _MAKE_SHARED1(TH2D,
     "total",
     "total",
     nbinsx, xlow, xup,
@@ -111,7 +111,7 @@ TH2D* efficiency2D::DrawTrueHits(Int_t nbinsx, Double_t xlow, Double_t xup,
 TH2D* efficiency2D::DrawDUTHits(Int_t nbinsx, Double_t xlow, Double_t xup,
                                 Int_t nbinsy, Double_t ylow, Double_t yup)
 {
-  m_true_hits_with_dut = std::make_shared<TH2D>(
+  m_true_hits_with_dut = _MAKE_SHARED1(TH2D,
     "total",
     "total",
     nbinsx, xlow, xup,
@@ -130,7 +130,7 @@ TH2D* efficiency2D::DrawDUTHits(Int_t nbinsx, Double_t xlow, Double_t xup,
 TH2D* efficiency2D::DrawEfficiency(Int_t nbinsx, Double_t xlow, Double_t xup,
                                    Int_t nbinsy, Double_t ylow, Double_t yup)
 {
-  m_efficiency_trueHits = std::make_shared<TH2D>(
+  m_efficiency_trueHits = _MAKE_SHARED1(TH2D,
     "total",
     "total",
     nbinsx, xlow, xup,
@@ -144,7 +144,7 @@ TH2D* efficiency2D::DrawEfficiency(Int_t nbinsx, Double_t xlow, Double_t xup,
     .output_object(m_efficiency_trueHits.get())
     );
 
-  m_efficiency = std::make_shared<TH2D>(
+  m_efficiency = _MAKE_SHARED1(TH2D,
     "Efficiency",
     "Efficiency",
     nbinsx, xlow, xup,
