@@ -4,7 +4,7 @@
 #include <ostream>
 std::ostream* m_out = &std::cout;
 
-bool gDo_print = false;
+bool gDo_print = true;
 int gPos = 0;
 
 

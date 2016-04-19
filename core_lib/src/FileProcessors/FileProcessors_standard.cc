@@ -230,8 +230,8 @@ bool FileProcessors_standard::process_file(FileProberties* fileP)
 
 
 
-
-  std::cout << fileP->m_fileName << std::endl;
+  auto file__ = xml_print("file"); 
+  xml_print("fileName",fileP->m_fileName );
 
 
 

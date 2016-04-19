@@ -72,7 +72,8 @@ bool FileProcessorsBase_modulo::process_file(FileProberties* fileP)
 
   m_outputl->reset();
 
-  std::cout << fileP->m_fileName << std::endl;
+  auto file__ = xml_print("file");
+  xml_print("fileName", fileP->m_fileName);
 
 
   m_input_file = FFile(fileP->m_fileName, "MAY15");
