@@ -61,8 +61,8 @@ lcio_reader_processor::lcio_reader_processor(const std::string& reader_name, Pro
 
 lcio_reader_processor::~lcio_reader_processor() {
   if (m_reader) {
-    m_reader->close();
-    delete m_reader;
+//     m_reader->close();
+//     delete m_reader;
   }
 }
 
