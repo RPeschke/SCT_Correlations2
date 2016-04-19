@@ -9,7 +9,7 @@
 
 #ifndef __CINT__
 #include "sct/internal/factory.hh"
-#define registerTruehitExtractor(ClassTypeName, name) registerClass(truehitExtractor,ClassTypeName,name)
+#define registerTruehitExtractor(ClassTypeName, name) registerClass(truehitExtractor,ClassTypeName,truehitExtractor::MainType(name))
 #endif
 class Xgear;
 class fitterFile;
@@ -33,7 +33,7 @@ private:
 class DllExport truehitExtractor {
   
 public:
-  typedef std::string MainType;
+  typedef SubClassName_t MainType;
   typedef TH_param Parameter_t;
   typedef TH_param& Parameter_ref;
 
@@ -46,7 +46,7 @@ public:
 };
 class DllExport THE {
 public:
-  THE(const std::string& name, TH_param& param_);
+  THE(const truehitExtractor::MainType& name, TH_param& param_);
   virtual xy_plane get_true_DUT_Hits();
   //static void register_new(const std::string& name, truehitExtractor* (fun)(truehitExtractor::Parameter_ref param_));
 private:

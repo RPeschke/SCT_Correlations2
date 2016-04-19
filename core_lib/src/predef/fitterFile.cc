@@ -2,13 +2,7 @@
 
 
 #ifdef _DEBUG
-
-std::string operator+(const std::string& rhs, const fitterFile::MainType& lhs) {
-  return rhs + lhs.value;
-}
-std::string operator+( const fitterFile::MainType& rhs, const std::string& lhs) {
-  return rhs.value + lhs;
-}
+#define Class_factory_Utilities_THROW(msg, inPutVar)  std::cout << "[Factory<baseClassType>::Create" << ":" << __LINE__ << "]: \n " << msg << " <" << necessary_CONVERSION(inPutVar) << ">" << std::endl;
 #endif // _DEBUG
 
 

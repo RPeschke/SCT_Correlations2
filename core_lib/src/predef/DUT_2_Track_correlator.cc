@@ -1,5 +1,8 @@
 #include "sct//predef/DUT_2_Track_correlator.hh"
 
+#ifdef _DEBUG
+#define Class_factory_Utilities_THROW(msg, inPutVar)  std::cout << "[Factory<baseClassType>::Create" << ":" << __LINE__ << "]: \n " << msg << " <" << necessary_CONVERSION(inPutVar) << ">" << std::endl;
+#endif // _DEBUG
 
 #include "sct/internal/factoryDef.hh"
 registerBaseClassDef(DUT_2_Track_correlator);

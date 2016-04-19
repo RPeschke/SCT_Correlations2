@@ -7,7 +7,7 @@
 
 
 #ifndef  Class_factory_Utilities_THROW
-  #define  Class_factory_Utilities_THROW(msg) std::cout<< "[Factory<baseClassType>::Create" <<":" << __LINE__<<"]: \n"<<msg<<std::endl;
+#define Class_factory_Utilities_THROW(msg,inPutVar) std::cout << "[Factory<baseClassType>::Create" << ":" << __LINE__ << "]: \n " << msg << " <" <<  inPutVar <<">"<<std::endl;
 #endif
 
 
@@ -41,7 +41,7 @@ namespace Class_factory_Utilities{
     
     }
     
-    Class_factory_Utilities_THROW(std::string("unknown class: <") + name + std::string(">"));
+    Class_factory_Utilities_THROW("unknown class" , name);
     return nullptr;
 
   }

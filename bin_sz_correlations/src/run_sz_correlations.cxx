@@ -59,7 +59,7 @@ int main(int argc, char **argv) {
 
   cmd.parse(argc, argv);  //terminates on error
 
-  FFile file_(FileNameArg.getValue());
+  FFile file_(FileName_t(FileNameArg.getValue()));
 
   TFile * file_1 = new TFile(outFileNameArg.getValue().c_str(), "recreate");
 
@@ -80,8 +80,8 @@ int main(int argc, char **argv) {
 
 
 
-  auto sz_dut_normalized = xy_pro::transform(sz_dut, 0.0745, 0, 1, 0, DontsaveWithRandomName(processorName_t("sz_dut_normalized")));
-  auto sz_tel_normalized = xy_pro::transform(apix, 2.500000000e-01, 0, 5.000000000e-02, 0, DontsaveWithRandomName(processorName_t("sz_tel_normalized")));
+  auto sz_dut_normalized = xy_pro::transform(sz_dut, x_slope_t(0.0745), x_offset_t(0), y_slope_t(1), y_offset_t(0), DontsaveWithRandomName(processorName_t("sz_dut_normalized")));
+  auto sz_tel_normalized = xy_pro::transform(apix, x_slope_t(2.500000000e-01), x_offset_t(0),y_slope_t(5.000000000e-02), y_offset_t(0), DontsaveWithRandomName(processorName_t("sz_tel_normalized")));
   auto res = xy_pro::residual(sz_dut_normalized.get_x(), sz_tel_normalized.get_x());
   file_.getProcessorCollection()->loop();
   new TCanvas();

@@ -68,7 +68,7 @@ int main(int argc, char **argv) {
 
   auto file_path = (inPath.getValue() + "/" + m_input_files_xml->get_File(element.getValue()).name);
   std::cout << "opening file path: " << file_path << std::endl;
-    FFile fitter_file_(file_path.c_str());
+    FFile fitter_file_(FileName_t(file_path) ,SubClassName_t("MAY15"));
 
     Xgear gear(m_input_files_xml->globalConfig.gearFile.c_str());
 

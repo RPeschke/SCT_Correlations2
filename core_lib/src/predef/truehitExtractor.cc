@@ -1,6 +1,15 @@
 #include "sct/predef/truehitExtractor.hh"
-#include "sct/internal/factoryDef.hh"
 #include "sct/predef/fitterFile.hh"
+
+#ifdef _DEBUG
+#define Class_factory_Utilities_THROW(msg, inPutVar)  std::cout << "[Factory<baseClassType>::Create" << ":" << __LINE__ << "]: \n " << msg << " <" << necessary_CONVERSION(inPutVar) << ">" << std::endl;
+#endif // _DEBUG
+
+ 
+
+
+
+#include "sct/internal/factoryDef.hh"
 registerBaseClassDef(truehitExtractor);
 
 truehitExtractor::truehitExtractor(truehitExtractor::Parameter_ref param_) :m_param(param_)

@@ -10,7 +10,7 @@
 
 #ifndef __CINT__
 #include "sct/internal/factory.hh"
-#define registerDUT_2_Track_correlator(ClassTypeName, name) registerClass(DUT_2_Track_correlator,ClassTypeName,name)
+#define registerDUT_2_Track_correlator(ClassTypeName, name) registerClass(DUT_2_Track_correlator,ClassTypeName,DUT_2_Track_correlator::MainType(name))
 #endif
 
 class DllExport D2T_prob {
@@ -36,7 +36,7 @@ private:
 
 class DllExport DUT_2_Track_correlator {
 public:
-  typedef  std::string MainType;
+  typedef  SubClassName_t MainType;
   typedef  D2T_prob Parameter_t;
   typedef   D2T_prob& Parameter_ref;
   DUT_2_Track_correlator(Parameter_ref param_);

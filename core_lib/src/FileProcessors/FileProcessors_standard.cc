@@ -254,12 +254,12 @@ bool FileProcessors_standard::process_file(FileProberties* fileP)
 
 
 
-  THE the("MAY15", TH_param().set_fitterFile(m_input_file).set_gear(get_gear()));
+  THE the(SubClassName_t("MAY15"), TH_param().set_fitterFile(m_input_file).set_gear(get_gear()));
   m_trueHits = the.get_true_DUT_Hits();
 
 
 
-  D2T d2t("MAY15", D2T_prob().set_gear(get_gear()).set_xmlFile(*get_xml_input()).set_trueHits(m_trueHits).set_DUTHits(m_input_file.DUT_zs_data()));
+  D2T d2t(SubClassName_t("MAY15"), D2T_prob().set_gear(get_gear()).set_xmlFile(*get_xml_input()).set_trueHits(m_trueHits).set_DUTHits(m_input_file.DUT_zs_data()));
   m_totalTrue_hits = d2t.getTotalTrueHits();
   m_truehits_withDUT = d2t.getTrueHitsWithDUT();
   m_efficiency = _MAKE_SHARED1(efficiency, d2t.getTotalTrueHits(), d2t.getTrueHitsWithDUT());
