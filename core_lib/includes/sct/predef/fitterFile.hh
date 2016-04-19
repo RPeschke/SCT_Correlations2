@@ -10,15 +10,15 @@
 
 #ifndef __CINT__
 #include "sct/internal/factory.hh"
-#define registerFitterFile(FitterFileType,FitterFileName) registerClass(fitterFile,FitterFileType,FitterFileName)
+#define registerFitterFile(FitterFileType,FitterFileName) registerClass(fitterFile,FitterFileType,fitterFile::MainType(FitterFileName))
 #endif // !__CINT__
 
 class EUTFile;
 class DllExport fitterFile  {
 public:
   
-  typedef std::string MainType;
-  typedef  std::string Parameter_t;
+  typedef SubClassName_t MainType;
+  typedef  FileName_t Parameter_t;
   typedef const Parameter_t& Parameter_ref;
   virtual xy_plane  apix_hit_local() const = 0;
   virtual xy_plane  apix_hit() const = 0;
@@ -52,10 +52,10 @@ public:
 class DllExport FFile {
 public:
 
-  typedef std::string MainType;
-  typedef  std::string Parameter_t;
+  typedef SubClassName_t MainType;
+  typedef  FileName_t Parameter_t;
   typedef const Parameter_t& Parameter_ref;
-  FFile(fitterFile::Parameter_ref name, const fitterFile::MainType& type = "MAY15");
+  FFile(fitterFile::Parameter_ref name, const fitterFile::MainType& type = fitterFile::MainType("MAY15"));
   FFile();
   xy_plane  apix_hit_local() const;
   xy_plane  apix_hit() const ;
@@ -89,6 +89,6 @@ private:
   std::shared_ptr <fitterFile> m_file;
 #endif
 };
-DllExport std::unique_ptr<fitterFile> create_Fitter_file(fitterFile::Parameter_ref name, const fitterFile::MainType& type = "MAY15");
-DllExport void register_file_reader(const std::string& name, fitterFile* (fun)(fitterFile::Parameter_ref param_));
+DllExport std::unique_ptr<fitterFile> create_Fitter_file(fitterFile::Parameter_ref name, const fitterFile::MainType& type = fitterFile::MainType("MAY15"));
+DllExport void register_file_reader(const fitterFile::MainType& name, fitterFile* (fun)(fitterFile::Parameter_ref param_));
 #endif // fitterFile_h__

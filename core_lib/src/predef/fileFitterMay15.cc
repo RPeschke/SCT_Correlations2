@@ -60,7 +60,7 @@ registerFitterFile(fitterFileMay15, "MAY15");
 // } reg_;
 fitterFileMay15::fitterFileMay15(fitterFile::Parameter_ref params)
 {
-  m_file = _MAKE_SHARED1(TFile, params.c_str());
+  m_file = _MAKE_SHARED1(TFile, necessary_CONVERSION(params).c_str());
   m_pc = _MAKE_SHARED0(ProcessorCollection);
   m_generic = _MAKE_SHARED1(EUTFile,m_file.get(), m_pc.get());
 

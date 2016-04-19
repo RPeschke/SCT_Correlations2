@@ -1,4 +1,17 @@
 #include "sct/predef/fitterFile.hh"
+
+
+#ifdef _DEBUG
+
+std::string operator+(const std::string& rhs, const fitterFile::MainType& lhs) {
+  return rhs + lhs.value;
+}
+std::string operator+( const fitterFile::MainType& rhs, const std::string& lhs) {
+  return rhs.value + lhs;
+}
+#endif // _DEBUG
+
+
 #include "sct//internal/factoryDef.hh"
 registerBaseClassDef(fitterFile);
 
@@ -9,7 +22,7 @@ std::unique_ptr<fitterFile> create_Fitter_file(fitterFile::Parameter_ref name, c
   return Class_factory_Utilities::Factory<fitterFile>::Create(type, name);
 }
 
-void register_file_reader(const std::string& name, fitterFile* (fun)(fitterFile::Parameter_ref param_))
+void register_file_reader(const fitterFile::MainType& name, fitterFile* (fun)(fitterFile::Parameter_ref param_))
 {
    Class_factory_Utilities::Factory<fitterFile>::do_register( name ,fun);
 }

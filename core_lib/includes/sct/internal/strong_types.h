@@ -62,7 +62,8 @@ out_t strong_cast(const in_t& in_)  {
   TYPE_CLASS(processorName_t, std::string);
   TYPE_CLASS(procent_t, double);
 
-
+  TYPE_CLASS(FileName_t, std::string);
+  TYPE_CLASS(SubClassName_t, std::string);
 
 
 #endif // strong_types_h__

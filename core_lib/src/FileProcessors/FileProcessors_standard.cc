@@ -226,8 +226,6 @@ void FileProcessors_standard::saveHistograms(TFile* outPutFile, double residual_
 bool FileProcessors_standard::process_file(FileProberties* fileP)
 {
   process_reset();
-  //  auto file_PRINTOUT = xml_print("file");
-
 
 
   auto file__ = xml_print("file"); 
@@ -235,7 +233,7 @@ bool FileProcessors_standard::process_file(FileProberties* fileP)
 
 
 
-  m_input_file = FFile(fileP->m_fileName, "MAY15");
+  m_input_file = FFile(FileName_t(fileP->m_fileName), SubClassName_t("MAY15"));
   if (!m_input_file.isOpen())
   {
     return false;

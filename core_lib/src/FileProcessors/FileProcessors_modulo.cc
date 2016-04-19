@@ -76,7 +76,7 @@ bool FileProcessorsBase_modulo::process_file(FileProberties* fileP)
   xml_print("fileName", fileP->m_fileName);
 
 
-  m_input_file = FFile(fileP->m_fileName, "MAY15");
+  m_input_file = FFile(FileName_t( fileP->m_fileName), SubClassName_t("MAY15"));
   if (!m_input_file.isOpen())
   {
     return false;
