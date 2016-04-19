@@ -1,3 +1,7 @@
+#ifdef WIN32
+
+
+
 #include "ReleaseVectorDef.h"
 #include <string>
 #include <vector>
@@ -112,3 +116,5 @@ void ReleaseVectorDef::clear()
   }
   m_vecImpl->m_vec->clear();
 }
+
+#endif // WIN32
