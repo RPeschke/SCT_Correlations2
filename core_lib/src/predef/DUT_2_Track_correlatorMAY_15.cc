@@ -43,8 +43,8 @@ DUT_2_Track_correlatorMAY15::DUT_2_Track_correlatorMAY15(DUT_2_Track_correlator:
   auto trueHitsInStrips_name = param_.get_processor_pro().name + processorName_t("_true");
   auto dut_rotated_moved = xy_pro::transform_move(
     dut_rotated,
-    param_.get_xmlFile().globalConfig.Position_value,
-    0,
+    x_offset_t(param_.get_xmlFile().globalConfig.Position_value),
+    y_offset_t(0),
     processor_prob(param_.get_processor_pro()).setName(trueHitsInStrips_name)
     );
 
