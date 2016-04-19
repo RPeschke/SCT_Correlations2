@@ -74,8 +74,8 @@ init_returns lcio_reader_processor::init() {
     m_missingCollection.push_back(necessary_CONVERSION(e->m_name));
   }
   if (m_reader) {
-    m_reader->close();
-    delete m_reader;
+   // m_reader->close(); crasses when executing 
+   // delete m_reader;
   }
 
   m_reader = LCFactory::getInstance()->createLCReader();
