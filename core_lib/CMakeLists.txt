@@ -69,11 +69,11 @@ INCLUDE_DIRECTORIES(${RAPIDXML_INCLUDE_DIRS})
 
 
 
-set(FAKE_TARGET fakeTarget)
-add_custom_target(fakeTarget
+set(Make_Dict_name MakeDict)
+add_custom_target(${Make_Dict_name}
    ${ROOT_CINT_EXECUTABLE} -f ${SCT_DICTIONARY} -c -p -I${MY_INCLUDE_DIRECTORIES} ${SCT_ROOT_HEADERS} ${LINKDEF_FILE} 
 )
-add_dependencies(${PROJECT_NAME} ${FAKE_TARGET})
+add_dependencies(${PROJECT_NAME} ${Make_Dict_name})
 
 IF(LCIO_FOUND)
  
