@@ -77,11 +77,17 @@ bool FileProcessorsBase_modulo::process_file(FileProberties* fileP)
   xml_print("fileName", fileP->m_fileName);
 
 
-  m_input_file = FFile(FileName_t( fileP->m_fileName), SubClassName_t("MAY15"));
+  m_input_file = FFile(
+    FileName_t( fileP->m_fileName), 
+    SubClassName_t(get_xml_input()->globalConfig.FitterFileType)
+    );
+
   if (!m_input_file.isOpen())
   {
     return false;
   }
+
+
   m_dummy->cd();
   xml_print("fileName", fileP->m_fileName);
 
@@ -98,14 +104,30 @@ bool FileProcessorsBase_modulo::process_file(FileProberties* fileP)
 
 
 
-  THE the(SubClassName_t("MAY15"), TH_param().set_fitterFile(m_input_file).set_gear(get_gear()));
+  THE the(
+    SubClassName_t(
+    get_xml_input()->globalConfig.TrueHitExtractor), 
+    TH_param()
+    .set_fitterFile(m_input_file)
+    .set_gear(get_gear())
+    );
+
   m_trueHits = the.get_true_DUT_Hits();
 
+  D2T d2t(
+    SubClassName_t(
+    get_xml_input()->globalConfig.DUT2TrackCorrelator), 
+    D2T_prob()
+    .set_gear(get_gear())
+    .set_xmlFile(*get_xml_input())
+    .set_trueHits(m_trueHits)
+    .set_DUTHits(m_input_file.DUT_zs_data())
+    );
 
 
-  D2T d2t(SubClassName_t("MAY15"), D2T_prob().set_gear(get_gear()).set_xmlFile(*get_xml_input()).set_trueHits(m_trueHits).set_DUTHits(m_input_file.DUT_zs_data()));
   m_totalTrue_hits = d2t.getTotalTrueHits();
   m_truehits_withDUT = d2t.getTrueHitsWithDUT();
+
   m_efficiency = _MAKE_SHARED1(instrip_efficiency ,d2t.getTotalTrueHits(), d2t.getTrueHitsWithDUT(), modulo_x( 3), modulo_y(100000));
 
   m_res_efficiency = _MAKE_SHARED1(residual_efficiency,d2t.getTotalTrueHits(), m_input_file.DUT_zs_data(), residualCut_t(5), x_axis_def);

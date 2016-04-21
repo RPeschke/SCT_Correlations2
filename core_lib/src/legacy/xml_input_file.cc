@@ -90,6 +90,11 @@ xml_globalConfig::xml_globalConfig(rapid_xml_node* xIn)
   auto ymax_ = xml_util::getAtribute<double>(xIn->value->first_node("YCut"), "max");
   auto xmin_ = xml_util::getAtribute<double>(xIn->value->first_node("XCut"), "min");
   auto xmax_ = xml_util::getAtribute<double>(xIn->value->first_node("XCut"), "max");
+  FitterFileType = xml_util::getAtribute_string(xIn->value->first_node("FitterFileType"), "name");
+  DUT2TrackCorrelator = xml_util::getAtribute_string(xIn->value->first_node("DUT2TrackCorrelator"), "name");
+  TrueHitExtractor = xml_util::getAtribute_string(xIn->value->first_node("TrueHitExtractor"), "name");
+
+
   m_cut = S_YCut(ymin_, ymax_) + S_XCut(xmin_, xmax_);
   
 }
@@ -116,6 +121,9 @@ xml_globalConfig::xml_globalConfig(const xml_globalConfig& rhs)
   residual_cut = rhs.residual_cut;
   gearFile = rhs.gearFile;
   m_cut = rhs.m_cut;
+  FitterFileType = rhs.FitterFileType;
+  DUT2TrackCorrelator = rhs.DUT2TrackCorrelator;
+  TrueHitExtractor = rhs.TrueHitExtractor;
 }
 
 xml_globalConfig& xml_globalConfig::operator=(const xml_globalConfig& rhs)
@@ -135,6 +143,10 @@ xml_globalConfig& xml_globalConfig::operator=(const xml_globalConfig& rhs)
   residual_cut = rhs.residual_cut;
   gearFile = rhs.gearFile;
   m_cut = rhs.m_cut;
+
+  FitterFileType = rhs.FitterFileType;
+  DUT2TrackCorrelator = rhs.DUT2TrackCorrelator;
+  TrueHitExtractor = rhs.TrueHitExtractor;
   return *this;
 }
 

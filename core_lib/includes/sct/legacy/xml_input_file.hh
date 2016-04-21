@@ -48,7 +48,9 @@ public:
   double Position_value;
   double residual_cut;
   std::string gearFile;
-
+  std::string TrueHitExtractor;
+  std::string FitterFileType;
+  std::string DUT2TrackCorrelator;
 private:
 #ifndef __CINT__
   mutable  S_CutCoollection m_cut = S_YCut(-10000000, 100000000000) + S_XCut(-10000, 10000);
