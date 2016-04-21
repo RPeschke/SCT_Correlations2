@@ -22,6 +22,10 @@ public: \
   friend name operator+(const name& lhs, const name& rhs) { return name(lhs.value + rhs.value);} \
 }
 
+template <typename out_t, typename in_t>
+out_t strong_cast(const in_t& in_) {
+  return out_t(necessary_CONVERSION(in_));
+}
 
 
 #else 
@@ -32,13 +36,19 @@ public: \
 typedef  type name
 
 
+template <typename out_t, typename in_t>
+const out_t& strong_cast(const in_t& in_) {
+  return in_;
+}
+
+template <typename out_t, typename in_t>
+out_t& strong_cast(in_t& in_) {
+  return in_;
+}
 #endif // _DEBUG
 
 
-template <typename out_t, typename in_t>
-out_t strong_cast(const in_t& in_)  {
-  return out_t(necessary_CONVERSION(in_));
-}
+
 
   TYPE_CLASS(modulo_x, double);
   TYPE_CLASS(modulo_y, double);
