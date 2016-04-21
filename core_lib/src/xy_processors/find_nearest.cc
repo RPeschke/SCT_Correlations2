@@ -15,7 +15,7 @@
 
 class find_nearest_processor :public processorPlaneVSPlane {
 public:
-  find_nearest_processor(const xy_plane& plane_A, const xy_plane& plane_B, double x_cutOff, double y_cutOff, processor_prob pprob);
+  find_nearest_processor(const xy_plane& plane_A, const xy_plane& plane_B, residualCut_x x_cutOff, residualCut_y y_cutOff, processor_prob pprob);
 
 
   virtual void processEventStart();
@@ -24,7 +24,8 @@ public:
 
 
   const double m_c_noHit = 100000000000;
-  double m_x_cutOff, m_y_cutOff;
+  double m_x_cutOff;
+  double m_y_cutOff;
   double r;
   hit  dist = hit(0, 0), h1 = hit(0, 0), h2 = hit(0, 0);
   
@@ -34,12 +35,12 @@ public:
 find_nearest_processor::find_nearest_processor(
   const xy_plane& plane_A, 
   const xy_plane& plane_B, 
-  double x_cutOff, 
-  double y_cutOff, 
+  residualCut_x x_cutOff,
+  residualCut_y y_cutOff,
   processor_prob pprob)
   :processorPlaneVSPlane(plane_A,plane_B,pprob),
-  m_x_cutOff(x_cutOff),
-  m_y_cutOff(y_cutOff)
+  m_x_cutOff(necessary_CONVERSION(x_cutOff)),
+  m_y_cutOff(necessary_CONVERSION(y_cutOff))
 {
 
 }
@@ -61,7 +62,7 @@ void find_nearest_processor::processHit(const hit& p1, const hit& p2){
   if (
     r1 < r
     &&
-    TMath::Abs(e.x) < m_x_cutOff
+    TMath::Abs(e.x) <   m_x_cutOff
     &&
     TMath::Abs(e.y) < m_y_cutOff)
   {
@@ -85,7 +86,7 @@ process_returns find_nearest_processor::processEventEnd()
   return p_sucess;
 }
 
-find_nearest::find_nearest(const xy_plane& plane_A, const xy_plane& plane_B, double x_cutoff, double y_cutoff, processor_prob pprob /*= processor_prob() */)
+find_nearest::find_nearest(const xy_plane& plane_A, const xy_plane& plane_B, residualCut_x x_cutoff, residualCut_y y_cutoff, processor_prob pprob /*= processor_prob() */)
 {
   std::shared_ptr<processor> p(new find_nearest_processor(plane_A, plane_B, x_cutoff, y_cutoff, pprob));
   plane_A.get_ProcessorCollection()->addProcessor(p);

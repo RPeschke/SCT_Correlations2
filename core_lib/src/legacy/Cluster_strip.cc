@@ -106,7 +106,7 @@ Cluster_strip::Cluster_strip(const xy_plane& trueHits_with_dut, const xy_plane& 
     cluster__cut,
     trueHits_with_dut, //used to be all hits 
     search_axis,
-    1,
+    residualCut_t( 1),
     DontsaveWithRandomName(processorName_t("cluster_find_closest_"))
     );
   auto mod_total_closest = xy_pro::modulo(

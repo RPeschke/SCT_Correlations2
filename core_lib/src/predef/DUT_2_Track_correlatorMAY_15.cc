@@ -62,7 +62,7 @@ auto find_closest_name = param_.get_processor_pro().name + processorName_t("_clo
     m_totalTrueHit_afterCut,
     param_.get_DUT_Hits(),
     x_axis_def,
-    param_.get_xmlFile().globalConfig.residual_cut,
+    residualCut_t( param_.get_xmlFile().globalConfig.residual_cut),
     processor_prob(param_.get_processor_pro()).setName(find_closest_name)
     );
 

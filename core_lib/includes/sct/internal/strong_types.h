@@ -64,6 +64,8 @@ out_t& strong_cast(in_t& in_) {
    TYPE_CLASS(y_offset_t, double);
     TYPE_CLASS(y_slope_t, double);
   TYPE_CLASS(residualCut_t, double);
+  TYPE_CLASS(residualCut_x, double);
+  TYPE_CLASS(residualCut_y, double);
   TYPE_CLASS(rot_angle_t, double);
 
   TYPE_CLASS(move_t, double);

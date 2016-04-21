@@ -15,7 +15,7 @@ public:
   find_nearest_strip(const xy_plane& planeA,
     const xy_plane& planeB,
     axis_def search_axis,
-    double cutOfff,
+    residualCut_t cutOfff,
     processor_prob plot_prob_ = saveWithRandomName(processorName_t("find_nearest_strip__")));
 
   xy_plane getResidual() const;

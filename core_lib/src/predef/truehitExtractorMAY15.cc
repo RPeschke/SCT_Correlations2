@@ -38,8 +38,8 @@ xy_plane make_connections(truehitExtractor::Parameter_ref param_) {
   return find_nearest(
     apix_on_DUT,
     param_.get_fitterFile()->DUT_fitted_local_GBL(),
-    1, // residual cut x
-    1,  // residual cut y
+    residualCut_x(1), // residual cut x
+    residualCut_y(1),  // residual cut y
     param_.get_processor_pro()
     ).getHitOnPlaneB();
 }

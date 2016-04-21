@@ -9,8 +9,8 @@ class DllExport find_nearest {
 public:
   find_nearest(const xy_plane& plane_A,
     const xy_plane& plane_B,
-    double x_cutoff,
-    double y_cutoff,
+    residualCut_x x_cutoff,
+    residualCut_y y_cutoff,
     processor_prob pprob = saveWithRandomName(processorName_t("find_nearest__"))
     );
   xy_plane getResidual() const;
