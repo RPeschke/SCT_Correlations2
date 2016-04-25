@@ -103,6 +103,18 @@ ID_t generic_plane::get_ID() const
 
 
 
+std::vector<axesName_t> generic_plane::get_axes_names() const
+{
+  std::vector<axesName_t> ret;
+  for (auto&e : m_storage)
+  {
+    ret.push_back(e.axisName);
+  }
+
+
+  return ret;
+}
+
 storage::storage(std::vector<double>* vec_, const axesName_t& axisName_) :vec(vec_), axisName(axisName_), value(&zero)
 {
 

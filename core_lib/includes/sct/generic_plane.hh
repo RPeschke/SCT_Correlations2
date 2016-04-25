@@ -42,6 +42,7 @@ public:
   ProcessorCollection* get_ProcessorCollection() const;
   TTree* get_tree();
   ID_t get_ID() const;
+  std::vector<axesName_t> get_axes_names() const;
 private:
 
 #ifndef __CINT__
