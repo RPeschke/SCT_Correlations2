@@ -8,6 +8,7 @@
 
 init_returns processor_2d::init()
 {
+  m_current = 0;
   m_output_coll->clear_collection();
   return i_sucess;
 }
