@@ -4,7 +4,34 @@
 #include "sct/collection.h"
 #include "sct/processor_prob.hh"
 #include "sct/ProcessorCollection.h"
+#include "sct/generic_processors/planeCut.hh"
+#include "sct/generic_processors/cutNote.hh"
 
+class processor_cut_axis :public processor {
+public:
+  processor_cut_axis(const generic_plane& pl, const cutNote& ax, const processor_prob& pprob);
+
+  virtual init_returns init() override;
+
+  virtual process_returns processEvent() override;
+
+  virtual process_returns fill() override;
+
+  virtual end_returns end() override;
+
+  virtual processorName_t get_name() override;
+
+  collection* get_output_collection();
+
+  planeCut m_plane;
+  std::shared_ptr<cutNote> m_note;
+  const std::vector<axesName_t> m_names;
+  std::shared_ptr<collection> m_output_coll;
+  std::shared_ptr<generic_plane> m_outputPlane;
+  processor_prob m_pprob;
+  int m_current = 0;
+
+};
 
 processor_cut_axis::processor_cut_axis(const generic_plane& pl, const cutNote& ax,const processor_prob& pprob) :m_note(ax.copy()), m_plane(pl),m_names(pl.get_axes_names()),m_pprob(pprob) {
   m_pprob.setAxis(m_names);
@@ -70,299 +97,5 @@ generic_plane cut_op(const generic_plane& pl, const cutNote& ax, const processor
 
 
 
-void axCutHandle::register_plane(planeCut& pl) {
-  m_Ax.register_plane(pl);
-  
-}
 
-bool axCutHandle::operator()() const {
-  return m_predicate(m_Ax.getValue());
-}
-
-
-
-std::shared_ptr<cutNote> axCutHandle::copy() const {
-  return _MAKE_SHARED1(axCutHandle, *this);
-}
-
-axCutHandle::axCutHandle(axCut name, Predicate_f fun) :m_Ax(std::move(name)), m_predicate(std::move(fun)) {
-
-}
-
-
-axCutHandle operator<(cutValue_t min_, axCut ax) {
-  return axCutHandle(ax, [min_](hitVale_t hitValue) { return min_ < hitValue;});
-}
-
-axCutHandle operator<(axCut ax, cutValue_t val) {
-  return axCutHandle(ax, [val](hitVale_t hitValue) { return hitValue < val;});
-
-}
-
-doubleAX operator<(axCut A, axCut B) {
-  return doubleAX(A, B, [](double hitA, double hitB) {return hitA < hitB;});
-}
-
-axCutHandle operator<=(cutValue_t min_, axCut ax) {
-  return axCutHandle(ax, [min_](hitVale_t hitValue) { return min_ <= hitValue;});
-}
-
-axCutHandle operator<=(axCut ax, cutValue_t val) {
-  return axCutHandle(ax, [val](hitVale_t hitValue) { return hitValue <= val;});
-}
-
-doubleAX operator<=(axCut A, axCut B) {
-  return doubleAX(A, B, [](double hitA, double hitB) {return hitA <= hitB;});
-}
-
-axCutHandle operator>(cutValue_t val, axCut ax) {
-  return axCutHandle(ax, [val](hitVale_t hitValue) { return val > hitValue;});
-}
-
-axCutHandle operator>(axCut ax, cutValue_t val) {
-  return axCutHandle(ax, [val](hitVale_t hitValue) { return hitValue > val;});
-}
-
-doubleAX operator>(axCut A, axCut B) {
-  return doubleAX(A, B, [](double hitA, double hitB) {return hitA > hitB;});
-}
-
-axCutHandle operator>=(cutValue_t val, axCut ax) {
-  return axCutHandle(ax, [val](hitVale_t hitValue) { return val >= hitValue;});
-}
-
-axCutHandle operator>=(axCut ax, cutValue_t val) {
-  return axCutHandle(ax, [val](hitVale_t hitValue) { return hitValue >= val;});
-}
-
-doubleAX operator>=(axCut A, axCut B) {
-  return doubleAX(A, B, [](double hitA, double hitB) {return hitA >= hitB;});
-}
-
-doubleAX operator==(axCut A, axCut B) {
-  return doubleAX(A, B, [](double hitA, double hitB) {return hitA == hitB;});
-}
-
-axCutHandle operator==(axCut ax, cutValue_t val) {
-  return axCutHandle(ax, [val](hitVale_t hitValue) { return hitValue == val;});
-}
-
-axCutHandle operator==(cutValue_t val, axCut ax) {
-  return axCutHandle(ax, [val](hitVale_t hitValue) { return hitValue == val;});
-}
-
-doubleAX operator!=(axCut A, axCut B) {
-  return doubleAX(A, B, [](double hitA, double hitB) {return hitA != hitB;});
-}
-
-axCutHandle operator!=(axCut ax, cutValue_t val) {
-  return axCutHandle(ax, [val](hitVale_t hitValue) { return hitValue != val;});
-}
-
-axCutHandle operator!=(cutValue_t val, axCut ax) {
-  return axCutHandle(ax, [val](hitVale_t hitValue) { return hitValue != val;});
-}
-
-AND_note operator&&(const cutNote& NoteA, const cutNote& NoteB) {
-  AND_note ret;
-  ret.add(NoteA.copy());
-  ret.add(NoteB.copy());
-  return ret;
-}
-
-
-
-AND_note operator&&(AND_note NoteA, const cutNote& NoteB) {
-  NoteA.add(NoteB.copy());
-  return NoteA;
-}
-
-AND_note operator&&(const cutNote& NoteA, AND_note NoteB) {
-  AND_note ret;
-  for (auto e:NoteB.m_storage)
- {
-   ret.add(e);
- }
-  return ret;
-}
-
-AND_note operator&&(AND_note NoteA, AND_note NoteB) {
-  for (auto e : NoteB.m_storage) {
-    NoteA.add(e);
-  }
-  return NoteA;
-}
-
-OR_note operator||(const cutNote& NoteA, const cutNote& NoteB) {
-  OR_note ret;
-  ret.add(NoteA.copy());
-  ret.add(NoteB.copy());
-  return ret;
-}
-
-OR_note operator||(OR_note NoteA, const cutNote& NoteB) {
-  NoteA.add(NoteB.copy());
-  return NoteA;
-}
-
-
-
-NOT_note operator!(const cutNote& note_) {
-  return NOT_note(note_.copy());
-}
-
-planeCut::planeCut(const generic_plane& pl):m_pl(pl) {
-
-}
-
-double* planeCut::getAxis(axesName_t ax) {
-  auto p = m_storage[ax];
-  if (p) {
-    return p.get();
-  }
-
-  m_storage[ax] = _MAKE_SHARED0(double);
-  m_pl.setHitAxisAdress(ax, m_storage[ax].get());
-  return m_storage[ax].get();
-}
-
-
-
-bool planeCut::next() {
-  return m_pl.next();
-}
-
-
-
-doubleAX::doubleAX(axCut nameA, axCut nameB, Predicate_f2 fun) :m_axA(nameA), m_axB(nameB),m_predicate(fun) {
-
-}
-
-
-
-
-void doubleAX::register_plane(planeCut& pl) {
-  m_axA.register_plane(pl);
-  m_axB.register_plane(pl);
-}
-
-bool doubleAX::operator()() const {
-  return m_predicate(m_axA.getValue(), m_axB.getValue());
-}
-
-std::shared_ptr<cutNote> doubleAX::copy() const {
-  return _MAKE_SHARED1(doubleAX, *this);
-}
-
-
-
-
-
-
- NOT_note::NOT_note(std::shared_ptr<cutNote> note_):m_note(note_){
-
- }
-
- void NOT_note::register_plane(planeCut& pl) {
-   m_note->register_plane(pl);
- }
-
- bool NOT_note::operator()() const {
-   return !(m_note->operator()());
- }
-
- std::shared_ptr<cutNote> NOT_note::copy() const {
-   return _MAKE_SHARED1(NOT_note, *this);
- }
-
- void OR_note::register_plane(planeCut& pl) {
-   for (auto&e : m_storage) {
-     e->register_plane(pl);
-   }
- }
-
- bool OR_note::operator()() const {
-   for (auto& e : m_storage) {
-     if (e->operator()()) {
-       return true;
-     }
-   }
-   return false;
- }
-
- std::shared_ptr<cutNote> OR_note::copy() const {
-   return _MAKE_SHARED1(OR_note, *this);
- }
-
- void OR_note::add(std::shared_ptr<cutNote> cut_) {
-   m_storage.push_back(cut_);
- }
-
- void AND_note::register_plane(planeCut& pl) {
-   for (auto&e : m_storage){
-     e->register_plane(pl);
-   }
- }
-
- bool AND_note::operator()() const {
-   for (auto& e : m_storage) {
-     if (!e->operator()()) {
-       return false;
-     }
-   }
-   return true;
- }
-
- std::shared_ptr<cutNote> AND_note::copy() const {
-   return _MAKE_SHARED1(AND_note, *this);
- }
-
- void AND_note::add(std::shared_ptr<cutNote> cut_) {
-   m_storage.push_back(cut_);
- }
-
- axCut::axCut(axesName_t name_, x_slope_t slope_, x_offset_t offset_) :m_name(std::move(name_)), m_slope(slope_), m_offset(offset_) {
-
- }
-
- axCut::axCut(axesName_t name_) : m_name(std::move(name_)) {
-
- }
-
- double axCut::getValue() const {
-   return necessary_CONVERSION(m_slope)* (*m_hit) + necessary_CONVERSION(m_offset);
- }
-
- bool axCut::register_plane(planeCut& pl) {
-   m_hit = pl.getAxis(m_name);
-   return true;
- }
-
- axesName_t axCut::getName() const {
-   return m_name;
- }
-
- axCut operator+(axCut ax, double offset_) {
-   return axCut(ax.getName(), ax.m_slope, ax.m_offset + x_offset_t( offset_));
- }
-
-axCut operator+(double offset_, axCut ax) {
-  return axCut(ax.getName(), ax.m_slope, ax.m_offset + x_offset_t( offset_));
-}
-
-axCut operator*(axCut ax, double slope_) {
-  return axCut(ax.getName(), x_slope_t(slope_*  necessary_CONVERSION(ax.m_slope)), x_offset_t(slope_*  necessary_CONVERSION(ax.m_offset)));
-}
-
-axCut operator*(double slope_, axCut ax) {
-  return axCut(ax.getName(), x_slope_t(slope_*  necessary_CONVERSION(ax.m_slope)), x_offset_t(slope_*  necessary_CONVERSION(ax.m_offset)));
-}
-
-axCut x_def() {
-  return axCut(axesName_t("x"));
-}
-
-axCut y_def() {
-  return axCut(axesName_t("y"));
-}
 

@@ -39,6 +39,14 @@ ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/analysis/instrip_efficiency.hh
 ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/legacy/Cluster_strip.hh
 ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/lcio/lcio_reader.hh
 ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/internal/strong_types.h
+${PROJECT_SOURCE_DIR}/core_lib/includes/sct/generic_processors/cutNote.hh
+${PROJECT_SOURCE_DIR}/core_lib/includes/sct/generic_processors/AND_note.hh
+${PROJECT_SOURCE_DIR}/core_lib/includes/sct/generic_processors/axCut.hh
+${PROJECT_SOURCE_DIR}/core_lib/includes/sct/generic_processors/axCutHandle.hh
+${PROJECT_SOURCE_DIR}/core_lib/includes/sct/generic_processors/doubleAX.hh
+${PROJECT_SOURCE_DIR}/core_lib/includes/sct/generic_processors/NOT_note.hh
+${PROJECT_SOURCE_DIR}/core_lib/includes/sct/generic_processors/OR_note.hh
+${PROJECT_SOURCE_DIR}/core_lib/includes/sct/generic_processors/processor_cut_axis.hh
  )
 
 

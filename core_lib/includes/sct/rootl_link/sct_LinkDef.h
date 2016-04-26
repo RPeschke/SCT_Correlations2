@@ -99,4 +99,61 @@
 #pragma link C++ typedef axesName_t;
 #pragma link C++ typedef processorName_t;
 #pragma link C++ typedef procent_t;
+#pragma link C++ typedef x_offset_t;
+#pragma link C++ typedef x_slope_t;
+#pragma link C++ typedef cutValue_t;
+#pragma link C++ function cut_op;
+#pragma link C++ class cutNote;
+
+
+#pragma link C++ class AND_note;
+#pragma link C++ function  operator&&(AND_note , AND_note);
+#pragma link C++ function  operator&&(const cutNote& , AND_note );
+#pragma link C++ function  operator&&(const cutNote& , const cutNote& );
+#pragma link C++ function  operator&&(AND_note , const cutNote& );
+
+
+#pragma link C++ class axCut;
+
+#pragma link C++ function x_def;
+#pragma link C++ function y_def;
+#pragma link C++ function  operator+(axCut ,double);
+#pragma link C++ function operator+(double, axCut );
+#pragma link C++ function operator*(axCut, double);
+#pragma link C++ function operator*(double, axCut);
+
+#pragma link C++ class axCutHandle;
+#pragma link C++ function operator<(cutValue_t , axCut );
+#pragma link C++ function operator<=(cutValue_t, axCut );
+#pragma link C++ function operator>(cutValue_t , axCut );
+#pragma link C++ function operator>=(cutValue_t , axCut);
+#pragma link C++ function operator<(axCut , cutValue_t );
+#pragma link C++ function operator<=(axCut, cutValue_t );
+#pragma link C++ function operator>(axCut , cutValue_t );
+#pragma link C++ function operator>=(axCut, cutValue_t );
+#pragma link C++ function operator==(axCut, cutValue_t);
+#pragma link C++ function operator!=(axCut, cutValue_t);
+#pragma link C++ function operator==(cutValue_t, axCut);
+#pragma link C++ function operator!=(cutValue_t, axCut);
+
+
+#pragma link C++ class doubleAX;
+#pragma link C++ function operator<(axCut , axCut);
+#pragma link C++ function operator<=(axCut, axCut);
+#pragma link C++ function operator>(axCut , axCut);
+#pragma link C++ function operator>=(axCut, axCut);
+#pragma link C++ function operator==(axCut, axCut);
+#pragma link C++ function operator!=(axCut, axCut);
+
+
+#pragma link C++ class NOT_note;
+#pragma link C++ function  operator!(const cutNote&);
+
+
+#pragma link C++ class OR_note;
+#pragma link C++ function operator||(OR_note , OR_note );
+#pragma link C++ function operator||(const cutNote& , OR_note);
+#pragma link C++ function operator||(const cutNote& , const cutNote& );
+#pragma link C++ function operator||(OR_note , const cutNote& );
+
 #endif //__CINT__
