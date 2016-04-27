@@ -24,14 +24,14 @@ void dummy(Axes_t... ax) {
 
 
 template<typename Func_t, typename... Axes_t>
-auto  make_lambda_Note_sp(Func_t&& f, std::shared_ptr<Axes_t>&&... ax) {
+lambda_Note  make_lambda_Note_sp(Func_t&& f, std::shared_ptr<Axes_t>&&... ax) {
   auto reg_ = register_plane_f([=](planeCut& pl) {dummy(ax->register_plane(pl)...);});
   auto func_ = Predicate_f0([=]() { return f(ax->getValue()...);});
   return lambda_Note(reg_, func_);
 }
 
 template<typename Func_t,typename... Axes_t>
-auto  make_lambda_Note(Func_t&& func_, Axes_t&&... ax) {
+lambda_Note  make_lambda_Note(Func_t&& func_, Axes_t&&... ax) {
   return make_lambda_Note_sp(func_, _MAKE_SHARED1(Axes_t, ax)...);
 }
 
