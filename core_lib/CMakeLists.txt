@@ -37,7 +37,6 @@ ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/analysis/efficiency.hh
 ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/analysis/residual_efficiency.hh
 ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/analysis/instrip_efficiency.hh
 ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/legacy/Cluster_strip.hh
-${PROJECT_SOURCE_DIR}/core_lib/includes/sct/lcio/lcio_reader.hh
 ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/internal/strong_types.h
 ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/generic_processors/cutNote.hh
 ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/generic_processors/AND_note.hh
@@ -50,7 +49,20 @@ ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/generic_processors/processor_cut_axi
  )
 
 
+
+
+
+IF(LCIO_FOUND)
+
+set(SCT_ROOT_HEADERS ${SCT_ROOT_HEADERS} ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/lcio/lcio_reader.hh)
 set(LINKDEF_FILE  ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/rootl_link/sct_LinkDef.h)
+ELSE(LCIO_FOUND) 
+
+set(LINKDEF_FILE  ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/rootl_link/sct_LinkDefNOLCIO.h)
+ENDIF(LCIO_FOUND)
+
+
+
  SET(MY_INCLUDE_DIRECTORIES
      ${PROJECT_SOURCE_DIR}/core_lib/includes/
     )

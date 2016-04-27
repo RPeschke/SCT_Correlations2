@@ -1,6 +1,6 @@
 #ifndef lcio_reader_h__
 #define lcio_reader_h__
-
+#ifdef USE_LCIO
 #ifndef __CINT__
 #include <memory>
 #include <vector>
@@ -37,4 +37,5 @@ private:
 #endif
 
 };
+#endif
 #endif // lcio_reader_h__

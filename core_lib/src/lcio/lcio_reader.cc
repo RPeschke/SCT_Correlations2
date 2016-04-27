@@ -1,6 +1,8 @@
-#ifdef USE_LCIO
-#include <iostream>
 #include "sct/lcio/lcio_reader.hh"
+#include "sct/predef/plane.hh"
+#include <iostream>
+#include "sct/internal/strong_types.h"
+#ifdef USE_LCIO
 #include "lcio.h"
 #include "IO/LCReader.h"
 #include "IMPL/LCTOOLS.h"
@@ -22,6 +24,8 @@
 #include "EVENT/LCEvent.h"
 #include "sct/lcio/lcio_output.hh"
 #include <algorithm>
+
+
 
 
 
@@ -218,38 +222,38 @@ xy_plane lcio_reader::getPlane(const collectionName_t& CollectionName, ID_t plan
   return xy_plane(getCollection(CollectionName)->getPlane(planeID));
 }
 
+#else
 
-
-
-
-lcio_reader::lcio_reader(const std::string& inputFile, ProcessorCollection* pc) :lcio_reader(inputFile)
-{
-
-}
-
-lcio_reader::lcio_reader(const std::string& inputFile)
-{
-
-  std::cout << "LCIO reader not supported " << std::endl;
-}
-
-lcio_reader::~lcio_reader() {
-
-}
-
-lcio_collection* lcio_reader::getCollection(const collectionName_t& name) {
-  return nullptr;
-
-}
-
-ProcessorCollection* lcio_reader::getProcessorCollection()
-{
-  return nullptr;
-}
-
-xy_plane lcio_reader::getPlane(const collectionName_t& CollectionName, int planeID)
-{
-  return xy_plane();
-}
+// 
+// 
+// lcio_reader::lcio_reader(const std::string& inputFile, ProcessorCollection* pc) :lcio_reader(inputFile)
+// {
+// 
+// }
+// 
+// lcio_reader::lcio_reader(const std::string& inputFile)
+// {
+// 
+//   std::cout << "LCIO reader not supported " << std::endl;
+// }
+// 
+// lcio_reader::~lcio_reader() {
+// 
+// }
+// 
+// lcio_collection* lcio_reader::getCollection(const collectionName_t& name) {
+//   return nullptr;
+// 
+// }
+// 
+// ProcessorCollection* lcio_reader::getProcessorCollection()
+// {
+//   return nullptr;
+// }
+// 
+// xy_plane lcio_reader::getPlane(const collectionName_t& CollectionName, int planeID)
+// {
+//   return xy_plane();
+// }
 
 #endif // USE_LCIO
