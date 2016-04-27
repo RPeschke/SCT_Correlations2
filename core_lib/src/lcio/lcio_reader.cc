@@ -217,7 +217,7 @@ xy_plane lcio_reader::getPlane(const collectionName_t& CollectionName, ID_t plan
 {
   return xy_plane(getCollection(CollectionName)->getPlane(planeID));
 }
-#else
+
 
 
 
