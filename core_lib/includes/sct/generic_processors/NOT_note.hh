@@ -13,7 +13,7 @@ public:
   NOT_note& operator=(const NOT_note&) DEFAULT_OP;
   virtual void register_plane(planeCut& pl);
   virtual bool operator()() const;
-  DllExport friend NOT_note operator!(const cutNote& note_);
+  
 #ifndef __CINT__
   NOT_note(std::shared_ptr<cutNote> note_);
   virtual std::shared_ptr<cutNote> copy() const;
@@ -21,5 +21,5 @@ private:
   std::shared_ptr<cutNote> m_note;
 #endif
 };
-
+DllExport NOT_note operator!(const cutNote& note_);
 #endif // NOT_note_h__
