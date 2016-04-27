@@ -2,8 +2,9 @@
 #include "sct/legacy/xml_util.hh"
 #include "rapidxml_utils.hpp"
 #include <iostream>
+#include "sct/internal/sct_exceptions.hh"
 #define  sct_corr_XML_ERROR_DEFAULT_VALUE  double(-666666.666666)
-#define SCT_THROW(x) std::cout << x << std::endl
+
 
 
 

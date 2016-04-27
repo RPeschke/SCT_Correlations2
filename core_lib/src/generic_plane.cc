@@ -1,6 +1,7 @@
 #include "sct/generic_plane.hh"
 #include "sct/axis.hh"
 #include "TTree.h"
+#include "sct/internal/sct_exceptions.hh"
 double zero = 0;
 
 
@@ -52,7 +53,7 @@ bool generic_plane::setHitAxisAdress(const axesName_t& name, double* outVar) {
       return true;
     }
   }
-
+  SCT_THROW("unknown Axes: " + necessary_CONVERSION(name));
   return false;
 }
 
