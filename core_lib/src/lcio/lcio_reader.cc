@@ -1,6 +1,6 @@
-#include "sct/lcio/lcio_reader.hh"
-#include <iostream>
 #ifdef USE_LCIO
+#include <iostream>
+#include "sct/lcio/lcio_reader.hh"
 #include "lcio.h"
 #include "IO/LCReader.h"
 #include "IMPL/LCTOOLS.h"
