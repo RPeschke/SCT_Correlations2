@@ -71,6 +71,41 @@ namespace sct_corr {
   void Exception::addLocation(const std::string & file /*= ""*/, unsigned line /*= 0*/, const std::string & func /*= ""*/, const std::string & shortfunc /*= ""*/) const {
     m_errors.push_back(errors_container(file, line, func,shortfunc));
   }
+  bool gStatusErrorPrinting = true;
+  void disableErrorPrinting() {
+    gStatusErrorPrinting = false;
+  }
+
+  void enableErrorPrinting() {
+    gStatusErrorPrinting = true;
+  }
+
+  bool getStatusErrorPrinting() {
+    return gStatusErrorPrinting;
+  }
+
+
+  void PrintException(const std::string& Exception__, const std::string & exec, const std::string & file, int line, const std::string func, const std::string shortfunc) {
+    if (getStatusErrorPrinting()) {
+      std::string ret;
+      if (!Exception__.empty()) {
+        ret += "exception: " + text_formating(Exception__);
+      }
+      if (!exec.empty()){
+        ret += "\n Message: " + text_formating(exec);
+      }
+      if (!file.empty()) {
+        ret += "\n\n  From :\n" + text_formating(file);
+        if (line > 0) {
+          ret += ":" + std::to_string(line);
+        }
+      }
+      if (shortfunc.length() > 0) ret += "\n\n  In: \n" + text_formating(shortfunc);
+      if (func.length() > 0) ret += "\n\n  LongName: \n" + text_formating(func);
+      ret += "\n" + std::string(60, '=');
+      std::cout << ret << std::endl;
+    }
+  }
 
   int handleExceptions() {
     try {
@@ -107,6 +142,20 @@ namespace sct_corr {
     if (m_func.length() > 0) ret += "\n\n  LongName: \n" + text_formating(m_func);
     
     return ret;
+  }
+
+  ScopteDisableErrorPrinting::ScopteDisableErrorPrinting():m_old_sataus(getStatusErrorPrinting()) {
+    disableErrorPrinting();
+  }
+
+  ScopteDisableErrorPrinting::~ScopteDisableErrorPrinting() {
+
+    if (m_old_sataus) {
+      enableErrorPrinting();
+    } else {
+      disableErrorPrinting();
+    }
+
   }
 
 }

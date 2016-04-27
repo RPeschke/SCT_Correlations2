@@ -38,7 +38,9 @@
 #endif // WIN32
 
 
-
+#define CONCATENATE_DETAIL(x, y) x##y
+#define CONCATENATE(x, y) CONCATENATE_DETAIL(x, y)
+#define MAKE_UNIQUE_NAME(x)  CONCATENATE(x, __LINE__)
 
 
 #endif // platform_h__

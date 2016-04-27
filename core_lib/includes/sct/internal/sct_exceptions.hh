@@ -14,7 +14,9 @@
   #define SCT_FUNC_SHORT   "" 
 #endif // !SCT_FUNC_SHORT
 
-#define SCT_THROWX(exc, msg) throw ::sct_corr::InitException(exc(msg), __FILE__, __LINE__, SCT_FUNC,SCT_FUNC_SHORT)
+#define SCT_THROWX(exc, msg) \
+ ::sct_corr::PrintException(#exc,msg, __FILE__, __LINE__, SCT_FUNC, SCT_FUNC_SHORT);\
+ throw ::sct_corr::InitException(exc(msg), __FILE__, __LINE__, SCT_FUNC,SCT_FUNC_SHORT)
 
 #define SCT_THROW(msg) SCT_THROWX(::sct_corr::Exception, (msg))
 
@@ -66,6 +68,21 @@ namespace sct_corr {
 
   // Some useful predefined exceptions
   SCT_EXCEPTION(CollectionNotFound);
+
+
+  DllExport void disableErrorPrinting();
+  DllExport void enableErrorPrinting();
+  DllExport bool getStatusErrorPrinting();
+  class DllExport ScopteDisableErrorPrinting {
+  public:
+    ScopteDisableErrorPrinting();
+    ~ScopteDisableErrorPrinting();
+  private:
+    const bool m_old_sataus;
+  };
+
+#define SCOPE_DISABLE_ERROR_PRINTOUTS() auto  MAKE_UNIQUE_NAME(__printouts)  =   ::sct_corr::ScopteDisableErrorPrinting()
+  DllExport void PrintException(const std::string& Exception__, const std::string & exec, const std::string & file, int line, const std::string func, const std::string shortfunc);
 
   DllExport int handleExceptions();
 }
