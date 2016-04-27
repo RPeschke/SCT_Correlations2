@@ -4,6 +4,7 @@
 #include <sstream>
 #include <stdexcept>
 #include "rapidxml.hpp"
+#include "sct/internal/sct_exceptions.hh"
 
 
 class rapid_xml_node {
@@ -24,7 +25,7 @@ namespace xml_util{
     s >> ret;
     char remain = '\0';
     s >> remain;
-    if (remain) throw std::invalid_argument("Invalid argument: " + x);
+    if (remain) SCT_THROW("Invalid argument: " + x); 
     return ret;
   }
   template<>
@@ -34,6 +35,8 @@ namespace xml_util{
 
   template<typename T>
   inline std::vector<T> getVectorOfT(rapidxml::xml_node<char>* node_) {
+    if (!node_)  SCT_THROW("Input Note is Empty");
+    
     std::vector<T> ret;
     for (auto node = node_->first_node(T::NodeName()); node; node = node->next_sibling(T::NodeName()))
     {
@@ -49,12 +52,16 @@ namespace xml_util{
   }
   template <typename T>
 inline  T getAtribute(rapidxml::xml_node<char>* node_, const char * AtributeName, T default_){
+  if (!node_) SCT_THROW("Input Note is Empty for Attribute: "+ std::string(AtributeName));
+    
+  
+
     auto n = node_->first_attribute(AtributeName);
     if (n)
     {
       return from_string(n->value(), (default_));
     }
-    throw std::invalid_argument("Invalid attribute: " + std::string(AtributeName));
+    SCT_THROW("Invalid attribute: " + std::string(AtributeName));
     return default_;
   }
 template <typename T>
@@ -72,11 +79,12 @@ inline std::string getAtribute(rapid_xml_node* node_, const char * AtributeName,
 
 template <typename T>
 inline  T getAtribute(rapidxml::xml_node<char>* node_, const char * AtributeName) {
+  if (!node_) SCT_THROW("Input Note is Empty for Attribute: " + std::string(AtributeName));
   const T def = -123154647; // random number 
   
   auto ret = getAtribute(node_, AtributeName, def);
   if (ret == def) {
-    throw std::invalid_argument("Invalid attribute: " + std::string(AtributeName));
+    SCT_THROW("Invalid attribute: " + std::string(AtributeName));
   }
   return ret;
 }
@@ -88,6 +96,7 @@ inline  T getAtribute(rapid_xml_node* node_, const char * AtributeName) {
 }
 
 inline std::string getAtribute_string(rapidxml::xml_node<char>* node_, const char * AtributeName) {
+  if (!node_) SCT_THROW("Input Note is Empty for Attribute: " + std::string(AtributeName));
   const std::string default_("__dummy_default");
 
   auto ret = getAtribute(node_, AtributeName, default_);

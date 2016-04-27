@@ -1,112 +1,138 @@
 #include "sct//legacy/xml_input_file.hh"
 #include "sct/legacy/xml_util.hh"
 #include "rapidxml_utils.hpp"
+#include "sct/internal/sct_exceptions.hh"
+#include "rapidxml.hpp"
+#include "sct/internal/ScopeGuard.hh"
 
-const S_Cut& xml_globalConfig::cut() const
-{
+
+template<typename T>
+auto getNode(T* inNote, const char* name) {
+  auto outNode = inNote->first_node(name);
+  if (!outNode) SCT_THROW("Node not found! nodeName: <" + std::string(name) + "> ");
+  return outNode;
+}
+
+template<typename T>
+T getAtributeFromNote(rapid_xml_node* xIn, const std::string& NodeName, const std::string& AtributeName) {
+  auto node = getNode(xIn->value, NodeName.c_str());
+  return xml_util::getAtribute<T>(node, AtributeName.c_str());
+
+}
+template<>
+std::string getAtributeFromNote<std::string>(rapid_xml_node* xIn, const std::string& NodeName, const std::string& AtributeName) {
+  auto node = getNode(xIn->value, NodeName.c_str());
+  return  xml_util::getAtribute_string(node, AtributeName.c_str());
+}
+
+
+
+const S_Cut& xml_globalConfig::cut() const {
   return  m_cut;
 }
 
 
 
-const char* xml_file::NodeName()
-{
+const char* xml_file::NodeName() {
   return "file";
 }
 
-XML_imput_file::XML_imput_file(const char* name) 
-{
-  rapidxml::file<> file_(name);
-  rapidxml::xml_document<> doc_;
-  doc_.parse<0>(file_.data());    // 0 means default parse flags
 
-  rapid_xml_node gconfig(doc_.first_node("RunCollection")->first_node("globalConfig"));
-  globalConfig = xml_globalConfig( &gconfig);
+XML_imput_file::XML_imput_file(const char* name) {
+  SCOPE_GUARD_START{
+    rapidxml::file<> file_(name);
+    rapidxml::xml_document<> doc_;
+    doc_.parse<0>(file_.data());    // 0 means default parse flags
 
-  m_files = xml_util::getVectorOfT<xml_file>(doc_.first_node("RunCollection")->first_node("fileList"));
+    auto RunCollection_n = getNode(&doc_, "RunCollection");
+    auto node2 = getNode(RunCollection_n, "globalConfig");
+
+    rapid_xml_node gconfig(node2);
+    globalConfig = xml_globalConfig(&gconfig);
+
+
+    auto fileList_n = getNode(RunCollection_n, "fileList");
+
+    m_files = xml_util::getVectorOfT<xml_file>(fileList_n);
+  }SCOPE_GUARD_END_CONTINUE
 }
 
-XML_imput_file::XML_imput_file()
-{
+XML_imput_file::XML_imput_file() {
 
 }
 
-XML_imput_file::XML_imput_file(const XML_imput_file& rhs)
-{
-  globalConfig =rhs.globalConfig;
+XML_imput_file::XML_imput_file(const XML_imput_file& rhs) {
+  globalConfig = rhs.globalConfig;
 
-  m_files =rhs.m_files;
+  m_files = rhs.m_files;
 }
 
-XML_imput_file& XML_imput_file::operator=(const XML_imput_file& rhs)
-{
+XML_imput_file& XML_imput_file::operator=(const XML_imput_file& rhs) {
   globalConfig = rhs.globalConfig;
 
   m_files = rhs.m_files;
   return *this;
 }
 
-xml_file& XML_imput_file::get_File(int id)
-{
+xml_file& XML_imput_file::get_File(int id) {
   return m_files.at(id);
 }
 
-const xml_file& XML_imput_file::get_File(int id) const
-{
+const xml_file& XML_imput_file::get_File(int id) const {
   return m_files.at(id);
 }
 
-int XML_imput_file::size() const
-{
+int XML_imput_file::size() const {
   return  m_files.size();
 }
 
-xml_globalConfig::xml_globalConfig(rapid_xml_node* xIn)
-{
-  CollectionName = xml_util::getAtribute_string(xIn->value->first_node("CollectionName"), "value");
 
-  NumberOfBins = xml_util::getAtribute<int>(xIn->value->first_node("NumberOfBins"), "value");
-  NumberOfStrips = xml_util::getAtribute<int>(xIn->value->first_node("NumberOfStrips"), "value");
+xml_globalConfig::xml_globalConfig(rapid_xml_node* xIn) {
+  SCOPE_GUARD_START{
+    if (!xIn) SCT_THROW("Input is nullptr");
+    CollectionName = getAtributeFromNote<std::string>(xIn,"CollectionName", "value");
 
-
-  Device = xml_util::getAtribute<int>(xIn->value->first_node("Device"), "value");
-
-
-  auto min_ = xml_util::getAtribute<int>(xIn->value->first_node("AvtiveStrips"), "min");
-  auto max_ = xml_util::getAtribute<int>(xIn->value->first_node("AvtiveStrips"), "max");
-
-  AvtiveStrips = MinMaxRange(min_, max_);
-
-  Rotation = xml_util::getAtribute<double>(xIn->value->first_node("Rotation"), "value");
-
-  Position_name = xml_util::getAtribute_string(xIn->value->first_node("Position"), "name");
-
-  Position_value = xml_util::getAtribute<double>(xIn->value->first_node("Position"), "value");
-  residual_cut = xml_util::getAtribute<double>(xIn->value->first_node("residual_cut"), "value");
-  gearFile = xml_util::getAtribute_string(xIn->value->first_node("gearFile"), "name");
+    NumberOfBins = getAtributeFromNote<int>(xIn,"NumberOfBins", "value");
+    NumberOfStrips = getAtributeFromNote<int>(xIn, "NumberOfStrips", "value");
 
 
-  auto ymin_ = xml_util::getAtribute<double>(xIn->value->first_node("YCut"), "min");
-  auto ymax_ = xml_util::getAtribute<double>(xIn->value->first_node("YCut"), "max");
-  auto xmin_ = xml_util::getAtribute<double>(xIn->value->first_node("XCut"), "min");
-  auto xmax_ = xml_util::getAtribute<double>(xIn->value->first_node("XCut"), "max");
-  FitterFileType = xml_util::getAtribute_string(xIn->value->first_node("FitterFileType"), "name");
-  DUT2TrackCorrelator = xml_util::getAtribute_string(xIn->value->first_node("DUT2TrackCorrelator"), "name");
-  TrueHitExtractor = xml_util::getAtribute_string(xIn->value->first_node("TrueHitExtractor"), "name");
+    Device == getAtributeFromNote<int>(xIn, "Device", "value");
 
 
-  m_cut = S_YCut(ymin_, ymax_) + S_XCut(xmin_, xmax_);
-  
+    auto min_ = getAtributeFromNote<int>(xIn, "AvtiveStrips", "min");
+    auto max_ = getAtributeFromNote<int>(xIn, "AvtiveStrips", "max");
+
+    AvtiveStrips = MinMaxRange(min_, max_);
+
+    Rotation = getAtributeFromNote<double>(xIn, "Rotation", "value");
+
+    Position_name = getAtributeFromNote<std::string>(xIn, "Position", "name");
+
+    Position_value = getAtributeFromNote<double>(xIn, "Position", "value");
+    residual_cut = getAtributeFromNote<double>(xIn, "residual_cut", "value");
+    gearFile = getAtributeFromNote<std::string>(xIn, "gearFile", "name");
+
+
+    auto ymin_ = getAtributeFromNote<double>(xIn, "YCut", "min");
+    auto ymax_ = getAtributeFromNote<double>(xIn, "YCut", "max");
+    auto xmin_ = getAtributeFromNote<double>(xIn, "XCut", "min");
+    auto xmax_ = getAtributeFromNote<double>(xIn, "XCut", "max");
+    m_cut = S_YCut(ymin_, ymax_) + S_XCut(xmin_, xmax_);
+
+
+
+    FitterFileType = getAtributeFromNote<std::string>(xIn, "FitterFileType", "name");
+    DUT2TrackCorrelator = getAtributeFromNote<std::string>(xIn, "DUT2TrackCorrelator", "name");
+    TrueHitExtractor = getAtributeFromNote<std::string>(xIn, "TrueHitExtractor", "name");
+  }SCOPE_GUARD_END_CONTINUE
 }
 
-xml_globalConfig::xml_globalConfig()
-{
+xml_globalConfig::xml_globalConfig() {
 
 }
 
-xml_globalConfig::xml_globalConfig(const xml_globalConfig& rhs)
-{
- CollectionName = rhs.CollectionName;
+xml_globalConfig::xml_globalConfig(const xml_globalConfig& rhs) {
+  CollectionName = rhs.CollectionName;
 
   NumberOfBins = rhs.NumberOfBins;
   NumberOfStrips = rhs.NumberOfStrips;
@@ -126,8 +152,7 @@ xml_globalConfig::xml_globalConfig(const xml_globalConfig& rhs)
   TrueHitExtractor = rhs.TrueHitExtractor;
 }
 
-xml_globalConfig& xml_globalConfig::operator=(const xml_globalConfig& rhs)
-{
+xml_globalConfig& xml_globalConfig::operator=(const xml_globalConfig& rhs) {
   CollectionName = rhs.CollectionName;
 
   NumberOfBins = rhs.NumberOfBins;
@@ -150,33 +175,30 @@ xml_globalConfig& xml_globalConfig::operator=(const xml_globalConfig& rhs)
   return *this;
 }
 
-xml_file::xml_file(rapid_xml_node* xIn)
-{
-  name = xml_util::getAtribute_string(xIn->value->first_node("name"), "value");
-  threshold = xml_util::getAtribute<double>(xIn->value->first_node("threshold"), "value");
+xml_file::xml_file(rapid_xml_node* xIn) {
+  name = getAtributeFromNote<std::string>(xIn, "name", "value");
 
-  HV = xml_util::getAtribute<double>(xIn->value->first_node("HV"), "value");
-  runNumber = xml_util::getAtribute<int>(xIn->value->first_node("runNumber"), "value");
+  threshold = getAtributeFromNote<double>(xIn, "threshold", "value");
 
+  HV = getAtributeFromNote<double>(xIn, "HV", "value");
+  runNumber = getAtributeFromNote<int>(xIn, "runNumber", "value");
 
-}
-
-xml_file::xml_file()
-{
 
 }
 
-xml_file::xml_file(const xml_file& rhs)
-{
-  name =rhs.name;
+xml_file::xml_file() {
+
+}
+
+xml_file::xml_file(const xml_file& rhs) {
+  name = rhs.name;
   threshold = rhs.threshold;
 
-  HV =rhs.HV;
+  HV = rhs.HV;
   runNumber = rhs.runNumber;
 }
 
-xml_file& xml_file::operator=(const xml_file& rhs)
-{
+xml_file& xml_file::operator=(const xml_file& rhs) {
   name = rhs.name;
   threshold = rhs.threshold;
 
@@ -185,32 +207,26 @@ xml_file& xml_file::operator=(const xml_file& rhs)
   return *this;
 }
 
-MinMaxRange::MinMaxRange() :m_min(0), m_max(0), m_stepSize(0)
-{
+MinMaxRange::MinMaxRange() :m_min(0), m_max(0), m_stepSize(0) {
 
 }
 
-MinMaxRange::MinMaxRange(int min_, int step_, int max_) : m_min(min_), m_max(max_), m_stepSize(step_)
-{
+MinMaxRange::MinMaxRange(int min_, int step_, int max_) : m_min(min_), m_max(max_), m_stepSize(step_) {
 
 }
 
-MinMaxRange::MinMaxRange(int min_, int max_) : m_min(min_), m_max(max_), m_stepSize(1)
-{
+MinMaxRange::MinMaxRange(int min_, int max_) : m_min(min_), m_max(max_), m_stepSize(1) {
 
 }
 
-int MinMaxRange::getMin() const
-{
+int MinMaxRange::getMin() const {
   return m_min;
 }
 
-int MinMaxRange::getMax() const
-{
+int MinMaxRange::getMax() const {
   return m_max;
 }
 
-int MinMaxRange::getStep() const
-{
+int MinMaxRange::getStep() const {
   return m_stepSize;
 }

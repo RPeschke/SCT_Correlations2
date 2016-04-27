@@ -29,6 +29,16 @@
 
 #endif // _DEBUG
 
+#ifdef WIN32
+#define SCT_FUNC __FUNCSIG__
+#define SCT_FUNC_SHORT  __func__
+#else
+#define  SCT_FUNC __PRETTY_FUNCTION__
+#define SCT_FUNC_SHORT  __FUNCTION__
+#endif // WIN32
+
+
+
 
 
 #endif // platform_h__
