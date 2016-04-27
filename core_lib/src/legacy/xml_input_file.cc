@@ -7,7 +7,7 @@
 
 
 template<typename T>
-auto getNode(T* inNote, const char* name) {
+auto getNode(T* inNote, const char* name) ->decltype(inNote->first_node(name)) {
   auto outNode = inNote->first_node(name);
   if (!outNode) SCT_THROW("Node not found! nodeName: <" + std::string(name) + "> ");
   return outNode;
