@@ -63,7 +63,7 @@ namespace sct_internal {
   };
 
   template <typename T>
-  auto operator+(ScopeGuard_h&& h, T&& func_) {
+  auto operator+(ScopeGuard_h&& h, T&& func_) -> decltype(ScopeGuard(std::forward<T>(func_), h.m_run)) {
 
     return ScopeGuard(std::forward<T>(func_), h.m_run);
   }
