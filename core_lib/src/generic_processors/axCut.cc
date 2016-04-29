@@ -18,6 +18,10 @@
 
  
 
+ axCut::axCut(axesName_t name_, x_slope_t slope_, x_offset_t offset_, const double* hit_):m_name(name_) ,m_slope(slope_),m_offset(m_offset),m_hit(hit_) {
+
+ }
+
  double axCut::getValue() const {
    return necessary_CONVERSION(m_slope)* (*m_hit) + necessary_CONVERSION(m_offset);
  }
@@ -43,7 +47,11 @@
 
 
 
-axCut operator+(axCut ax, double offset_) {
+ std::shared_ptr<axCut> axCut::copy() const {
+   return _MAKE_SHARED1(axCut, m_name, m_slope, m_offset, m_hit);
+ }
+
+ axCut operator+(axCut ax, double offset_) {
   return ax.add(offset_);
 }
 

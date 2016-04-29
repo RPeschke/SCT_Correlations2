@@ -4,13 +4,17 @@
 #include "sct/platform.hh"
 #include "sct/internal/strong_types.h"
 #include "cutNote.hh"
-
+#ifndef __CINT__
+#include <memory>
+#endif // !__CINT__
 
 class planeCut;
 
 
 class DllExport axCut {
 public:
+
+  
   axCut(axesName_t name_);
   axCut(axesName_t name_, x_slope_t slope_, x_offset_t offset_);
   
@@ -22,6 +26,12 @@ public:
 
   axCut add(double value);
   axCut multiply(double value);
+  
+#ifndef __CINT__
+   virtual std::shared_ptr<axCut> copy() const ;
+   axCut(axesName_t name_, x_slope_t slope_, x_offset_t offset_ , const double* hit_);
+#endif // !__CINT__
+
 private:
   const axesName_t m_name;
   const double* m_hit = nullptr;
