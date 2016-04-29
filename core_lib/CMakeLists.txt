@@ -86,7 +86,12 @@ ADD_LIBRARY( ${PROJECT_NAME} SHARED ${SOURCES} ${SCT_DICTIONARY_handle})
 
 INCLUDE_DIRECTORIES(${RAPIDXML_INCLUDE_DIRS})
 
-
+if(WIN32)
+    INCLUDE_DIRECTORIES( ${PROJECT_SOURCE_DIR}/extern/ReleaseVectorDef/inc )
+    SET(releaseVectorDef_lib ${PROJECT_SOURCE_DIR}/extern/ReleaseVectorDef/lib/ReleaseVectorDef.lib)
+ELSE(WIN32)
+    SET(releaseVectorDef_lib "")
+endif(WIN32)
 
 
 set(Make_Dict_name MakeDict)
@@ -99,11 +104,11 @@ IF(LCIO_FOUND)
  
     INCLUDE_DIRECTORIES(${RAPIDXML_INCLUDE_DIRS} ${LCIO_INCLUDE_DIRS})
     add_definitions(-DUSE_LCIO)
-    target_link_libraries(${PROJECT_NAME}  ${ROOT_LIBRARIES} ${ADDITIONAL_LIBRARIES}  ${LCIO_LIBRARIES})
+    target_link_libraries(${PROJECT_NAME}  ${ROOT_LIBRARIES} ${ADDITIONAL_LIBRARIES} ${releaseVectorDef_lib}  ${LCIO_LIBRARIES})
 MESSAGE(STATUS "using LCIO")
 ELSE(LCIO_FOUND)
     INCLUDE_DIRECTORIES(${RAPIDXML_INCLUDE_DIRS})
-    target_link_libraries(${PROJECT_NAME}  ${ROOT_LIBRARIES} ${ADDITIONAL_LIBRARIES}  )
+    target_link_libraries(${PROJECT_NAME}  ${ROOT_LIBRARIES} ${ADDITIONAL_LIBRARIES}  ${releaseVectorDef_lib})
 MESSAGE(STATUS "not using LCIO")
 
 ENDIF(LCIO_FOUND)
