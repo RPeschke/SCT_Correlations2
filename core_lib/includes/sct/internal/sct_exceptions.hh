@@ -14,9 +14,8 @@
   #define SCT_FUNC_SHORT   "" 
 #endif // !SCT_FUNC_SHORT
 
-#define SCT_THROWX(exc, msg) \
- ::sct_corr::PrintException(#exc,msg, __FILE__, __LINE__, SCT_FUNC, SCT_FUNC_SHORT);\
- throw ::sct_corr::InitException(exc(msg), __FILE__, __LINE__, SCT_FUNC,SCT_FUNC_SHORT)
+#define SCT_THROWX(exc, msg) do{ ::sct_corr::PrintException(#exc,msg, __FILE__, __LINE__, SCT_FUNC, SCT_FUNC_SHORT);\
+ throw ::sct_corr::InitException(exc(msg), __FILE__, __LINE__, SCT_FUNC,SCT_FUNC_SHORT); }while (false)
 
 #define SCT_THROW(msg) SCT_THROWX(::sct_corr::Exception, (msg))
 

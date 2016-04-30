@@ -16,8 +16,9 @@
 #include "TMath.h"
 #include "sct/legacy/SCT_helpers.hh"
 #include "sct/analysis/residual_efficiency.hh"
+#include "sct/internal/sct_exceptions.hh"
 
-#define  SCT_THROW(X)  std::cout<<X<<std::endl
+
 
 
 

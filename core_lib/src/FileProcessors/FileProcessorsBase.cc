@@ -4,10 +4,11 @@
 #include "sct/internal/factoryDef.hh"
 #include "TH1.h"
 #include "TProfile.h"
+#include "sct/internal/sct_exceptions.hh"
 registerBaseClassDef(FileProcessorsBase);
 
 
-#define  SCT_THROW(X)  std::cout<<X<<std::endl
+
 
 
 
