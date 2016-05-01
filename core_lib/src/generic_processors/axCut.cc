@@ -1,44 +1,39 @@
 #include "sct/generic_processors/axCut.hh"
 #include "sct/generic_processors/planeCut.hh"
+#include "sct/platform.hh"
 
 
 
 
- axCut::axCut(axesName_t name_, x_slope_t slope_, x_offset_t offset_) :m_name(std::move(name_)), m_slope(slope_), m_offset(offset_) {
 
- }
-
- axCut::axCut(axesName_t name_) : m_name(std::move(name_)) {
+ axCut::axCut():m_name(axesName_t("")) {
 
  }
 
- axCut::axCut(const axCut& rhs): m_name(rhs.m_name),m_hit(rhs.m_hit), m_slope(rhs.m_slope),m_offset(rhs.m_offset) {
-   
- }
 
- 
 
- axCut::axCut(axesName_t name_, x_slope_t slope_, x_offset_t offset_, const double* hit_):m_name(name_) ,m_slope(slope_),m_offset(m_offset),m_hit(hit_) {
+ axCut::axCut(const axesName_t& name):m_name(name) {
 
  }
 
- double axCut::getValue() const {
-   return necessary_CONVERSION(m_slope)* (*m_hit) + necessary_CONVERSION(m_offset);
+
+
+ axCut::axCut(const axCut& rhs) : m_name(rhs.m_name), m_hit(rhs.m_hit) {
+
  }
 
- bool axCut::register_plane(planeCut& pl) {
+
+ bool axCut::register_plane(planeCut& pl)  {
    m_hit = pl.getAxis(m_name);
    return true;
  }
 
- axesName_t axCut::getName() const {
-   return m_name;
+ double axCut::get_value()  const {
+   return *m_hit;
  }
- axCut axCut::add(double value) {
-   return axCut(m_name, m_slope, m_offset + x_offset_t(value));
- }
- axCut axCut::multiply(double value) {
-   return axCut(m_name, x_slope_t(value*  necessary_CONVERSION(m_slope)), x_offset_t(value*  necessary_CONVERSION(m_offset)));
+
+ axCut::~axCut() {
+
  }
 
 
@@ -47,17 +42,12 @@
 
 
 
- std::shared_ptr<axCut> axCut::copy() const {
-   return _MAKE_SHARED1(axCut, m_name, m_slope, m_offset, m_hit);
+
+
+ std::shared_ptr<cutNote> axCut::copy() const  {
+   return _MAKE_SHARED1(axCut, *this);
  }
 
- axCut operator+(axCut ax, double offset_) {
-  return ax.add(offset_);
-}
-
-axCut operator+(double offset_, axCut ax) {
-  return ax.add(offset_);
-}
 
 axCut x_def() {
   return axCut(axesName_t("x"));
@@ -67,11 +57,41 @@ axCut y_def() {
   return axCut(axesName_t("y"));
 }
 
-axCut operator*(axCut ax, double value) {
-  return ax.multiply(value);
+
+
+lambda_Note operator+(const axCut& lhs, double rhs) {
+  return make_lambda_Note([rhs](double x) { return x + rhs; }, lhs);
 }
 
-axCut operator*(double value, axCut ax) {
-  return ax.multiply(value);
+lambda_Note operator+(double lhs, const axCut& rhs) {
+  return make_lambda_Note([lhs](double x) { return lhs + x; }, rhs);
+}
+
+lambda_Note operator+(const axCut& lhs, const axCut& rhs) {
+  return make_lambda_Note([](double x, double y) { return x +y ; }, lhs, rhs);
+}
+
+lambda_Note operator-(const axCut& lhs, double rhs) {
+  return make_lambda_Note([rhs](double x) { return x - rhs; }, lhs);
+}
+
+lambda_Note operator-(double lhs, const axCut& rhs) {
+  return make_lambda_Note([lhs](double x) { return lhs - x; }, rhs);
+}
+
+lambda_Note operator-(const axCut& lhs, const axCut& rhs) {
+  return make_lambda_Note([](double x,double y) { return x - y; }, lhs, rhs);
+}
+
+lambda_Note operator*(const axCut& lhs, double rhs) {
+  return make_lambda_Note([rhs](double x) { return x * rhs; }, lhs);
+}
+
+lambda_Note operator*(double lhs, const axCut& rhs) {
+  return make_lambda_Note([lhs](double x) { return lhs * x; }, rhs);
+}
+
+lambda_Note operator*(const axCut& lhs, const axCut& rhs) {
+  return make_lambda_Note([](double x,double y) { return  x*y; }, lhs, rhs);
 }
 

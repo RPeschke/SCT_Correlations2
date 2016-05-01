@@ -10,8 +10,8 @@ public:
   OR_note() DEFAULT_OP;
   OR_note(const OR_note&) DEFAULT_OP;
   OR_note& operator=(const OR_note&) DEFAULT_OP;
-  virtual void register_plane(planeCut& pl);
-  virtual bool operator()() const;
+  virtual bool register_plane(planeCut& pl);
+  virtual double get_value() const;
 
 
 #ifndef __CINT__

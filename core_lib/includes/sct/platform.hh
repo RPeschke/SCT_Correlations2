@@ -6,11 +6,14 @@
 #ifdef WIN32 
 #ifndef __CINT__
 #define DllExport   __declspec( dllexport )
+#define __OVERIDE__ override
 #else
 #define DllExport   
+#define __OVERIDE__ 
 #endif // __CINT__
 #else 
 #define DllExport   
+#define __OVERIDE__ 
 #endif // WIN32
 
 

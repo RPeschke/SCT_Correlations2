@@ -11,8 +11,8 @@ class DllExport NOT_note :public cutNote {
 public:
   NOT_note(const NOT_note&) DEFAULT_OP;
   NOT_note& operator=(const NOT_note&) DEFAULT_OP;
-  virtual void register_plane(planeCut& pl);
-  virtual bool operator()() const;
+  virtual bool register_plane(planeCut& pl);
+  virtual double get_value() const __OVERIDE__;
   
 #ifndef __CINT__
   NOT_note(std::shared_ptr<cutNote> note_);

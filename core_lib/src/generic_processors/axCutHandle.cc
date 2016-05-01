@@ -3,13 +3,13 @@
 
 
 
-void axCutHandle::register_plane(planeCut& pl) {
+bool axCutHandle::register_plane(planeCut& pl) {
   m_Ax->register_plane(pl);
-  
+  return true;
 }
 
-bool axCutHandle::operator()() const {
-  return m_predicate(m_Ax->getValue());
+double axCutHandle::get_value() const {
+  return m_predicate(m_Ax->get_value());
 }
 
 

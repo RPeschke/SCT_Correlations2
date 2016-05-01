@@ -4,15 +4,16 @@
 
 
 
-void OR_note::register_plane(planeCut& pl) {
+bool OR_note::register_plane(planeCut& pl) {
    for (auto&e : m_storage) {
      e->register_plane(pl);
    }
+   return true;
  }
 
- bool OR_note::operator()() const {
+double OR_note::get_value() const {
    for (auto& e : m_storage) {
-     if (e->operator()()) {
+     if (e->get_value()) {
        return true;
      }
    }

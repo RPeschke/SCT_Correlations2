@@ -1,17 +1,18 @@
 #include "sct/generic_processors/planeCut.hh"
 #include "sct/generic_processors/AND_note.hh"
 
- void AND_note::register_plane(planeCut& pl) {
+ bool AND_note::register_plane(planeCut& pl) {
    for (auto&e : m_storage){
      e->register_plane(pl);
    }
+   return true;
  }
 
 
 
- bool AND_note::operator()() const {
+ double AND_note::get_value() const {
    for (auto& e : m_storage) {
-     if (!e->operator()()) {
+     if (!e->get_value()) {
        return false;
      }
    }

@@ -8,8 +8,8 @@ public:
   AND_note() DEFAULT_OP;
   AND_note(const AND_note&) DEFAULT_OP;
   AND_note& operator=(const AND_note&) DEFAULT_OP;
-  virtual void register_plane(planeCut& pl);
-  virtual bool operator()() const;
+  virtual bool register_plane(planeCut& pl) __OVERIDE__;
+  virtual double get_value() const __OVERIDE__;
 
 
   

@@ -7,42 +7,47 @@
 #ifndef __CINT__
 #include <memory>
 #endif // !__CINT__
+#include "lambda_Note.hh"
 
 class planeCut;
 
 
-class DllExport axCut {
+class DllExport axCut:public cutNote {
 public:
 
   
-  axCut(axesName_t name_);
-  axCut(axesName_t name_, x_slope_t slope_, x_offset_t offset_);
-  
-  axCut(const axCut&);
-
-  double getValue() const;
-  bool register_plane(planeCut& pl);
-  axesName_t getName() const;
-
-  axCut add(double value);
-  axCut multiply(double value);
-  
+  axCut();
+  axCut(const axCut& rhs);
+  axCut(const axesName_t& name);
+  virtual bool register_plane(planeCut& pl) __OVERIDE__;
+  virtual double get_value() const __OVERIDE__;
+  virtual ~axCut() __OVERIDE__;
 #ifndef __CINT__
-   virtual std::shared_ptr<axCut> copy() const ;
-   axCut(axesName_t name_, x_slope_t slope_, x_offset_t offset_ , const double* hit_);
-#endif // !__CINT__
+  virtual std::shared_ptr<cutNote> copy() const __OVERIDE__;
+private:  
+  axesName_t m_name;
+  const double * m_hit = nullptr;
+#endif
 
-private:
-  const axesName_t m_name;
-  const double* m_hit = nullptr;
-  const x_slope_t m_slope = x_slope_t(1);
-  const x_offset_t m_offset = x_offset_t(0);
+  
+
 };
 
-DllExport axCut operator+(axCut , double);
-DllExport axCut operator+(double, axCut);
-DllExport axCut operator*(axCut, double);
-DllExport axCut operator*(double, axCut);
+
+
+
+DllExport lambda_Note operator+(const axCut& lhs , double rhs);
+DllExport lambda_Note operator+(double lhs, const axCut& rhs);
+DllExport lambda_Note operator+(const axCut& lhs, const axCut& rhs);
+
+
+DllExport lambda_Note operator-(const axCut& lhs, double rhs);
+DllExport lambda_Note operator-(double lhs, const axCut& rhs);
+DllExport lambda_Note operator-(const axCut& lhs, const axCut& rhs);
+
+DllExport lambda_Note operator*(const axCut&, double);
+DllExport lambda_Note operator*(double, const axCut&);
+DllExport lambda_Note operator*(const axCut& lhs, const axCut& rhs);
 
 DllExport axCut x_def();
 DllExport axCut y_def();

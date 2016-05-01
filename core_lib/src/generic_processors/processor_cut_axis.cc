@@ -57,7 +57,7 @@ process_returns processor_cut_axis::processEvent() {
   m_output_coll->clear_event();
 
   while (m_plane.next()) {
-    if (m_note->operator()()) {
+    if (m_note->get_value()) {
       m_outputPlane->push(ID_t(0));
     }
   }

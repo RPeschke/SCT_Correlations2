@@ -7,8 +7,8 @@ class DllExport doubleAX :public cutNote {
 public:
   doubleAX(const doubleAX&) ;
   doubleAX operator=(const doubleAX&);
-  virtual void register_plane(planeCut& pl);
-  virtual bool operator()() const;
+  virtual bool register_plane(planeCut& pl) __OVERIDE__;
+  virtual double get_value() const __OVERIDE__;
 #ifndef __CINT__
   doubleAX(axCut nameA, axCut nameB, Predicate_f2 fun);
   virtual std::shared_ptr<cutNote> copy() const;

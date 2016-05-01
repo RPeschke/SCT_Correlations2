@@ -4,12 +4,13 @@
 
  }
 
- void NOT_note::register_plane(planeCut& pl) {
+ bool NOT_note::register_plane(planeCut& pl) {
    m_note->register_plane(pl);
+   return true;
  }
 
- bool NOT_note::operator()() const {
-   return !(m_note->operator()());
+ double NOT_note::get_value() const {
+   return !(m_note->get_value());
  }
 
  std::shared_ptr<cutNote> NOT_note::copy() const {

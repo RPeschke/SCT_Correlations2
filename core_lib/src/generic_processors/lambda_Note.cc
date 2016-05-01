@@ -1,7 +1,7 @@
 #include "sct/generic_processors/lambda_Note.hh"
 #include "sct/generic_processors/cutNote.hh"
 #include <vector>
-using Predicate_f0 = std::function<bool()>;
+
 
 
 
@@ -9,11 +9,12 @@ lambda_Note::lambda_Note(register_plane_f reg_, Predicate_f0 cut_) :m_reg(reg_),
 
 }
 
-void lambda_Note::register_plane(planeCut& pl) {
+bool lambda_Note::register_plane(planeCut& pl) {
   m_reg(pl);
+  return true;
 }
 
-bool lambda_Note::operator()() const {
+double lambda_Note::get_value() const {
   return m_cut();
 }
 

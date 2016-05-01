@@ -20,13 +20,14 @@ doubleAX doubleAX::operator=(const doubleAX& rhs) {
   return *this;
 }
 
-void doubleAX::register_plane(planeCut& pl) {
+bool doubleAX::register_plane(planeCut& pl) {
   m_axA->register_plane(pl);
   m_axB->register_plane(pl);
+  return true;
 }
 
-bool doubleAX::operator()() const {
-  return m_predicate(m_axA->getValue(), m_axB->getValue());
+double doubleAX::get_value() const {
+  return m_predicate(m_axA->get_value(), m_axB->get_value());
 }
 
 std::shared_ptr<cutNote> doubleAX::copy() const {
