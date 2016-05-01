@@ -7,15 +7,13 @@
 #include "sct/predef/plane.hh"
 
 
-#include "sct/generic_processors/AND_note.hh"
+
 #include "sct/generic_processors/axCut.hh"
 #include "sct/generic_processors/axCutHandle.hh"
 #include "sct/generic_processors/cutNote.hh"
-#include "sct/generic_processors/doubleAX.hh"
 #include "sct/generic_processors/lambda_Note.hh"
-#include "sct/generic_processors/NOT_note.hh"
-#include "sct/generic_processors/OR_note.hh"
 #include "sct/generic_processors/planeCut.hh"
+#include "sct/generic_processors/generic_operator.hh"
 
 
 

@@ -59,39 +59,4 @@ axCut y_def() {
 
 
 
-lambda_Note operator+(const axCut& lhs, double rhs) {
-  return make_lambda_Note([rhs](double x) { return x + rhs; }, lhs);
-}
-
-lambda_Note operator+(double lhs, const axCut& rhs) {
-  return make_lambda_Note([lhs](double x) { return lhs + x; }, rhs);
-}
-
-lambda_Note operator+(const axCut& lhs, const axCut& rhs) {
-  return make_lambda_Note([](double x, double y) { return x +y ; }, lhs, rhs);
-}
-
-lambda_Note operator-(const axCut& lhs, double rhs) {
-  return make_lambda_Note([rhs](double x) { return x - rhs; }, lhs);
-}
-
-lambda_Note operator-(double lhs, const axCut& rhs) {
-  return make_lambda_Note([lhs](double x) { return lhs - x; }, rhs);
-}
-
-lambda_Note operator-(const axCut& lhs, const axCut& rhs) {
-  return make_lambda_Note([](double x,double y) { return x - y; }, lhs, rhs);
-}
-
-lambda_Note operator*(const axCut& lhs, double rhs) {
-  return make_lambda_Note([rhs](double x) { return x * rhs; }, lhs);
-}
-
-lambda_Note operator*(double lhs, const axCut& rhs) {
-  return make_lambda_Note([lhs](double x) { return lhs * x; }, rhs);
-}
-
-lambda_Note operator*(const axCut& lhs, const axCut& rhs) {
-  return make_lambda_Note([](double x,double y) { return  x*y; }, lhs, rhs);
-}
 

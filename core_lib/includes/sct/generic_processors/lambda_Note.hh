@@ -1,22 +1,25 @@
 #ifndef lambda_Note_h__
 #define lambda_Note_h__
-#ifndef __CINT__
+
 #include "sct/generic_processors/cutNote.hh"
 #include <memory>
 #include <vector>
 
 class DllExport lambda_Note : public cutNote {
 public:
-  lambda_Note(register_plane_f reg_, Predicate_f0  cut_);
+  lambda_Note();
   virtual bool register_plane(planeCut& pl);;
   virtual double get_value() const;;
+#ifndef __CINT__
+  lambda_Note(register_plane_f reg_, Predicate_f0  cut_);
   virtual std::shared_ptr<cutNote> copy() const;;
   register_plane_f m_reg;
   Predicate_f0 m_cut;
 
   std::vector<std::shared_ptr<cutNote>> m_notes;
+#endif
 };
-
+#ifndef __CINT__
 template<typename... Axes_t>
 void dummy(Axes_t... ax) {
 

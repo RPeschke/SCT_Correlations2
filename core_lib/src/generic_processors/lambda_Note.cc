@@ -9,6 +9,10 @@ lambda_Note::lambda_Note(register_plane_f reg_, Predicate_f0 cut_) :m_reg(reg_),
 
 }
 
+lambda_Note::lambda_Note() {
+
+}
+
 bool lambda_Note::register_plane(planeCut& pl) {
   m_reg(pl);
   return true;

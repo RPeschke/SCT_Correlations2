@@ -8,6 +8,7 @@
 #include <memory>
 #endif // !__CINT__
 #include "lambda_Note.hh"
+#include "sct/platform.hh"
 
 class planeCut;
 
@@ -36,18 +37,7 @@ private:
 
 
 
-DllExport lambda_Note operator+(const axCut& lhs , double rhs);
-DllExport lambda_Note operator+(double lhs, const axCut& rhs);
-DllExport lambda_Note operator+(const axCut& lhs, const axCut& rhs);
 
-
-DllExport lambda_Note operator-(const axCut& lhs, double rhs);
-DllExport lambda_Note operator-(double lhs, const axCut& rhs);
-DllExport lambda_Note operator-(const axCut& lhs, const axCut& rhs);
-
-DllExport lambda_Note operator*(const axCut&, double);
-DllExport lambda_Note operator*(double, const axCut&);
-DllExport lambda_Note operator*(const axCut& lhs, const axCut& rhs);
 
 DllExport axCut x_def();
 DllExport axCut y_def();
