@@ -8,6 +8,7 @@
 #include "sct/internal/collectionReader_proc.hh"
 #include "sct/ProcessorCollection.h"
 #include "sct/internal/strong_types.h"
+#include "sct/internal/sct_exceptions.hh"
 
 
 collection* get_known_collection(const collectionName_t& name, std::vector<collection*>& collections) {
@@ -34,7 +35,7 @@ collection* EUTFile::getCollection(const collectionName_t&  name){
 
   auto tree = dynamic_cast<TTree*>(m_inputFile->Get(necessary_CONVERSION(name).c_str()));
   if (!tree) {
-    return nullptr;
+    SCT_THROW("unknown collection: <" + necessary_CONVERSION(name) + ">");
   }
 
   auto coll_proc = collectionReader_proc::create(tree,m_pc);
