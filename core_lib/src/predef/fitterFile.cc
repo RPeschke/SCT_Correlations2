@@ -7,6 +7,7 @@
 
 
 #include "sct//internal/factoryDef.hh"
+#include "sct/internal/sct_exceptions.hh"
 registerBaseClassDef(fitterFile);
 
 
@@ -23,7 +24,11 @@ void register_file_reader(const fitterFile::MainType& name, fitterFile* (fun)(fi
 
 FFile::FFile(fitterFile::Parameter_ref name, const fitterFile::MainType& type /*= "MAY15"*/)
 {
-  m_file = std::move(create_Fitter_file(name, type));
+ auto dummy = std::move(create_Fitter_file(name, type));
+  if (!dummy->isOpen()) {
+    SCT_THROW("Unable to open File: <" + necessary_CONVERSION(name) + ">");
+  }
+  m_file = std::move(dummy);
 }
 
 FFile::FFile()

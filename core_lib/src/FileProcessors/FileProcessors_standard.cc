@@ -239,10 +239,6 @@ bool FileProcessors_standard::process_file(FileProberties* fileP)
     SubClassName_t(get_xml_input()->globalConfig.FitterFileType)
     );
 
-  if (!m_input_file.isOpen())
-  {
-    return false;
-  }
   m_dummy->cd();
   xml_print("fileName", fileP->m_fileName);
 
