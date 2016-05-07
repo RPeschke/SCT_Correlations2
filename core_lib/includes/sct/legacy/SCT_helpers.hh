@@ -19,6 +19,7 @@ public:
   static TH1* calc_efficiency(TH1* trueHits, TH1* dutHits);
   static TH2* calc_efficiency(TH2* trueHits, TH2* dutHits);
   static void saveTH1_as_txt(const TH1& h1, const char* nameTXT);
+  static void saveTH2_as_txt(const TH2& h1, const char* nameTXT);
 
 
   static void saveTH1_as_txt(const TProfile& h1, const char* nameTXT);

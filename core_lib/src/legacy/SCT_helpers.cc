@@ -184,3 +184,23 @@
 
   }
 
+  void SCT_helpers::saveTH2_as_txt(const TH2& h1, const char* nameTXT) {
+    std::ofstream out(nameTXT);
+    out << h1.GetTitle() << std::endl;
+    out << h1.GetXaxis()->GetTitle() << " ; " << h1.GetYaxis()->GetTitle() << " ; " << h1.GetZaxis()->GetTitle() << std::endl;
+    double x = 0, y = 0, binContent = 0;
+
+    for (int y_bin = 0; y_bin <= h1.GetNbinsY(); ++y_bin) {
+      for (int x_bin = 0; x_bin <= h1.GetNbinsX(); ++x_bin) {
+        x = h1.GetXaxis()->GetBinCenter(x_bin);
+        y = h1.GetYaxis()->GetBinCenter(y_bin);
+        auto bin = h1.GetBin(x_bin, y_bin);
+        binContent = h1.GetBinContent(bin);
+
+        out << x << " ; " << y << " ; " << binContent << std::endl;
+      }
+
+    }
+
+  }
+
