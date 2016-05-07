@@ -18,28 +18,28 @@ xy_plane make_connections(truehitExtractor::Parameter_ref param_) {
   xy_plane apix_local = convert::zs_data_to_hits_GBL(
     param_.get_fitterFile()->apix_zs_data(),
     *param_.get_gear()->detector.layer_by_ID(20),
-    DontsaveWithRandomName()
+    DontsaveWithRandomName("zs_apix_to_hits")
     );
 
   auto apix_global = convert::local_to_global(
     apix_local,
     *param_.get_gear()->detector.layer_by_ID(20),
-    DontsaveWithRandomName()
+    DontsaveWithRandomName("local_apix_to_global")
     );
 
 
   auto apix_on_DUT = convert::global_to_local(
     apix_global,
     *param_.get_gear()->detector.layer_by_ID(8),
-    DontsaveWithRandomName()
+    DontsaveWithRandomName("global_apix_to_localDUT_hit")
     );
 
 
   return find_nearest(
     apix_on_DUT,
     param_.get_fitterFile()->DUT_fitted_local_GBL(),
-    residualCut_x(1), // residual cut x
-    residualCut_y(1),  // residual cut y
+    residualCut_x(10), // residual cut x
+    residualCut_y(10),  // residual cut y
     param_.get_processor_pro()
     ).getHitOnPlaneB();
 }
