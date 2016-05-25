@@ -27,7 +27,7 @@ void dummy(Axes_t... ax) {
 
 
 template<typename Func_t, typename... Axes_t>
-auto  make_lambda_Node_sp(Func_t&& f, std::shared_ptr<Axes_t>&&... ax) {
+lambda_Note  make_lambda_Node_sp(Func_t&& f, std::shared_ptr<Axes_t>&&... ax) {
   auto reg_ = register_plane_f([=](planeCut& pl) {dummy(ax->register_plane(pl)...);});
   auto func_ = Predicate_f0([=]() { return f(ax->get_value()...);});
   return lambda_Note(reg_, func_);
