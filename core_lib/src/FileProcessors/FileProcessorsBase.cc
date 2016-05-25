@@ -5,6 +5,7 @@
 #include "TH1.h"
 #include "TProfile.h"
 #include "sct/internal/sct_exceptions.hh"
+#include "TMath.h"
 registerBaseClassDef(FileProcessorsBase);
 
 
@@ -152,7 +153,7 @@ void FileProcessorsBase::start_collection(TFile* file__)
 }
 
  double BinNomialSigma(double totalHits, double DUTHits) {
-   return sqrt((DUTHits / totalHits)*(1 - (DUTHits / totalHits))*(1 / totalHits));
+   return TMath::Sqrt((DUTHits / totalHits)*(1 - (DUTHits / totalHits))*(1 / totalHits));
  }
 
 
