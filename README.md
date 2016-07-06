@@ -284,7 +284,7 @@ void example9() {
 ``` c++
 void example10() {
 
-  FFile file("run00xxxx_fitter.root", "MAY15 )// no strong types
+  FFile file("run00xxxx_fitter.root", "MAY15")// no strong types
   new TFile("test.root", "recreate");
 
 
