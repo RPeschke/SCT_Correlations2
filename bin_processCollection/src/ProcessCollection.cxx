@@ -62,20 +62,10 @@ int main(int argc, char **argv) {
     p->process();
   
 
-    std::cout << "</main()>\n";
+   
 
   return 0;
 
-
-
-
-
-
-
-
-
-
-  return 0;
 
 }
 
