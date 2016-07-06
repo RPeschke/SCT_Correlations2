@@ -1,6 +1,6 @@
 #ifndef cluster_h__
 #define cluster_h__
-
+#include "TMath.h"
 template <typename T>
 class pixelHit{
 public:
@@ -22,7 +22,7 @@ template <typename  T>
 T hitDistance(const pixelHit<T>& h1, const pixelHit<T>& h2){
   T xdiff = (h1.m_x - h2.m_x);
   T ydiff = (h1.m_y - h2.m_y);
-  T dif = sqrt(xdiff*xdiff + ydiff*ydiff);
+  T dif = TMath::Sqrt(xdiff*xdiff + ydiff*ydiff);
   return dif;
 }
 
