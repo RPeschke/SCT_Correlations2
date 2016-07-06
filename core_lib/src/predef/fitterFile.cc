@@ -140,3 +140,103 @@ bool FFile::isOpen() const
 {
   return m_file->isOpen();
 }
+
+xy_plane fitterFile::apix_hit_local() const {
+  SCT_THROW("Virtual function not implemented");
+  return xy_plane();
+}
+
+xy_plane fitterFile::apix_hit() const {
+  SCT_THROW("Virtual function not implemented");
+  return xy_plane();
+}
+
+xy_plane fitterFile::apix_zs_data() const {
+  SCT_THROW("Virtual function not implemented");
+  return xy_plane();
+}
+
+xy_plane fitterFile::apix_fitted() const {
+  SCT_THROW("Virtual function not implemented");
+  return xy_plane();
+}
+
+xy_plane fitterFile::apix_fitted_local() const {
+  SCT_THROW("Virtual function not implemented");
+  return xy_plane();
+}
+
+xy_plane fitterFile::DUT_hit_local() const {
+  SCT_THROW("Virtual function not implemented");
+  return xy_plane();
+}
+
+xy_plane fitterFile::DUT_hit() const {
+  SCT_THROW("Virtual function not implemented");
+  return xy_plane();
+}
+
+xy_plane fitterFile::DUT_zs_data() const {
+  SCT_THROW("Virtual function not implemented");
+  return xy_plane();
+}
+
+xy_plane fitterFile::DUT_fitted() const {
+  SCT_THROW("Virtual function not implemented");
+  return xy_plane();
+}
+
+xy_plane fitterFile::DUT_fitted_local() const {
+  SCT_THROW("Virtual function not implemented");
+  return xy_plane();
+}
+
+xy_plane fitterFile::tel_hit_local(ID_t ID) const {
+  SCT_THROW("Virtual function not implemented");
+  return xy_plane();
+}
+
+xy_plane fitterFile::tel_hit(ID_t ID) const {
+  SCT_THROW("Virtual function not implemented");
+  return xy_plane();
+}
+
+xy_plane fitterFile::tel_zs_data(ID_t ID) const {
+  SCT_THROW("Virtual function not implemented");
+  return xy_plane();
+}
+
+xy_plane fitterFile::tel_fitted(ID_t ID) const {
+  SCT_THROW("Virtual function not implemented");
+  return xy_plane();
+}
+
+xy_plane fitterFile::tel_fitted_local(ID_t ID) const {
+  SCT_THROW("Virtual function not implemented");
+  return xy_plane();
+}
+
+FitterPlane fitterFile::DUT_fitted_local_GBL() const {
+  SCT_THROW("Virtual function not implemented");
+  return FitterPlane();
+}
+
+FitterPlane fitterFile::tel_fitted_local_GBL(ID_t ID) const {
+  SCT_THROW("Virtual function not implemented");
+  return FitterPlane();
+}
+
+EUTFile* fitterFile::getGenericFile() {
+  SCT_THROW("Virtual function not implemented");
+  return nullptr;
+}
+
+ProcessorCollection* fitterFile::getProcessorCollection() {
+  SCT_THROW("Virtual function not implemented");
+  return nullptr;
+}
+
+bool fitterFile::isOpen() const {
+  SCT_THROW("Virtual function not implemented");
+  return false;
+}
