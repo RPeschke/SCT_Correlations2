@@ -18,20 +18,20 @@ xy_plane make_connections(truehitExtractor::Parameter_ref param_) {
   xy_plane apix_local = convert::zs_data_to_hits_GBL(
     param_.get_fitterFile()->apix_zs_data(),
     *param_.get_gear()->detector.layer_by_ID(20),
-    DontsaveWithRandomName("zs_apix_to_hits")
+    DontsaveWithRandomName(processorName_t("zs_apix_to_hits"))
     );
 
   auto apix_global = convert::local_to_global(
     apix_local,
     *param_.get_gear()->detector.layer_by_ID(20),
-    DontsaveWithRandomName("local_apix_to_global")
+    DontsaveWithRandomName(processorName_t("local_apix_to_global"))
     );
 
 
   auto apix_on_DUT = convert::global_to_local(
     apix_global,
     *param_.get_gear()->detector.layer_by_ID(8),
-    DontsaveWithRandomName("global_apix_to_localDUT_hit")
+    DontsaveWithRandomName(processorName_t("global_apix_to_localDUT_hit"))
     );
 
 
