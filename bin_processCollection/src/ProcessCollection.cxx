@@ -37,7 +37,8 @@ int main(int argc, char **argv) {
 
     ValueArg<std::string>  inPath("p", "inPath", "path to the root files", true, "", "string");
     cmd.add(inPath);
-
+    SwitchArg forceSave("f", "forceToSave", "Force all Collections To be stored to disk", false);
+    cmd.add(forceSave);
     ValueArg<std::string>  outpath("o", "outPath", "output path", false, ".", "string");
     cmd.add(outpath);
     ValueArg<std::string>  processor_type("s", "Processor", "which processor to use Standard or Modulo", false, "standard", "string");
@@ -54,7 +55,9 @@ int main(int argc, char **argv) {
      
       return 0;
     }
-
+    if (forceSave.getValue()) {
+      processor_prob::EnableDebugSave();
+    }
     auto p = create_processor(processor_type.getValue());
 
     p->Add_XML_RunList(FileNameArg.getValue(), inPath.getValue(), outpath.getValue());

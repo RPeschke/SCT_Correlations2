@@ -16,6 +16,7 @@
 #include <thread>
 
 #include "TSystem.h"
+#include "sct/processor_prob.hh"
 
 
 using namespace TCLAP;
@@ -118,10 +119,13 @@ int main(int argc, char **argv) {
     ValueArg<std::string> residualRange("c", "residualCut", "range for the residual -r -10:10 => min =-10 , max = 10  ", false, "-10:10", "range");
 
     cmd.add(residualRange);
-
+    SwitchArg forceSave("f", "forceToSave", "Force all Collections To be stored to disk", false);
+    cmd.add(forceSave);
 
     cmd.parse(argc, argv);  //terminates on error
-
+    if (forceSave.getValue()) {
+      processor_prob::EnableDebugSave();
+    }
     TFile * __file1 = new TFile(output_path.getValue().c_str(), "recreate");
 
 

@@ -1,5 +1,8 @@
 #include "sct/processor_prob.hh"
 
+
+bool gForceSaveToDisk = false;
+
 processor_prob::processor_prob()
 {
 
@@ -35,6 +38,23 @@ processor_prob& processor_prob::setProcessorCollection(ProcessorCollection* PC){
   return *this;
 }
 
+SaveOption processor_prob::getSave() const {
+  if (gForceSaveToDisk == true) {
+    return SaveOption::save2Disk;
+  }
+
+  return save;
+}
+
+void processor_prob::EnableDebugSave() {
+  gForceSaveToDisk = true;
+}
+
+void processor_prob::DisableDebugSave() {
+  gForceSaveToDisk = false;
+
+}
+
 int gcounter = 0;
 
 processor_prob saveWithRandomName(const processorName_t& name)
@@ -52,3 +72,6 @@ processor_prob saveWithRandomName(const processorName_t& name)
   ret.setName(name + processorName_t(std::to_string(++gcounter)));
   return ret;
 }
+
+
+

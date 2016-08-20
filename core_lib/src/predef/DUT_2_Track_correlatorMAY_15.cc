@@ -30,14 +30,14 @@ DUT_2_Track_correlatorMAY15::DUT_2_Track_correlatorMAY15(DUT_2_Track_correlator:
   auto trueHitsInStrips = convert::hits_to_zs_data_GBL(
     param_.get_trueHits(),
     *param_.get_gear()->detector.layer_by_ID(8),
-    DontsaveWithRandomName()
+    DontsaveWithRandomName(processorName_t("hit_to_sz_data_gbl_"))
     );
 
 
   auto dut_rotated = xy_pro::rotate(
     trueHitsInStrips,
     param_.get_xmlFile().globalConfig.Rotation,
-    DontsaveWithRandomName()
+    DontsaveWithRandomName(processorName_t("rotate__"))
     );
 
   auto trueHitsInStrips_name = param_.get_processor_pro().name + processorName_t("_true");

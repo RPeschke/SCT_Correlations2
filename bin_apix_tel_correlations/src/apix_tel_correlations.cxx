@@ -60,7 +60,13 @@ int main(int argc, char **argv) {
   ValueArg<std::string>  output_path("o", "outPath", "output path", false, "output.root", "string");
   ValueArg<int> element("e", "element", "element of interest  in the XML file", true, 1, "int");
   cmd.add(element);
+  SwitchArg forceSave("f", "forceToSave", "Force all Collections To be stored to disk", false);
+  cmd.add(forceSave);
+
   cmd.parse(argc, argv);  //terminates on error
+  if (forceSave.getValue()) {
+    processor_prob::EnableDebugSave();
+  }
 
 
   auto m_input_files_xml = _MAKE_SHARED1(XML_imput_file, FileNameArg.getValue().c_str());

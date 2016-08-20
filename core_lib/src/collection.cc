@@ -59,7 +59,7 @@ collection::collection(const collection& coll) :
 
 }
 
-collection::collection(const processor_prob& pprob):collection(strong_cast<collectionName_t>( pprob.name),pprob.axisNames,pprob.ProcessorColl,pprob.save)
+collection::collection(const processor_prob& pprob):collection(strong_cast<collectionName_t>( pprob.name),pprob.axisNames,pprob.ProcessorColl,pprob.getSave())
 {
 
 }

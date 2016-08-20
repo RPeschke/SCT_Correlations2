@@ -56,8 +56,14 @@ int main(int argc, char **argv) {
 
   ValueArg<std::string> outFileNameArg("o", "outFile", "output root file", false, "dummy.root", "string");
   cmd.add(outFileNameArg);
+  SwitchArg forceSave("f", "forceToSave", "Force all Collections To be stored to disk", false);
+  cmd.add(forceSave);
 
   cmd.parse(argc, argv);  //terminates on error
+
+  if (forceSave.getValue()) {
+    processor_prob::EnableDebugSave();
+  }
 
   FFile file_(FileName_t(FileNameArg.getValue()));
 

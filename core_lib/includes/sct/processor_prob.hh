@@ -15,11 +15,17 @@ public:
   processor_prob& setAxis(const std::vector<axesName_t>& AxisNames);
   processor_prob& setProcessorCollection(ProcessorCollection* PC);
   processorName_t name = processorName_t("");
-  SaveOption save = DontSave2Disk;
+  SaveOption getSave() const;
   ProcessorCollection* ProcessorColl = nullptr;
   std::vector<axesName_t> axisNames;
+  static void EnableDebugSave();
+  static void DisableDebugSave();
+private:
+  SaveOption save = DontSave2Disk;
 };
 
 DllExport processor_prob saveWithRandomName(const processorName_t& name= processorName_t("random__"));
 DllExport processor_prob DontsaveWithRandomName(const processorName_t& name = processorName_t("random__"));
+
+
 #endif // processor_prob_h__
