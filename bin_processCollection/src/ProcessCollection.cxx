@@ -12,6 +12,7 @@
 #include <thread>
 
 #include "sct/legacy/xml_print.hh"
+#include "sct/processor_prob.hh"
 
 
 
