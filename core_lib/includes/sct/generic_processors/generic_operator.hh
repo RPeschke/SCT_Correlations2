@@ -25,11 +25,32 @@ DllExport lambda_Note operator/(double, const cutNote&);
 DllExport lambda_Note operator/(const cutNote& lhs, const cutNote& rhs);
 
 DllExport lambda_Note operator<(const cutNote& A, const cutNote&  B);
+DllExport lambda_Note operator<(const cutNote& A, double  B);
+DllExport lambda_Note operator<(double A, const cutNote&  B);
+
+
 DllExport lambda_Note operator<=(const cutNote& A, const cutNote&  B);
+DllExport lambda_Note operator<=(const cutNote& A, double B);
+DllExport lambda_Note operator<=(double A, const cutNote&  B);
+
+
 DllExport lambda_Note operator>(const cutNote& A, const cutNote&  B);
+DllExport lambda_Note operator>(const cutNote& A, double  B);
+DllExport lambda_Note operator>(double A, const cutNote&  B);
+
+
 DllExport lambda_Note operator>=(const cutNote& A, const cutNote&  B);
+DllExport lambda_Note operator>=(const cutNote& A, double  B);
+DllExport lambda_Note operator>=(double A, const cutNote&  B);
+
+
 DllExport lambda_Note operator==(const cutNote& A, const cutNote&  B);
+DllExport lambda_Note operator==(const cutNote& A, double  B);
+DllExport lambda_Note operator==(double A, const cutNote&  B);
+
 DllExport lambda_Note operator!=(const cutNote& A, const cutNote&  B);
+DllExport lambda_Note operator!=(const cutNote& A, double  B);
+DllExport lambda_Note operator!=(double A, const cutNote&  B);
 
 
 DllExport lambda_Note operator&&(const cutNote& NoteA, const cutNote& NoteB);

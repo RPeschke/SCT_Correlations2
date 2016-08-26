@@ -134,11 +134,30 @@
 
 
 #pragma link C++ function operator< (const cutNote& , const cutNote&  );
+#pragma link C++ function operator< (const cutNote& , double  );
+#pragma link C++ function operator< (double , const cutNote&  );
+
 #pragma link C++ function operator<=(const cutNote& , const cutNote&  );
+#pragma link C++ function operator<=(const cutNote& , double  );
+#pragma link C++ function operator<=(double , const cutNote&  );
+
+
 #pragma link C++ function operator> (const cutNote& , const cutNote&  );
+#pragma link C++ function operator> (const cutNote& , double  );
+#pragma link C++ function operator> (double , const cutNote&  );
+
 #pragma link C++ function operator>=(const cutNote& , const cutNote&  );
+#pragma link C++ function operator>=(const cutNote& , double );
+#pragma link C++ function operator>=(double , const cutNote&  );
+
+
 #pragma link C++ function operator==(const cutNote& , const cutNote&  );
+#pragma link C++ function operator==(const cutNote& , double  );
+#pragma link C++ function operator==(double , const cutNote&  );
+
 #pragma link C++ function operator!=(const cutNote& , const cutNote&);
+#pragma link C++ function operator!=(const cutNote& , double);
+#pragma link C++ function operator!=(double , const cutNote&);
 
 
 

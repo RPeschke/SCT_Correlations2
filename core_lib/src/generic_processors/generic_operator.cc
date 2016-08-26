@@ -7,24 +7,72 @@ lambda_Note operator<(const cutNote& A, const cutNote& B) {
   return make_lambda_Node([](double x, double y) { return  x < y; }, A, B);
 }
 
+lambda_Note operator<(const cutNote& A, double B) {
+  return make_lambda_Node([B](double x) { return  x < B; }, A);
+}
+
+lambda_Note operator<(double A, const cutNote& B) {
+  return make_lambda_Node([A](double y) { return  A < y; }, B);
+}
+
 lambda_Note operator<=(const cutNote& A, const cutNote& B) {
   return make_lambda_Node([](double x, double y) { return  x <= y; }, A, B);
+}
+
+lambda_Note operator<=(const cutNote& A, double B) {
+  return make_lambda_Node([B](double x) { return  x <= B; }, A);
+}
+
+lambda_Note operator<=(double A, const cutNote& B) {
+  return make_lambda_Node([A](double y) { return  A <= y; }, B);
 }
 
 lambda_Note operator>(const cutNote& A, const cutNote& B) {
   return make_lambda_Node([](double x, double y) { return  x > y; }, A, B);
 }
 
+lambda_Note operator>(const cutNote& A, double B) {
+  return make_lambda_Node([B](double x) { return  x > B; }, A);
+}
+
+lambda_Note operator>(double A, const cutNote& B) {
+  return make_lambda_Node([A](double y) { return  A > y; }, B);
+}
+
 lambda_Note operator>=(const cutNote& A, const cutNote& B) {
   return make_lambda_Node([](double x, double y) { return  x >= y; }, A, B);
+}
+
+lambda_Note operator>=(const cutNote& A, double B) {
+  return make_lambda_Node([B](double x) { return  x >= B; }, A);
+}
+
+lambda_Note operator>=(double A, const cutNote& B) {
+  return make_lambda_Node([A](double y) { return  A >= y; }, B);
 }
 
 lambda_Note operator==(const cutNote& A, const cutNote& B) {
   return make_lambda_Node([](double x, double y) { return  x == y; }, A, B);
 }
 
+lambda_Note operator==(const cutNote& A, double B) {
+  return make_lambda_Node([B](double x) { return  x == B; }, A);
+}
+
+lambda_Note operator==(double A, const cutNote& B) {
+  return make_lambda_Node([A](double y) { return  A == y; }, B);
+}
+
 lambda_Note operator!=(const cutNote& A, const cutNote& B) {
   return make_lambda_Node([](double x, double y) { return  x != y; }, A, B);
+}
+
+lambda_Note operator!=(const cutNote& A, double B) {
+  return make_lambda_Node([B](double x) { return  x != B; }, A);
+}
+
+lambda_Note operator!=(double A, const cutNote& B) {
+  return make_lambda_Node([A](double y) { return  A != y; }, B);
 }
 
 lambda_Note operator&&(const cutNote& NoteA, const cutNote& NoteB) {
