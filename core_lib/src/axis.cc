@@ -1,6 +1,18 @@
 #include "sct/axis.hh"
 
-axis::axis(ID_t planeID, std::vector<double> *ID, const axesName_t& axisName, std::vector<double> *axis_, ProcessorCollection* pc,TTree* tree):plane_id(planeID),m_id(ID),m_axis(axis_),m_name(axisName),m_pc(pc),m_tree(tree){
+axis::axis(ID_t planeID, 
+  std::vector<double> *ID, 
+  const axesName_t& axisName, 
+  std::vector<double> *axis_, 
+  ProcessorCollection* pc,
+  TTree* tree)
+        :
+  plane_id(planeID),
+  m_id(ID),
+  m_axis(axis_),
+  m_name(axisName),
+  m_pc(pc),
+  m_tree(tree){
 
 }
 

@@ -22,18 +22,4 @@ private:
 };
 
 
-DllExport axCutHandle operator<(cutValue_t min_, axCut ax);
-DllExport axCutHandle operator<=(cutValue_t min_, axCut ax);
-DllExport axCutHandle operator>(cutValue_t val, axCut ax);
-DllExport axCutHandle operator>=(cutValue_t val, axCut ax);
-DllExport axCutHandle operator<(axCut ax, cutValue_t val);
-DllExport axCutHandle operator<=(axCut ax, cutValue_t val);
-DllExport axCutHandle operator>(axCut ax, cutValue_t val);
-DllExport axCutHandle operator>=(axCut ax, cutValue_t val);
-
-DllExport axCutHandle operator==(axCut ax, cutValue_t val);
-DllExport axCutHandle operator!=(axCut ax, cutValue_t val);
-
-DllExport axCutHandle operator==(cutValue_t val, axCut ax);
-DllExport axCutHandle operator!=(cutValue_t val, axCut ax);
 #endif // axCutHandle_h__

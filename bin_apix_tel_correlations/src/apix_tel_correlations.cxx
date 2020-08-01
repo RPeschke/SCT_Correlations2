@@ -17,6 +17,22 @@
 #include "sct/internal/strong_types.h"
 #include "sct/legacy/xml_print.hh"
 
+
+
+#include "sct/EUTFile.h"
+#include "sct/platform.hh"
+#include "sct/internal/strong_types.h"
+#include "sct/ref_ptr.hh"
+#include "sct/generic_processors/processor_cut_axis.hh"
+#include "sct/generic_processors/axCut.hh"
+#include "sct/generic_processors/generic_operator.hh"
+#include "sct/generic_processors/processor_generic_correlation.hh"
+#include "sct/generic_processors/processor_normalize_on_first_plane.hh"
+
+#include "sct/generic_processors/processor_generic_append_plane.hh"
+#include "TMath.h"
+#include "sct/generic_processors/processor_generic_make_unique_axis.hh"
+
 std::vector<TCanvas*> gCanvas;
 TBrowser* gBrowser = NULL;
 
@@ -40,96 +56,199 @@ void add2File(TFile* file_, TH2* h, const char* name) {
   file_->Add(h);
 }
 
-int main(int argc, char **argv) {
-  int argc_asdasddsa = 1;
+TApplication* get_TApplication() {
+  auto argc_asdasddsa =  new  int(1);
   char **argv_sadsda = new char*[1];
   argv_sadsda[0] = "dummy";
+  return new TApplication("App", argc_asdasddsa, argv_sadsda);
+}
+
+
+struct lamda_note_helper_1 {
+  lamda_note_helper_1(axesName_t names) :m_names(names) {}
+  axesName_t  m_names;
+  template<typename T>
+  auto operator*(T&& t) {
+    return make_lambda_Node(std::forward<T>(t), axCut(m_names));
+  }
+};
+
+struct lamda_note_helper_2 {
+  lamda_note_helper_2(axesName_t names1, axesName_t names2) :m_names1(names1), m_names2(names2) {}
+  axesName_t  m_names1;
+  axesName_t  m_names2;
+  template<typename T>
+  auto operator*(T&& t) {
+    return make_lambda_Node(std::forward<T>(t), axCut(m_names1), axCut(m_names2));
+  }
+};
+
+struct lamda_note_helper_3 {
+  lamda_note_helper_3(axesName_t names1, axesName_t names2, axesName_t names3) :m_names1(names1), m_names2(names2), m_names3(names3) {}
+  axesName_t  m_names1;
+  axesName_t  m_names2;
+  axesName_t  m_names3;
+  template<typename T>
+  auto operator*(T&& t) {
+    return make_lambda_Node(std::forward<T>(t), axCut(m_names1), axCut(m_names2), axCut(m_names3) );
+  }
+};
+#define  append1(name1) lamda_note_helper_1(axesName_t(#name1)) * [](double name1)  
+#define  append2(name1, name2) lamda_note_helper_2(axesName_t(#name1),axesName_t(#name2)) * [](double name1,double name2)  
+#define  append3(name1, name2, name3) lamda_note_helper_3(axesName_t(#name1),axesName_t(#name2),axesName_t(#name3)) * [](double name1,double name2,double name3)  
+
+int main(int argc, char **argv) {
+
 #ifdef _DEBUG
-  TApplication theApp("App", &argc_asdasddsa, argv_sadsda);
+  
+ // auto theApp = get_TApplication();
 #endif // _DEBUG
 
-
-
-
-  CmdLine cmd("ProcessFile", ' ', "0.1");
-
-  ValueArg<std::string> FileNameArg("i", "inFile", "xml filename", true, "", "string");
-  cmd.add(FileNameArg);
-  ValueArg<std::string>  inPath("p", "inPath", "path to the root files", true, ".", "string");
-  cmd.add(inPath);
-  ValueArg<std::string>  output_path("o", "outPath", "output path", false, "output.root", "string");
-  ValueArg<int> element("e", "element", "element of interest  in the XML file", true, 1, "int");
-  cmd.add(element);
-  SwitchArg forceSave("f", "forceToSave", "Force all Collections To be stored to disk", false);
-  cmd.add(forceSave);
-
-  cmd.parse(argc, argv);  //terminates on error
-  if (forceSave.getValue()) {
-    processor_prob::EnableDebugSave();
-  }
-
-
-  auto m_input_files_xml = _MAKE_SHARED1(XML_imput_file, FileNameArg.getValue().c_str());
-
-
-  auto file_path = (inPath.getValue() + "/" + m_input_files_xml->get_File(element.getValue()).name);
-  std::cout << "opening file path: " << file_path << std::endl;
-    FFile fitter_file_(FileName_t(file_path) ,SubClassName_t("MAY15"));
-
-    Xgear gear(m_input_files_xml->globalConfig.gearFile.c_str());
-
-  TFile * out_file = new TFile(output_path.getValue().c_str(), "recreate");
-
-  auto apix_local = convert::zs_data_to_hits_GBL(
-    fitter_file_.apix_zs_data(),
-    *gear.detector.layer_by_ID(20),
-    DontsaveWithRandomName(processorName_t("apix_local"))
-    );
-  auto apix_global = convert::local_to_global(
-    apix_local,
-    *gear.detector.layer_by_ID(20),
-    DontsaveWithRandomName(processorName_t("apix_global"))
-    );
-  auto apix_local_8 = convert::global_to_local(
-    apix_global,
-    *gear.detector.layer_by_ID(8),
-    DontsaveWithRandomName(processorName_t("apix_local_8"))
-    );
+  auto m_file = Snew TFile("C:/Users/Peschke/Documents/xilinx_share2/GitHub/SCT_Correlations2/debug/t_2020-07-28.root");
+  auto m_file2 = Snew TFile("C:/Users/Peschke/Documents/xilinx_share2/GitHub/SCT_Correlations2/debug/t23_2020-07-28.root");
   
-  auto corr_xx = xy_pro::correlations(apix_local_8.get_x(), fitter_file_.DUT_fitted_local_GBL().get_x());
-  auto corr_yy = xy_pro::correlations(apix_local_8.get_y(), fitter_file_.DUT_fitted_local_GBL().get_y());
+  TFile * out_file1 = new TFile("C:/Users/Peschke/Documents/xilinx_share2/GitHub/SCT_Correlations2/debug/tout_2020-07-28_h.root", "recreate");
 
-  fitter_file_.getProcessorCollection()->loop();
 
-  TH2D h_local("corr_xx", "corr_xx", 100, 0, 0, 100, 0, 0);
-  Draw(corr_xx, DrawOption().output_object(&h_local));
+  auto m_generic = Snew EUTFile(m_file);
+  auto mcparticle_file = Snew EUTFile(m_file2, m_generic->getProcessorCollection());
+  
+  var(all_layers_xy)  = xy_plane( m_generic->getCollection(collectionName_t("KLM_Digits"))->getPlane(ID_t(0)));
+  var(all_layers) = m_generic->getCollection(collectionName_t("KLM_Digits"))->getPlane(ID_t(0));
+  var(mcparticles) = mcparticle_file->getCollection(collectionName_t("t3"))->getPlane(ID_t(0));
+
+  //auto corr_zz1 = xy_pro::correlations(p0.get_z(), p0.get_z());
+
+  var(muons_dummy) = mcparticles[(axCut(axesName_t("PDG")) == 13 || axCut(axesName_t("PDG")) == -13) && axCut(axesName_t("mass")) <1];
+  
+  var(muons_dummy1) = generic_append_plane(muons_dummy,
+    axesName_t("theta"), append3(px, py, pz) {
+    return TMath::ACos(pz / TMath::Sqrt(px*px + py * py + pz * pz));
+  }, DontsaveWithRandomName()
+    );
+
+
+  var(muons_dummy2) = generic_append_plane(muons_dummy1,
+    axesName_t("phi"), append3(px, py, pz) {
+    return TMath::ATan2(py, px);
+  });
+  
+  var(muons_dummy3) = generic_append_plane(muons_dummy2,
+    axesName_t("pseudo_z"), append3(theta, py, pz) {
+    return  -328.268 + 311.889 * theta;
+  });
+
+  var(muons) = generic_append_plane(muons_dummy3,
+    axesName_t("pseudo_y_sector1"), append3(phi, py, pz) {
+    return  527.05 + 241.804 * phi;
+  });
+
+  var(layer_7) = all_layers[axCut(axesName_t("layer")) == 7];
+  var(layer_0) = all_layers_xy[axCut(axesName_t("layer")) == 0];
+  var(layer_1) = all_layers_xy[axCut(axesName_t("layer")) == 1];
+  var(layer_8) = all_layers_xy[axCut(axesName_t("layer")) == 8];
+  var(cor_0_vs_8) = layer_0 cross layer_8;
+
+  var(cor_1_vs_8) = layer_1 cross layer_8;
+  
+  
+  var(norm_all_with_0) = all_layers normalize_with layer_0;
+  var(norm_all_with_8) = all_layers normalize_with layer_8;
+
+  var(pl3) = layer_0[ axCut(axesName_t("y")) < 0 ];
+
+  var(corr_zz1) = xy_pro::correlations(layer_0.get_z(), layer_8.get_z());
   
 
-//   auto h =SCT_helpers::Draw<TH2>(corr_xx,S_DrawOption());
-//   auto h_local = (TH2*)h->Clone("corr_xx");
-   auto p = SCT_helpers::LinearFit_Of_Profile(&h_local, procent_t(20));
-   h_local.Draw("colz");
-   p.Draw("same");
-   p.Print();
+  var(corr_pz_z) = xy_pro::correlations(muons.get_axis(axesName_t("pz")), all_layers.get_axis(axesName_t("z")));
+  
+  var(corr_pz_z_1) = muons cross all_layers;
 
 
+  var(corr_yy1) = xy_pro::correlations(layer_0.get_y(), layer_8.get_y());
+
+  var( res_yy) = xy_pro::residual(layer_0.get_y(), layer_8.get_y());
+  var(res_zz) = xy_pro::residual(layer_0.get_z(), layer_8.get_z());
+
+
+  var(res_yy_zz) = xy_pro::hitmap(res_yy.get_x(), res_zz.get_x());
+  //m_generic->getProcessorCollection()->loop();
+
+  //pl3 = pl[axCut(axesName_t("y")) < -10];
+
+
+  var(corr_pz_z_3_lose_cut_temp) = cut_op(corr_pz_z_1,
+    append2(phi1, sector2) {
+    if (sector2 == 0 && (phi1 >2.5 || phi1 <-2)) {
+      return 1;
+    }
+    if (sector2 == 1 && ( -3 < phi1 && phi1 < -1.6)) {
+      return 1;
+    }
+    if (sector2 == 2 && (-2 < phi1 && phi1 < -1)) {
+      return 1;
+    }
+    if (sector2 == 3 && (-1 < phi1 && phi1 < 0)) {
+      return 1;
+    }
+    if (sector2 == 4 && (-0.5 < phi1 && phi1 < 0.6)) {
+      return 1;
+    }
+    if (sector2 == 5 && ( 0.5 < phi1 && phi1 < 1.4)) {
+      return 1;
+    }
+    if (sector2 == 6 && (1 < phi1 && phi1 < 2.1)) {
+      return 1;
+    }
+    if (sector2 == 7 && (1.5 < phi1 && phi1 < 3)) {
+      return 1;
+    }
+    return 0;
+  });
+  var(corr_pz_z_3_lose_cut) = cut_op(corr_pz_z_3_lose_cut_temp,
+    append2(theta1, section2) {
+    if (section2 == 0 && theta1 < 1.3) {
+      return 1;
+    }
+    if (section2 == 1 && theta1 > 1.) {
+      return 1;
+    }
+    
+    return 0;
+  });
+
+  var(corr_pz_z_3_z_tight) = cut_op(corr_pz_z_3_lose_cut,
+    append2(pseudo_z1, z2) {
+      return abs(pseudo_z1 - z2) < 50;
+  });
+
+
+  var(corr_pz_z_3_z_tight_u) = corr_pz_z_3_z_tight[unique_ax(axesName_t("index1"))];
+  m_generic->getProcessorCollection()->loop();
+
+  out_file1->Write();
+  Draw(pl3,DrawOption().draw_axis("y:z").title("pl3"));
+  new TCanvas();
+  Draw(layer_0, DrawOption().title("pl"));
+  new TCanvas();
+  Draw(corr_yy1, DrawOption().title("corr_yy1"));
+  new TCanvas();
+  Draw(corr_zz1, DrawOption().title("corr_zz1"));
   new TCanvas();
 
-  TH2D h1_local("corr_yy", "corr_yy", 100, 0, 0, 100, 0, 0);
-  Draw(corr_yy,DrawOption().output_object(&h1_local));
-//   auto h1 = SCT_helpers::Draw<TH2>(corr_yy, S_DrawOption());
-//   auto h1_local = (TH2*)h1->Clone("corr_yy");
-   auto p1 = SCT_helpers::LinearFit_Of_Profile(&h1_local, procent_t(20));
-   h1_local.Draw("colz");
-   p1.Draw("same");
-   p1.Print();
-//   
-   out_file->Add(&h_local);
-   out_file->Add(&h1_local);
-   out_file->Write(); 
+  Draw(res_yy.get_x(), DrawOption().title("res_yy"));
+  new TCanvas();
+  Draw(res_zz.get_x(), DrawOption().title("res_zz"));
+  new TCanvas();
+  Draw(res_yy_zz, DrawOption().title("res_yy_zz"));
 #ifdef _DEBUG
-  theApp.Run();
+ //theApp->Run();
+
+
+
+
 #endif // _DEBUG
+  
   return 0;
 }
 

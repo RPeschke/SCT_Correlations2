@@ -60,3 +60,51 @@ axCut y_def() {
 
 
 
+unique_ax::unique_ax() :m_name(axesName_t(""))
+{
+
+}
+
+unique_ax::unique_ax(const unique_ax& rhs) : m_name(rhs.m_name), m_hit(rhs.m_hit)
+{
+
+}
+
+unique_ax::unique_ax(const axesName_t& name) : m_name(name)
+{
+
+}
+
+bool unique_ax::register_plane(planeCut& pl) 
+{
+  m_hit = pl.getAxis(m_name);
+  return true;
+}
+
+void unique_ax::onNewEvent() 
+{
+  m_elements.clear();
+}
+
+bool contains_element1(std::vector<double> const& items, double const& item)
+{
+  return std::find(items.begin(), items.end(), item) != items.end();
+}
+double unique_ax::get_value() const 
+{
+  if (!contains_element1(m_elements, *m_hit)) {
+    m_elements.push_back(*m_hit);
+    return 1;
+  }
+  return 0;
+}
+
+unique_ax::~unique_ax() 
+{
+
+}
+
+std::shared_ptr<cutNote> unique_ax::copy() const 
+{
+  return Snew unique_ax(*this);
+}

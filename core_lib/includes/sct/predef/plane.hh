@@ -3,6 +3,7 @@
 #include "sct/generic_plane.hh"
 #include "sct/predef/hit.hh"
 #include "sct/platform.hh"
+#include "sct/generic_processors/cutNote.hh"
 
 #ifndef __CINT__
 #include <memory>
@@ -33,14 +34,21 @@ public:
   xy_plane();
   xy_plane(const xy_plane& rhs);
   xy_plane& operator=(const xy_plane& rhs);
+  xy_plane operator[](const cutNote& ax);
   virtual hit* get_hit();
   axis get_x() const;
   axis get_y() const;
+  axis get_z() const;
+  void set_name(const  std::string& name);
 private:
 #ifndef __CINT__
   std::shared_ptr<hit> Hit = std::make_shared<hit>();
 #endif
 };
+
+
+
+
 
 
 class DllExport FitterPlane :public xy_plane {

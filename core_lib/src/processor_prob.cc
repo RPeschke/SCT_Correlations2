@@ -57,19 +57,42 @@ void processor_prob::DisableDebugSave() {
 
 int gcounter = 0;
 
+processorName_t GName= processorName_t("");
+
+DllExport void ___set_GName(processorName_t name)
+{
+  GName = name;
+}
+
+
+DllExport processorName_t ___get_GName()
+{
+  return GName;
+}
+
 processor_prob saveWithRandomName(const processorName_t& name)
 {
+  auto n = ___get_GName();
+  if ( necessary_CONVERSION(n).empty()) {
+    n = name + processorName_t(std::to_string(++gcounter));
+  }
   auto ret = processor_prob();
   ret.save2Disk();
-  ret.setName(name + processorName_t(std::to_string(++gcounter)));
+  ret.setName(n);
+  ___set_GName(processorName_t(""));
   return ret;
 }
 
  processor_prob DontsaveWithRandomName(const processorName_t& name /*= "random"*/)
 {
+   auto n = ___get_GName();
+   if (necessary_CONVERSION(n).empty()) {
+     n = name + processorName_t(std::to_string(++gcounter));
+   }
   auto ret = processor_prob();
   ret.dontSave2Disk();
-  ret.setName(name + processorName_t(std::to_string(++gcounter)));
+  ret.setName(n);
+  ___set_GName(processorName_t(""));
   return ret;
 }
 

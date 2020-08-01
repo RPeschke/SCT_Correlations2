@@ -39,6 +39,13 @@ DrawOption& DrawOption::options(const char* option)
   return *this;
 }
 
+
+DrawOption& DrawOption::title(const char* title_)
+{
+  m_title = title_;
+  return *this;
+}
+
 DrawOption& DrawOption::opt_colz()
 {
 
@@ -356,6 +363,10 @@ Long64_t DrawOption::Draw(TTree * tree) const
     auto n = tree->Draw(getAxis(), getCut(), getOptions());
     
     //push_output_to_TGraph(n, tree);
+    TH1* h = dynamic_cast<TH1*>(gPad->GetPrimitive("htemp"));
+    if (!m_title.empty()) {
+      h->SetTitle(m_title.c_str());
+    }
     push_output_to_TGraphErrors(n, tree);
     return n;
 }

@@ -30,6 +30,7 @@ public:
   collection(const processor_prob& pprob);
   collection(const collection& coll);
   collection& operator=(const collection& coll);
+  void add_Axis(const axesName_t& axis_name);
   generic_plane getPlane(ID_t planeID);
   axis getAxis(ID_t planeID, const axesName_t& axis_name);
   void set_Event_Nr(int EventNR);

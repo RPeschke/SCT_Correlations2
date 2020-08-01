@@ -17,6 +17,7 @@ class planeCut;
 class DllExport cutNote {
 public:
   virtual bool register_plane(planeCut& pl) = 0;
+  virtual void onNewEvent() {}
   virtual double get_value() const = 0;
   virtual ~cutNote() {}
 #ifndef __CINT__

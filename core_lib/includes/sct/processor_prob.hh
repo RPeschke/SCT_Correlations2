@@ -24,6 +24,9 @@ private:
   SaveOption save = DontSave2Disk;
 };
 
+DllExport void ___set_GName(processorName_t name);
+DllExport processorName_t ___get_GName();
+
 DllExport processor_prob saveWithRandomName(const processorName_t& name= processorName_t("random__"));
 DllExport processor_prob DontsaveWithRandomName(const processorName_t& name = processorName_t("random__"));
 

@@ -1,7 +1,10 @@
 #include "sct/predef/plane.hh"
+#include "sct/generic_processors/processor_cut_axis.hh"
+#include "sct/generic_processors/cutNote.hh"
 
 #define  X_DEF axesName_t( "x")
 #define  Y_DEF axesName_t("y")
+#define  Z_DEF axesName_t("z")
 #define  ID_DEF axesName_t("ID")
 
 std::vector<axesName_t> xy_names() {
@@ -72,7 +75,10 @@ xy_plane& xy_plane::operator=(const xy_plane& rhs)
   m_plane.setHitAxisAdress(Y_DEF, &Hit->y);
   return *this;
 }
-
+void xy_plane::set_name(const  std::string& name)
+{
+    m_plane.set_name(name);
+}
 hit* xy_plane::get_hit() {
   return Hit.get();
 }
@@ -85,6 +91,15 @@ axis xy_plane::get_x() const
 axis xy_plane::get_y() const
 {
   return m_plane.get_axis(Y_DEF);
+}
+
+axis xy_plane::get_z() const
+{
+  return m_plane.get_axis(Z_DEF);
+}
+xy_plane xy_plane::operator[](const cutNote& ax)
+{
+  return cut_op(*this, ax);
 }
 
 FitterPlane::FitterPlane(const generic_plane& pl) :xy_plane(pl) {

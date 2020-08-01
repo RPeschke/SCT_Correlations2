@@ -2,6 +2,7 @@
 #include "sct/axis.hh"
 #include "TTree.h"
 #include "sct/internal/sct_exceptions.hh"
+#include "sct/generic_processors/processor_cut_axis.hh"
 double zero = 0;
 
 
@@ -36,6 +37,9 @@ generic_plane& generic_plane::operator=(const generic_plane& pl)  {
   }
 
   return *this;
+}
+generic_plane generic_plane::operator[](const cutNote& ax) {
+  return cut_op(*this, ax);
 }
 
 void generic_plane::add_axis(const axesName_t& axisName, std::vector<double> *axis_) {
@@ -89,6 +93,17 @@ axis generic_plane::get_axis(const axesName_t& axisName)const {
 
 }
 
+
+double generic_plane::get_value(const axesName_t& axisName) const
+{
+  for (auto& e : m_usedstorage) {
+    if (e.axisName == axisName) {
+      return *e.value;
+    }
+  }
+  SCT_THROW("axis not found");
+}
+
 ProcessorCollection* generic_plane::get_ProcessorCollection() const{
   return m_pc;
 }
@@ -114,6 +129,18 @@ std::vector<axesName_t> generic_plane::get_axes_names() const
 
 
   return ret;
+}
+
+
+void generic_plane::set_name(const std::string& name)
+{
+  m_tree->SetName(name.c_str());
+}
+
+
+void generic_plane::clear_event()
+{
+  
 }
 
 storage::storage(std::vector<double>* vec_, const axesName_t& axisName_) :vec(vec_), axisName(axisName_), value(&zero)

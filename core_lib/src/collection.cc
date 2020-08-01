@@ -76,6 +76,16 @@ collection& collection::operator=(const collection& coll)
     return *this;
 }
 
+
+void collection::add_Axis(const axesName_t& axis_name)
+{
+  auto newAxis = Snew TTreeVectorExtractor(necessary_CONVERSION(axis_name));
+  m_data.push_back(newAxis);
+  if (outPutTree) {
+    newAxis->push2TTree(outPutTree.get());
+  }
+}
+
 generic_plane collection::getPlane(ID_t planeID) {
   auto ID = getAxisByName(axesName_t("ID"), m_data);
 

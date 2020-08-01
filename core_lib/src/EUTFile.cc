@@ -9,7 +9,7 @@
 #include "sct/ProcessorCollection.h"
 #include "sct/internal/strong_types.h"
 #include "sct/internal/sct_exceptions.hh"
-
+#include "sct/ref_ptr.hh"
 
 collection* get_known_collection(const collectionName_t& name, std::vector<collection*>& collections) {
 
@@ -23,7 +23,15 @@ collection* get_known_collection(const collectionName_t& name, std::vector<colle
   return nullptr;
 }
 
-EUTFile::EUTFile(TFile *inputFile, ProcessorCollection* pc):m_inputFile(inputFile),m_pc(pc){
+EUTFile::EUTFile(sct::ref_ptr<TFile> inputFile, sct::ref_ptr<ProcessorCollection> pc):m_inputFile(inputFile.get()),m_pc(pc.get()){
+
+}
+
+
+EUTFile::EUTFile(sct::ref_ptr<TFile> inputFile) : m_inputFile(inputFile.get()) {
+  
+  m_pc_owned = Snew ProcessorCollection();
+  m_pc = m_pc_owned.get();
 
 }
 

@@ -17,6 +17,7 @@ public:
   DrawOption(const char* options, TCut cuts, const char * axis = "y:x");
   DrawOption();
   DrawOption& options(const char* option);
+  DrawOption& title(const char* title_);
   DrawOption& opt_colz();
   DrawOption& opt_star();
   DrawOption& opt_bar();
@@ -77,6 +78,7 @@ private:
   mutable int m_numOfAxis = 2;
   mutable Color_t m_color = kBlack;
   bool m_same = false;
+  mutable std::string m_title;
 #endif // !__CINT__
 
 
