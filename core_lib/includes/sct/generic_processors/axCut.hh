@@ -7,7 +7,7 @@
 #ifndef __CINT__
 #include <memory>
 #endif // !__CINT__
-#include "lambda_Note.hh"
+
 #include "sct/platform.hh"
 
 class planeCut;

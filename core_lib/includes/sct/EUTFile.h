@@ -23,12 +23,13 @@ class collection;
 class DllExport EUTFile {
 public:
 
-  EUTFile(sct::ref_ptr<TFile> inputFile, sct::ref_ptr<ProcessorCollection> pc);
-  EUTFile(sct::ref_ptr<TFile> inputFile);
+  EUTFile(TFile* inputFile, ProcessorCollection* pc=nullptr);
   collection* getCollection(const collectionName_t& name);
   ProcessorCollection* getProcessorCollection();
-private:
 #ifndef __CINT__
+  EUTFile(sct::ref_ptr<TFile> inputFile, sct::ref_ptr<ProcessorCollection> pc);
+  EUTFile(sct::ref_ptr<TFile> inputFile);
+private:
   TFile *m_inputFile;
   ProcessorCollection* m_pc;
   std::vector<collection*> m_collections;

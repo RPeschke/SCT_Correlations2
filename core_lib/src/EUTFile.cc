@@ -35,6 +35,15 @@ EUTFile::EUTFile(sct::ref_ptr<TFile> inputFile) : m_inputFile(inputFile.get()) {
 
 }
 
+
+EUTFile::EUTFile(TFile* inputFile, ProcessorCollection* pc/*=nullptr*/) : m_inputFile(inputFile), m_pc(pc)
+{
+  if (!pc) {
+    m_pc_owned = Snew ProcessorCollection();
+    m_pc = m_pc_owned.get();
+  }
+}
+
 collection* EUTFile::getCollection(const collectionName_t&  name){
   collection* ret = get_known_collection(name, m_collections);
   if (ret){

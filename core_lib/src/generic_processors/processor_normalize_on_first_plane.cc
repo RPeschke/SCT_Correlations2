@@ -2,6 +2,7 @@
 #include "sct/ProcessorCollection.h"
 #include "sct/xy_processors/xy_pro.hh"
 #include "sct/generic_processors/processor_generic_correlation.hh"
+#include "sct/generic_processors/processor_normalize_on_first_plane.hh"
 
 class processor_normalize_on_first_plane :public processor {
 public:
@@ -87,7 +88,7 @@ process_returns processor_normalize_on_first_plane::processEvent()
   m_output_coll->clear_event();
   std::map<axesName_t, std::map<int, double> > m_summ;
   std::map<axesName_t, std::map<int, int>> m_count;
-
+  bool isEmpty = true;
   while (m_normalisation_plane.next()){
     double sector = *m_p_norm[axesName_t("sector")];
     double section = *m_p_norm[axesName_t("section")];
@@ -95,9 +96,11 @@ process_returns processor_normalize_on_first_plane::processEvent()
       m_summ[e][sector*100 + section] = (m_summ[e][sector * 100 + section] * m_count[e][sector * 100 + section] + (*m_p_norm[e]) ) / (m_count[e][sector * 100 + section]+1);
       m_count[e][sector * 100 + section] += 1;
     }
-
+    isEmpty = false;
   }
-
+  if (isEmpty) {
+    return p_sucess;
+  }
 
   while (m_plane1.next()) {
     

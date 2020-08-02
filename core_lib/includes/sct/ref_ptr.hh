@@ -2,10 +2,11 @@
 #define ref_ptr_h__
 
 #include <memory>
+#include "sct/platform.hh"
 
 namespace sct {
   template <typename T>
-  class ref_ptr {
+  class DllExport ref_ptr {
   public:
     ref_ptr(T* t) : m_ptr(t){
 

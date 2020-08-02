@@ -7,6 +7,7 @@
 #include "sct/generic_processors/planeCut.hh"
 #include "sct/generic_processors/cutNote.hh"
 #include "sct/generic_processors/processor_generic_make_unique_axis.hh"
+#include <algorithm>
 
 class processor_generic_make_unique_axis :public processor {
 public:

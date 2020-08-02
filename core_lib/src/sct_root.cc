@@ -1,25 +1,37 @@
-#ifndef lambda_Note_h__
-#define lambda_Note_h__
 
-#include "sct/generic_processors/cutNote.hh"
-#include <memory>
-#include <vector>
-#include "axCut.hh"
+#include "TSystem.h"
+#include "TInterpreter.h"
 
-class DllExport lambda_Note : public cutNote {
-public:
-  lambda_Note();
-  virtual bool register_plane(planeCut& pl);;
-  virtual double get_value() const;;
-#ifndef __CINT__
-  lambda_Note(register_plane_f reg_, Predicate_f0  cut_);
-  virtual std::shared_ptr<cutNote> copy() const;
-  register_plane_f m_reg;
-  Predicate_f0 m_cut;
+#include <iostream>
+#include <string>
 
-  std::vector<std::shared_ptr<cutNote>> m_notes;
-#endif
-};
+
+
+#ifndef WIN32
+
+
+
+struct __dummy_lib_load1 {
+  __dummy_lib_load1() {
+
+    gInterpreter->ProcessLine("#define  var(x)  ___set_GName( processorName_t(#x)); auto x ");
+
+
+    gInterpreter->ProcessLine("namespace ArggLib { namespace ArggLib_impl {  enum _unew_1 { __unew_start1  };  template <typename T> auto operator<<(_unew_1, T* in_) ->decltype(std::unique_ptr<T>(in_)) {  return std::unique_ptr<T>(in_); } enum _Snew_1 { __Snew_start1 };       template <typename T>       auto operator<<(_Snew_1, T* in_) -> decltype(std::shared_ptr<T>(in_)) {         return std::shared_ptr<T>(in_);       }    }  }");
+  
+    gInterpreter->ProcessLine("#define Unew ArggLib::ArggLib_impl::__unew_start1 << new ");
+    gInterpreter->ProcessLine("#define Snew ArggLib::ArggLib_impl::__Snew_start1 << new ");
+
+
+
+    
+
+    gInterpreter->ProcessLine("#define  cross *__correlation_start*");
+
+/*
+    gInterpreter->ProcessLine(R"(
+
+
 #ifndef __CINT__
 template<typename... Axes_t>
 void dummy(Axes_t... ax) {
@@ -72,5 +84,10 @@ struct lamda_note_helper_3 {
 #define  lambda2(name1, name2) lamda_note_helper_2(axesName_t(#name1),axesName_t(#name2)) * [](double name1,double name2)  
 #define  lambda3(name1, name2, name3) lamda_note_helper_3(axesName_t(#name1),axesName_t(#name2),axesName_t(#name3)) * [](double name1,double name2,double name3)  
 
-#endif
-#endif // lambda_Note_h__
+)");
+*/
+  }
+
+}___asdkl__;
+
+#endif // !WIN32

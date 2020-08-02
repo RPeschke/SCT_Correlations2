@@ -59,13 +59,13 @@ int gcounter = 0;
 
 processorName_t GName= processorName_t("");
 
-DllExport void ___set_GName(processorName_t name)
+void ___set_GName(processorName_t name)
 {
   GName = name;
 }
 
 
-DllExport processorName_t ___get_GName()
+processorName_t ___get_GName()
 {
   return GName;
 }

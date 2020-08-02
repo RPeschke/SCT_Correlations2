@@ -89,7 +89,7 @@ void collection::add_Axis(const axesName_t& axis_name)
 generic_plane collection::getPlane(ID_t planeID) {
   auto ID = getAxisByName(axesName_t("ID"), m_data);
 
-  auto ret = generic_plane(planeID, ID, m_pc, get_tree());
+  auto ret = generic_plane(planeID, ID, m_pc, get_tree(), get_name());
 
   for (auto&e : m_data) {
     if (e->getName() != "ID") {

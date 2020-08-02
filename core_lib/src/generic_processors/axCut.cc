@@ -1,6 +1,7 @@
 #include "sct/generic_processors/axCut.hh"
 #include "sct/generic_processors/planeCut.hh"
 #include "sct/platform.hh"
+#include <algorithm>
 
 
 

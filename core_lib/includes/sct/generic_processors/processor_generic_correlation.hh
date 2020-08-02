@@ -23,28 +23,20 @@ enum _correlation_ {
   __correlation_start
 };
 
-struct _correlation__generic_plane_wraper {
+struct DllExport _correlation__generic_plane_wraper {
   generic_plane pl1;
 };
 
-inline _correlation__generic_plane_wraper operator*(const generic_plane& pl, _correlation_) {
-  return _correlation__generic_plane_wraper{ pl };
-}
+DllExport _correlation__generic_plane_wraper operator*(const generic_plane& pl, _correlation_);
 
-inline generic_plane operator*(_correlation__generic_plane_wraper&& pl, const generic_plane& p2) {
-  return correlation(pl.pl1, p2);
-}
+DllExport generic_plane operator*(_correlation__generic_plane_wraper&& pl, const generic_plane& p2);
 
 
 
 
-inline _correlation__generic_plane_wraper operator*(const xy_plane& pl, _correlation_) {
-  return _correlation__generic_plane_wraper{ *pl.get_generic_plane() };
-}
+DllExport _correlation__generic_plane_wraper operator*(const xy_plane& pl, _correlation_);
 
-inline generic_plane operator*(_correlation__generic_plane_wraper&& pl, const xy_plane& p2) {
-  return correlation(pl.pl1, *p2.get_generic_plane());
-}
+DllExport generic_plane operator*(_correlation__generic_plane_wraper&& pl, const xy_plane& p2);
 
 
 #define  cross *__correlation_start*

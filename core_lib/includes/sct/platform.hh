@@ -48,8 +48,7 @@
 #define  var(x)  ___set_GName( processorName_t(#x)); auto x 
 
 #include <memory>
-#define Unew ArggLib::ArggLib_impl::__unew_start << new 
-#define Snew ArggLib::ArggLib_impl::__Snew_start << new 
+
 
 namespace ArggLib {
   namespace ArggLib_impl {
@@ -75,6 +74,10 @@ namespace ArggLib {
     }
   }
 }
+
+#define Unew ArggLib::ArggLib_impl::__unew_start << new 
+#define Snew ArggLib::ArggLib_impl::__Snew_start << new 
+
 
 
 #endif // platform_h__

@@ -16,7 +16,7 @@ generic_plane lcio_collection::getPlane(ID_t planeID)
 {
   auto ID = m_storage[ID_DEF].get();
 
-  auto ret = generic_plane(planeID, ID, m_pc, nullptr);
+  auto ret = generic_plane(planeID, ID, m_pc, nullptr , collectionName_t(""));
 
   for (auto&e : m_storage) {
     if (e.first != ID_DEF) {

@@ -136,3 +136,23 @@ generic_plane correlation(const generic_plane& pl1, const generic_plane& p2,  co
 
   return dynamic_cast<processor_generic_correlation*>(p.get())->get_output_collection()->getPlane(ID_t(0));
 }
+
+_correlation__generic_plane_wraper operator*(const generic_plane& pl, _correlation_)
+{
+  return _correlation__generic_plane_wraper{ pl };
+}
+
+generic_plane operator*(_correlation__generic_plane_wraper&& pl, const generic_plane& p2)
+{
+  return correlation(pl.pl1, p2);
+}
+
+_correlation__generic_plane_wraper operator*(const xy_plane& pl, _correlation_)
+{
+  return _correlation__generic_plane_wraper{ *pl.get_generic_plane() };
+}
+
+generic_plane operator*(_correlation__generic_plane_wraper&& pl, const xy_plane& p2)
+{
+  return correlation(pl.pl1, *p2.get_generic_plane());
+}

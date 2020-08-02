@@ -56,13 +56,6 @@ init_returns processor_generic_append_existing_plane::init()
 
 process_returns processor_generic_append_existing_plane::processEvent()
 {
-  ++m_current;
-  m_output_coll->clear_event();
-
-  while (m_plane.next()) {
-    *ret = m_note->get_value();
-    m_outputPlane->push(ID_t(0));
-  }
 
 
   return p_sucess;
@@ -85,7 +78,7 @@ processorName_t processor_generic_append_existing_plane::get_name()
 
 collection* processor_generic_append_existing_plane::get_output_collection()
 {
-  return m_output_coll.get();
+  return nullptr;
 }
 
 generic_plane generic_append_plane_existing(const generic_plane& pl, axesName_t  axName, const cutNote& ax, const processor_prob& pprob) {

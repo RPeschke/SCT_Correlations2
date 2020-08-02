@@ -20,6 +20,7 @@
 
 #pragma link C++ class EUTFile;
 #pragma link C++ class generic_plane;
+#pragma link C++ class  generic_plane_slice_handler;
 
 #pragma link C++ class processor;
 #pragma link C++ enum  end_returns;
@@ -102,7 +103,14 @@
 #pragma link C++ typedef x_offset_t;
 #pragma link C++ typedef x_slope_t;
 #pragma link C++ typedef cutValue_t;
+
 #pragma link C++ function cut_op;
+#pragma link C++ function unique_of;
+#pragma link C++ function correlation;
+#pragma link C++ function generic_append_plane_existing;
+
+
+
 #pragma link C++ class cutNote;
 #pragma link C++ class lambda_Note;
 
@@ -169,5 +177,15 @@
 
 
 #pragma link C++ function operator||(const cutNote& , const cutNote& );
+
+
+
+#pragma link C++ class sct::ref_ptr<TFile>;
+
+#pragma link C++ class lamda_note_helper_1;
+#pragma link C++ class lamda_note_helper_2;
+#pragma link C++ class lamda_note_helper_3;
+
+#pragma link C++ function ___set_GName;
 
 #endif //__CINT__

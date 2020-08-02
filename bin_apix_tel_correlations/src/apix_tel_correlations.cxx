@@ -64,38 +64,7 @@ TApplication* get_TApplication() {
 }
 
 
-struct lamda_note_helper_1 {
-  lamda_note_helper_1(axesName_t names) :m_names(names) {}
-  axesName_t  m_names;
-  template<typename T>
-  auto operator*(T&& t) {
-    return make_lambda_Node(std::forward<T>(t), axCut(m_names));
-  }
-};
 
-struct lamda_note_helper_2 {
-  lamda_note_helper_2(axesName_t names1, axesName_t names2) :m_names1(names1), m_names2(names2) {}
-  axesName_t  m_names1;
-  axesName_t  m_names2;
-  template<typename T>
-  auto operator*(T&& t) {
-    return make_lambda_Node(std::forward<T>(t), axCut(m_names1), axCut(m_names2));
-  }
-};
-
-struct lamda_note_helper_3 {
-  lamda_note_helper_3(axesName_t names1, axesName_t names2, axesName_t names3) :m_names1(names1), m_names2(names2), m_names3(names3) {}
-  axesName_t  m_names1;
-  axesName_t  m_names2;
-  axesName_t  m_names3;
-  template<typename T>
-  auto operator*(T&& t) {
-    return make_lambda_Node(std::forward<T>(t), axCut(m_names1), axCut(m_names2), axCut(m_names3) );
-  }
-};
-#define  append1(name1) lamda_note_helper_1(axesName_t(#name1)) * [](double name1)  
-#define  append2(name1, name2) lamda_note_helper_2(axesName_t(#name1),axesName_t(#name2)) * [](double name1,double name2)  
-#define  append3(name1, name2, name3) lamda_note_helper_3(axesName_t(#name1),axesName_t(#name2),axesName_t(#name3)) * [](double name1,double name2,double name3)  
 
 int main(int argc, char **argv) {
 
@@ -119,29 +88,21 @@ int main(int argc, char **argv) {
 
   //auto corr_zz1 = xy_pro::correlations(p0.get_z(), p0.get_z());
 
-  var(muons_dummy) = mcparticles[(axCut(axesName_t("PDG")) == 13 || axCut(axesName_t("PDG")) == -13) && axCut(axesName_t("mass")) <1];
+  var(muons) = mcparticles[(axCut(axesName_t("PDG")) == 13 || axCut(axesName_t("PDG")) == -13) && axCut(axesName_t("mass")) <1];
   
-  var(muons_dummy1) = generic_append_plane(muons_dummy,
-    axesName_t("theta"), append3(px, py, pz) {
+
+  muons[axesName_t("theta")] = lambda3(px, py, pz) {
     return TMath::ACos(pz / TMath::Sqrt(px*px + py * py + pz * pz));
-  }, DontsaveWithRandomName()
-    );
-
-
-  var(muons_dummy2) = generic_append_plane(muons_dummy1,
-    axesName_t("phi"), append3(px, py, pz) {
+  };
+  muons[axesName_t("phi")] =  lambda3(px, py, pz) {
     return TMath::ATan2(py, px);
-  });
-  
-  var(muons_dummy3) = generic_append_plane(muons_dummy2,
-    axesName_t("pseudo_z"), append3(theta, py, pz) {
+  };
+  muons[axesName_t("pseudo_z")] = lambda3(theta, py, pz) {
     return  -328.268 + 311.889 * theta;
-  });
-
-  var(muons) = generic_append_plane(muons_dummy3,
-    axesName_t("pseudo_y_sector1"), append3(phi, py, pz) {
+  };
+  muons[axesName_t("pseudo_y_sector1")] = lambda3(phi, py, pz) {
     return  527.05 + 241.804 * phi;
-  });
+  };
 
   var(layer_7) = all_layers[axCut(axesName_t("layer")) == 7];
   var(layer_0) = all_layers_xy[axCut(axesName_t("layer")) == 0];
@@ -178,7 +139,7 @@ int main(int argc, char **argv) {
 
 
   var(corr_pz_z_3_lose_cut_temp) = cut_op(corr_pz_z_1,
-    append2(phi1, sector2) {
+    lambda2(phi1, sector2) {
     if (sector2 == 0 && (phi1 >2.5 || phi1 <-2)) {
       return 1;
     }
@@ -206,7 +167,7 @@ int main(int argc, char **argv) {
     return 0;
   });
   var(corr_pz_z_3_lose_cut) = cut_op(corr_pz_z_3_lose_cut_temp,
-    append2(theta1, section2) {
+    lambda2(theta1, section2) {
     if (section2 == 0 && theta1 < 1.3) {
       return 1;
     }
@@ -218,7 +179,7 @@ int main(int argc, char **argv) {
   });
 
   var(corr_pz_z_3_z_tight) = cut_op(corr_pz_z_3_lose_cut,
-    append2(pseudo_z1, z2) {
+    lambda2(pseudo_z1, z2) {
       return abs(pseudo_z1 - z2) < 50;
   });
 

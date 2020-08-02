@@ -44,6 +44,10 @@ ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/generic_processors/axCutHandle.hh
 ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/generic_processors/lambda_Note.hh
 ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/generic_processors/processor_cut_axis.hh
 ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/generic_processors/generic_operator.hh
+${PROJECT_SOURCE_DIR}/core_lib/includes/sct/generic_processors/processor_generic_correlation.hh
+${PROJECT_SOURCE_DIR}/core_lib/includes/sct/generic_processors/processor_generic_make_unique_axis.hh
+${PROJECT_SOURCE_DIR}/core_lib/includes/sct/generic_processors/processor_normalize_on_first_plane.hh
+${PROJECT_SOURCE_DIR}/core_lib/includes/sct/generic_processors/processor_generic_append_plane.hh
  )
 
 
