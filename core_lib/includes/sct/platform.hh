@@ -46,7 +46,7 @@
 #define MAKE_UNIQUE_NAME(x)  CONCATENATE(x, __LINE__)
 
 #define  var(x)  ___set_GName( processorName_t(#x)); auto x 
-#define  temp_var(x)  ___set_GName( processorName_t(#x)); auto x 
+#define  temp_var(x) ___set_GTemp(); ___set_GName( processorName_t(#x)); auto x 
 
 #include <memory>
 
