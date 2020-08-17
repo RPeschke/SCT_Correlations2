@@ -24,6 +24,8 @@ private:
   SaveOption save = DontSave2Disk;
 };
 
+DllExport void ___set_GTemp();
+DllExport bool ___get_GTemp();
 DllExport void ___set_GName(processorName_t name);
 DllExport processorName_t ___get_GName();
 

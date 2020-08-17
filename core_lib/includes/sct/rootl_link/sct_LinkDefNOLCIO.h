@@ -107,14 +107,13 @@
 
 #pragma link C++ function unique_of;
 #pragma link C++ function correlation;
-#pragma link C++ function generic_append_plane_existing;
 #pragma link C++ function generic_append_plane;
 #pragma link C++ class lambda_Note;
+#pragma link C++ class unique_ax;
 #pragma link C++ class _correlation__generic_plane_wraper;
-#pragma link C++ function operator*(const generic_plane&, _correlation_);;
-#pragma link C++ function operator*(_correlation__generic_plane_wraper&&, const generic_plane&);
-#pragma link C++ function operator*(const xy_plane&, _correlation_);
-#pragma link C++ function operator*(_correlation__generic_plane_wraper&& , const xy_plane&);
+#pragma link C++ enum  _correlation_;
+//#pragma link C++ function operator*(generic_plane& const, _correlation_);
+//#pragma link C++ function operator*(_correlation__generic_plane_wraper&&, const generic_plane&);
 
 #pragma link C++ function  operator&&(const cutNote& , const cutNote& );
 

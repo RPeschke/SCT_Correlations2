@@ -57,7 +57,21 @@ void processor_prob::DisableDebugSave() {
 
 int gcounter = 0;
 
+
 processorName_t GName= processorName_t("");
+bool g_isTemp = false;
+void ___set_GTemp(){
+  g_isTemp = true;
+}
+
+
+
+bool ___get_GTemp()
+{
+  bool dummy = g_isTemp;
+  g_isTemp = false;
+  return dummy;
+}
 
 void ___set_GName(processorName_t name)
 {
@@ -77,7 +91,11 @@ processor_prob saveWithRandomName(const processorName_t& name)
     n = name + processorName_t(std::to_string(++gcounter));
   }
   auto ret = processor_prob();
-  ret.save2Disk();
+  if (___get_GTemp()) {
+    ret.dontSave2Disk();
+  } else {
+    ret.save2Disk();
+  }
   ret.setName(n);
   ___set_GName(processorName_t(""));
   return ret;
@@ -90,7 +108,13 @@ processor_prob saveWithRandomName(const processorName_t& name)
      n = name + processorName_t(std::to_string(++gcounter));
    }
   auto ret = processor_prob();
-  ret.dontSave2Disk();
+  
+  if (___get_GTemp()) {
+    ret.dontSave2Disk();
+  } else {
+    ret.save2Disk();
+  }
+
   ret.setName(n);
   ___set_GName(processorName_t(""));
   return ret;

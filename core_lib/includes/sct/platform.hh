@@ -46,6 +46,7 @@
 #define MAKE_UNIQUE_NAME(x)  CONCATENATE(x, __LINE__)
 
 #define  var(x)  ___set_GName( processorName_t(#x)); auto x 
+#define  temp_var(x)  ___set_GName( processorName_t(#x)); auto x 
 
 #include <memory>
 
@@ -72,11 +73,14 @@ namespace ArggLib {
     auto operator<<(_Snew_, T* in_) -> decltype(std::shared_ptr<T>(in_)) {
       return std::shared_ptr<T>(in_);
     }
+ 
   }
 }
 
 #define Unew ArggLib::ArggLib_impl::__unew_start << new 
 #define Snew ArggLib::ArggLib_impl::__Snew_start << new 
+
+
 
 
 

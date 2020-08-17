@@ -15,6 +15,8 @@ namespace sct {
 
 #include "sct/platform.hh"
 #include "sct/internal/strong_types.h"
+#include "generic_plane.hh"
+#include "collection.h"
 class TTree;
 class TFile;
 class ProcessorCollection;
@@ -37,5 +39,18 @@ private:
 #endif
 
 };
+class DllExport TSIMFile : public EUTFile {
+public:
+  TSIMFile(TFile* inputFile, ProcessorCollection* pc = nullptr) : EUTFile (inputFile,pc) {
+      
+  }
+  generic_plane KLM_Digits() {
+    return getCollection(collectionName_t("KLM_Digits"))->getPlane(ID_t(0));
+  }
+  generic_plane KLM_Tracks() {
+    return getCollection(collectionName_t("KLM_Tracks"))->getPlane(ID_t(0));
+  }
+  
 
+};
 #endif // EUTFile_h__
