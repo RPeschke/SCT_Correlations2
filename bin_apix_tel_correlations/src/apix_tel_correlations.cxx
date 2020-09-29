@@ -20,7 +20,7 @@
 #include "sct/legacy/xml_print.hh"
 
 
-
+#include "sct/CSV_File.hh"
 #include "sct/EUTFile.h"
 #include "sct/platform.hh"
 #include "sct/internal/strong_types.h"
@@ -36,6 +36,7 @@
 #include "sct/generic_processors/processor_generic_make_unique_axis.hh"
 #include "sct/generic_processors/processor_generic_extend_base.hh"
 #include "TTree.h"
+#include "sct/generic_processors/group_events.hh"
 
 std::vector<TCanvas*> gCanvas;
 TBrowser* gBrowser = NULL;
@@ -242,6 +243,105 @@ double pfit3(double x) {
 
 }
 
+#include <type_traits>
+template<class U, class T = typename std::remove_cv<U>::type>
+struct remove_all { typedef T type; };
+template<class U, class T> struct remove_all<U, T*> : remove_all<T> {};
+template<class U, class T> struct remove_all<U, T&> : remove_all<T> {};
+template<class U, class T> struct remove_all<U, T&&> : remove_all<T> {};
+template<class U, class T> struct remove_all<U, T[]> : remove_all<T> {};
+template<class U, class T, int n> struct remove_all<U, T[n]> : remove_all<T> {};
+
+enum _else_helper_ {
+  else_helper_start
+};
+template<typename T>
+struct else_struct_proto {
+
+  T t;
+
+};
+
+template<typename T>
+struct else_struct {
+  T t;
+  bool condition = false;
+  constexpr operator bool() const {
+    return condition;
+  }
+};
+
+template <typename T>
+constexpr auto operator|=(_else_helper_, T&& t) {
+  return else_struct_proto<T>{ std::forward<T>(t) };
+}
+
+
+template <typename T, typename U>
+constexpr auto operator|=(T&& t, else_struct_proto<U>&& else_str) {
+  return else_struct<U>{std::forward<U>(else_str.t), t};
+}
+
+
+enum _if_helper_ {
+  if_helper_start
+};
+
+template<typename T>
+struct if_struct{
+  T t;
+};
+
+template <typename T>
+constexpr auto operator|=(_if_helper_, T&& t) {
+  return if_struct<T>{ std::forward<T>(t) };
+}
+
+
+#include <optional>
+
+
+template <typename T, typename U>
+constexpr auto operator|=(T&& t, if_struct<U>&& is_str)  {
+  if (is_str.t){
+    return std::optional<remove_all<T>::type>(t);
+  }
+  
+  return  std::optional<remove_all<T>::type>{} ;
+}
+
+template <typename T, typename U>
+constexpr auto operator|=(T&& t, if_struct<else_struct<U>>&& if_str) {
+  if  (if_str.t) {
+    return std::forward<T>(t);
+  }
+  
+  return  if_str.t.t;
+}
+
+
+
+
+#define if_ |=if_helper_start|=
+#define  when if_
+#define else_ |=else_helper_start|=
+
+#include <array>
+
+
+void readin_csv() {
+  TFile * out_file1 = new TFile("C:/Users/Peschke/Documents/xilinx_share2/GitHub/SCT_Correlations2/debug/eudaq_out_52.root", "recreate");
+  auto csv = CSV_File("C:/Users/Peschke/Documents/xilinx_share2/GitHub/SCT_Correlations2/debug/test_52.csv");
+  var(all_layers) = csv.getCollection()->getPlane(ID_t(0));
+  var(all_dump) = all_layers[axCut(axesName_t("PlaneID")) >= 0];
+  var(all_grouped) =  sct::group_events(all_dump, axesName_t("EventNumber"));
+  var(layer_2) = all_grouped[axCut(axesName_t("PlaneID")) == 2];
+  var(layer_12) = all_grouped[axCut(axesName_t("PlaneID")) == 12];
+  var(cor_2_vs_12) = layer_2 cross layer_12;
+
+  csv.getProcessorCollection()->loop();
+  out_file1->Write();
+}
 
 int main(int argc, char **argv) {
 
@@ -249,6 +349,17 @@ int main(int argc, char **argv) {
   
  // auto theApp = get_TApplication();
 #endif // _DEBUG
+
+  readin_csv();
+  return 1;
+
+  constexpr  auto i = 123 when  1 > 2;
+  constexpr auto i2 = 123 when  1 < 2;
+
+  auto i3 = 123 if_  1 > 2 else_ 321 if_ 1 > 3 else_ 234;
+  auto i4 = 123 if_  1 > 2 else_ 456;
+
+  auto i5 = std::array<int, 10 when 1 < 2 else_ 30>();
 
   auto m_file = Snew TFile("C:/Users/Peschke/Documents/xilinx_share2/GitHub/SCT_Correlations2/debug/t_2020-08-16a.root");
   auto m_file2 = Snew TFile("C:/Users/Peschke/Documents/xilinx_share2/GitHub/SCT_Correlations2/debug/t23_2020-08-16a.root");
@@ -260,6 +371,7 @@ int main(int argc, char **argv) {
   auto m_generic1 = Snew TSIMFile(m_file.get());
   
   auto mcparticle_file = Snew EUTFile(m_file2, m_generic1->getProcessorCollection());
+  
   
 
   var(all_layers) = m_generic1->KLM_Tracks();

@@ -103,6 +103,7 @@
 #pragma link C++ typedef cutValue_t;
 #pragma link C++ function cut_op;
 #pragma link C++ class cutNote;
+#pragma link C++ class generic_plane_slice_handler;
 
 
 #pragma link C++ function unique_of;

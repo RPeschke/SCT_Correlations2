@@ -15,6 +15,18 @@ std::vector<double> *getAxisByName(const axesName_t& name,const std::vector<stor
   return nullptr;
 }
 
+void Draw(const generic_plane_slice_handler& pl)
+{
+  pl.m_plane->get_tree()->Draw(necessary_CONVERSION(pl.m_name).c_str());
+}
+
+
+void Draw(const generic_plane_slice_handler_multi& pl)
+{
+  std::string ax = necessary_CONVERSION(pl.m_data[0].m_name) +":" + necessary_CONVERSION(pl.m_data[1].m_name);
+  pl.m_data[0].m_plane->get_tree()->Draw(ax.c_str());
+}
+
 generic_plane::generic_plane(ID_t planeID, std::vector<double> *ID, ProcessorCollection*pc, TTree* tree, collectionName_t collectionName):plane_id(planeID),m_id(ID),m_pc(pc),m_tree(tree), m_collectionName(collectionName){
  
 }
@@ -173,7 +185,19 @@ void generic_plane_slice_handler::operator=(const cutNote &ax)
   *m_plane = pl;
 }
 
+
+void generic_plane_slice_handler::print_ax()
+{
+  std::cout << necessary_CONVERSION(m_name) << std::endl;
+}
+
 generic_plane_slice_handler::generic_plane_slice_handler(axesName_t name, generic_plane* plane) :m_plane(plane), m_name(name)
 {
 
 }
+
+generic_plane_slice_handler::generic_plane_slice_handler(const char * name, generic_plane* plane) : m_plane(plane), m_name(axesName_t(name))
+{
+
+}
+

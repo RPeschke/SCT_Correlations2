@@ -8,7 +8,7 @@ planeCut::planeCut(const generic_plane& pl):m_pl(pl) {
 }
 
 double* planeCut::getAxis(axesName_t ax) {
-  SCOPE_GUARD_START {
+
     auto p = m_storage[ax];
     if (p) {
       return p.get();
@@ -17,7 +17,7 @@ double* planeCut::getAxis(axesName_t ax) {
     m_storage[ax] = _MAKE_SHARED0(double);
     m_pl.setHitAxisAdress(ax, m_storage[ax].get());
     return m_storage[ax].get();
-  }SCOPE_GUARD_END_RETURN
+
 
 }
 

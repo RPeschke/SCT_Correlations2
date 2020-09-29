@@ -21,15 +21,43 @@ public:
   axesName_t axisName;
 };
 #endif
+#include "TString.h"
 
 class generic_plane_slice_handler;
+
+class generic_plane_slice_handler_multi {
+public:
+
+  std::vector<generic_plane_slice_handler> m_data;
+  generic_plane_slice_handler_multi operator&(const generic_plane_slice_handler& rhs) {
+    generic_plane_slice_handler_multi ret;
+    ret.m_data = m_data;
+    ret.m_data.push_back(rhs);
+    return ret;
+  }
+};
+
+DllExport void Draw(const generic_plane_slice_handler_multi& pl);
+
 class DllExport generic_plane_slice_handler {
 public:
+
   generic_plane* m_plane;
   axesName_t m_name;
+  void print_ax();
   generic_plane_slice_handler(axesName_t name, generic_plane* plane);
+  generic_plane_slice_handler(const char * name, generic_plane* plane);
   void  operator= (const cutNote &ax);
+  generic_plane_slice_handler_multi operator&(const generic_plane_slice_handler& rhs) {
+    generic_plane_slice_handler_multi ret;
+    ret.m_data.push_back(*this);
+    ret.m_data.push_back(rhs);
+    return ret;
+  }
+
 };
+
+DllExport void Draw(const generic_plane_slice_handler& pl);
 #include "sct/internal/strong_types.h"
 
 
@@ -62,8 +90,9 @@ public:
   std::vector<axesName_t> get_axes_names() const;
   void set_name(const  std::string& name);
   collectionName_t get_name() const;
-#ifndef __CINT__
   generic_plane_slice_handler operator[](axesName_t ax);
+
+#ifndef __CINT__
   void clear_event();
   void clear_event(axesName_t ax);
 
