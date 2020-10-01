@@ -105,6 +105,7 @@
 #pragma link C++ class cutNote;
 #pragma link C++ class generic_plane_slice_handler;
 #pragma link C++ class CSV_File;
+#pragma link C++ function sct::group_events;
 
 #pragma link C++ function unique_of;
 #pragma link C++ function correlation;

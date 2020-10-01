@@ -13,6 +13,7 @@ set(SCT_ROOT_HEADERS
   ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/collection.h
 ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/axis.hh
 ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/EUTFile.h 
+${PROJECT_SOURCE_DIR}/core_lib/includes/sct/CSV_File.hh
 ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/generic_plane.hh 
 ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/processor.h 
 ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/ProcessorCollection.h 
@@ -48,6 +49,7 @@ ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/generic_processors/processor_generic
 ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/generic_processors/processor_generic_make_unique_axis.hh
 ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/generic_processors/processor_normalize_on_first_plane.hh
 ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/generic_processors/processor_generic_append_plane.hh
+${PROJECT_SOURCE_DIR}/core_lib/includes/sct/generic_processors/group_events.hh
  )
 
 
