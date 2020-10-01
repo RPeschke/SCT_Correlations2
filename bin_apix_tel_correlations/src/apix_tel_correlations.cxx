@@ -266,19 +266,19 @@ template<typename T>
 struct else_struct {
   T t;
   bool condition = false;
-  constexpr operator bool() const {
+   operator bool() const {
     return condition;
   }
 };
 
 template <typename T>
-constexpr auto operator|=(_else_helper_, T&& t) {
+ auto operator|=(_else_helper_, T&& t)  -> decltype(else_struct_proto<T>{ std::forward<T>(t) }) {
   return else_struct_proto<T>{ std::forward<T>(t) };
 }
 
 
 template <typename T, typename U>
-constexpr auto operator|=(T&& t, else_struct_proto<U>&& else_str) {
+ auto operator|=(T&& t, else_struct_proto<U>&& else_str)-> decltype(else_struct<U>{std::forward<U>(else_str.t), t} ){
   return else_struct<U>{std::forward<U>(else_str.t), t};
 }
 
@@ -293,7 +293,7 @@ struct if_struct{
 };
 
 template <typename T>
-constexpr auto operator|=(_if_helper_, T&& t) {
+ auto operator|=(_if_helper_, T&& t) -> decltype(if_struct<T>{ std::forward<T>(t) }) {
   return if_struct<T>{ std::forward<T>(t) };
 }
 
@@ -302,7 +302,7 @@ constexpr auto operator|=(_if_helper_, T&& t) {
 
 
 template <typename T, typename U>
-constexpr auto operator|=(T&& t, if_struct<U>&& is_str)  {
+ auto operator|=(T&& t, if_struct<U>&& is_str)-> decltype(std::optional<remove_all<T>::type>{}) {
   if (is_str.t){
     return std::optional<remove_all<T>::type>(t);
   }
@@ -311,7 +311,7 @@ constexpr auto operator|=(T&& t, if_struct<U>&& is_str)  {
 }
 
 template <typename T, typename U>
-constexpr auto operator|=(T&& t, if_struct<else_struct<U>>&& if_str) {
+ auto operator|=(T&& t, if_struct<else_struct<U>>&& if_str) ->decltype(if_str.t.t){
   if  (if_str.t) {
     return std::forward<T>(t);
   }
@@ -356,10 +356,10 @@ int main(int argc, char **argv) {
   constexpr  auto i = 123 when  1 > 2;
   constexpr auto i2 = 123 when  1 < 2;
 
-  auto i3 = 123 if_  1 > 2 else_ 321 if_ 1 > 3 else_ 234;
+  auto i3 = 123 if_  1 > 2 else_ 321 ;
   auto i4 = 123 if_  1 > 2 else_ 456;
 
-  auto i5 = std::array<int, 10 when 1 < 2 else_ 30>();
+  
 
   auto m_file = Snew TFile("C:/Users/Peschke/Documents/xilinx_share2/GitHub/SCT_Correlations2/debug/t_2020-08-16a.root");
   auto m_file2 = Snew TFile("C:/Users/Peschke/Documents/xilinx_share2/GitHub/SCT_Correlations2/debug/t23_2020-08-16a.root");
