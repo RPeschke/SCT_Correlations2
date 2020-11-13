@@ -549,7 +549,7 @@ inline void CmdLine::missingArgsException()
 
 inline void CmdLine::deleteOnExit(Arg* ptr)
 {
-	_argDeleteOnExitList.push_back(ptr);
+	//_argDeleteOnExitList.push_back(ptr);
 }
 
 inline void CmdLine::deleteOnExit(Visitor* ptr)

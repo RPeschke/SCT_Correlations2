@@ -1,11 +1,15 @@
 #ifndef plane_h__
 #define plane_h__
 
+
 #include "sct/platform.hh"
 
 #include "sct/axis.hh"
+#include "sct/internal/strong_types.h"
 
+#include "sct/generic_plane_slice_handler.hh"
 
+class planeCut;
 class generic_plane;
 class cutNote;
 #ifndef __CINT__
@@ -23,42 +27,9 @@ public:
 #endif
 #include "TString.h"
 
-class generic_plane_slice_handler;
 
-class generic_plane_slice_handler_multi {
-public:
 
-  std::vector<generic_plane_slice_handler> m_data;
-  generic_plane_slice_handler_multi operator&(const generic_plane_slice_handler& rhs) {
-    generic_plane_slice_handler_multi ret;
-    ret.m_data = m_data;
-    ret.m_data.push_back(rhs);
-    return ret;
-  }
-};
 
-DllExport void Draw(const generic_plane_slice_handler_multi& pl);
-
-class DllExport generic_plane_slice_handler {
-public:
-
-  generic_plane* m_plane;
-  axesName_t m_name;
-  void print_ax();
-  generic_plane_slice_handler(axesName_t name, generic_plane* plane);
-  generic_plane_slice_handler(const char * name, generic_plane* plane);
-  void  operator= (const cutNote &ax);
-  generic_plane_slice_handler_multi operator&(const generic_plane_slice_handler& rhs) {
-    generic_plane_slice_handler_multi ret;
-    ret.m_data.push_back(*this);
-    ret.m_data.push_back(rhs);
-    return ret;
-  }
-
-};
-
-DllExport void Draw(const generic_plane_slice_handler& pl);
-#include "sct/internal/strong_types.h"
 
 
 
@@ -69,7 +40,7 @@ class TTree;
 class DllExport generic_plane{
 public:
 #ifndef __CINT__
-  generic_plane(ID_t planeID, std::vector<double> *ID, ProcessorCollection* pc,TTree* tree, collectionName_t collectionName );
+  generic_plane(ID_t planeID, std::vector<double> *ID, ProcessorCollection* pc,TTree* tree, collectionName_t collectionName, bool is_saved_to_disk_ = true);
 #endif
   generic_plane(const generic_plane& pl);
   generic_plane& operator=(const generic_plane& pl);
@@ -95,6 +66,7 @@ public:
 #ifndef __CINT__
   void clear_event();
   void clear_event(axesName_t ax);
+  bool is_saved_to_disk() const;
 
 private:
   ProcessorCollection* m_pc = nullptr;
@@ -105,6 +77,7 @@ private:
   int curr = -1;
   TTree* m_tree = nullptr;
   collectionName_t m_collectionName = collectionName_t("");
+  bool m_saved_to_disk = true;
 #endif // !__CINT__
 
 

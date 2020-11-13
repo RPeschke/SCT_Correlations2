@@ -261,16 +261,36 @@ template<class U, class T, int n> struct remove_all<U, T[n]> : remove_all<T> {};
 
 
 void readin_csv() {
-  TFile * out_file1 = new TFile("C:/Users/Peschke/Documents/xilinx_share2/GitHub/SCT_Correlations2/debug/eudaq_out_52.root", "recreate");
-  auto csv = CSV_File("C:/Users/Peschke/Documents/xilinx_share2/GitHub/SCT_Correlations2/debug/test_52.csv");
+  TFile * out_file1 = new TFile("C:/Users/Peschke/Documents/xilinx_share2/GitHub/SCT_Correlations2/debug/eudaq_out_227.root", "recreate");
+  auto csv = CSV_File("C:/Users/Peschke/Documents/xilinx_share2/GitHub/SCT_Correlations2/debug/run227.csv");
   var(all_layers) = csv.getCollection()->getPlane(ID_t(0));
   var(all_dump) = all_layers[axCut(axesName_t("PlaneID")) >= 0];
   var(all_grouped) =  sct::group_events(all_dump, axesName_t("EventNumber"));
-  var(layer_2) = all_grouped[axCut(axesName_t("PlaneID")) == 2];
-  var(layer_12) = all_grouped[axCut(axesName_t("PlaneID")) == 12];
+  var(layer_2) = all_grouped[all_grouped[axesName_t("PlaneID")] == 2];
+  var(layer_12) = all_grouped[all_grouped[axesName_t("PlaneID")] == 12];
   var(cor_2_vs_12) = layer_2 cross layer_12;
+  
+  var(layer_12_trigger) = layer_12[layer_12[axesName_t("x")] == 14 && layer_12[axesName_t("y")] == 8];
+  var(layer_12_not_trigger) = layer_12[layer_12[axesName_t("x")] != 14 || layer_12[axesName_t("y")] != 8];
+  var(layer12_trig_vs_non_trig) = layer_12_trigger cross layer_12_not_trigger;
+  
+  layer12_trig_vs_non_trig[axesName_t("delta_time")] = lambda2(TimeStamp1, TimeStamp2) {
+    return TimeStamp1 - TimeStamp2;
+  };
+  var(layer_12_cut) = layer12_trig_vs_non_trig[layer12_trig_vs_non_trig[axesName_t("delta_time")] > 40 && layer12_trig_vs_non_trig[axesName_t("delta_time")] < 100];
 
-  csv.getProcessorCollection()->loop();
+
+  var(layer_2_trigger) = layer_2[layer_2[axesName_t("x")] == 15 && layer_2[axesName_t("y")] == 7];
+  var(layer_2_not_trigger) = layer_2[layer_2[axesName_t("x")] != 15 || layer_2[axesName_t("y")] != 7];
+  var(layer2_trig_vs_non_trig) = layer_2_trigger cross layer_2_not_trigger;
+
+  layer2_trig_vs_non_trig[axesName_t("delta_time")] = lambda2(TimeStamp1, TimeStamp2) {
+    return TimeStamp1 - TimeStamp2;
+  };
+
+  var(layer_2_cut) = layer2_trig_vs_non_trig[layer2_trig_vs_non_trig[axesName_t("delta_time")] > 40 && layer2_trig_vs_non_trig[axesName_t("delta_time")] < 100];
+  var(layer_cut_2_vs_12) = layer_2_cut cross layer_12_cut;
+  csv.getProcessorCollection()->loop(1000);
   out_file1->Write();
 }
 
@@ -282,7 +302,7 @@ int main(int argc, char **argv) {
 #endif // _DEBUG
 
   readin_csv();
-  return 1;
+  return 0;
 
 
 

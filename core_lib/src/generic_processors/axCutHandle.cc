@@ -2,7 +2,6 @@
 #include "sct/generic_processors/planeCut.hh"
 
 
-
 bool axCutHandle::register_plane(planeCut& pl) {
   m_Ax->register_plane(pl);
   return true;

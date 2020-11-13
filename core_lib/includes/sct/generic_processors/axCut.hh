@@ -9,7 +9,7 @@
 #endif // !__CINT__
 
 #include "sct/platform.hh"
-
+#include <vector>
 class planeCut;
 
 

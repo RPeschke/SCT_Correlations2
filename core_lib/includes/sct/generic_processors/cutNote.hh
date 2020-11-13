@@ -7,7 +7,8 @@
 #include <functional>
 #include <memory>
 #define  DEFAULT_OP =default
-#include "sct/generic_processors/planeCut.hh"
+//#include "sct/generic_processors/planeCut.hh"
+class planeCut;
 #else
 #define  DEFAULT_OP 
 class planeCut;
