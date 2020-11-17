@@ -22,6 +22,7 @@ public:
   std::vector<double>* getVec() const;
   sct_type::AxesName_t getName() const;
   void reset();
+  bool empty() const;
 #ifdef _DEBUG
   void loadFromVector();
   void PushToVector() const;
