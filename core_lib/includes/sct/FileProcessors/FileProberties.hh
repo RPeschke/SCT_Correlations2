@@ -1,7 +1,7 @@
 #ifndef FileProberties_h__
 #define FileProberties_h__
-#include "TFile.h"
-#include <memory>
+
+
 #include <string>
 
 class FileProberties {

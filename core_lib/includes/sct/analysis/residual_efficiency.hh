@@ -1,11 +1,12 @@
 #ifndef residual_efficiency_h__
 #define residual_efficiency_h__
 #include "sct/platform.hh"
-#include "TH1.h"
+//#include "TH1.h"
 #include "sct/predef/plane.hh"
 #include "sct/collection.h"
 #include "sct/xy_processors/find_nearest_strip.hh"
 
+class TH1D;
 
 class DllExport residual_efficiency {
 public:
