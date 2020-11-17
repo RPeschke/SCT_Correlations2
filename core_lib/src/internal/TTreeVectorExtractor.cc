@@ -143,5 +143,9 @@ void TTreeVectorExtractor::reset()
 
 }
 
+bool TTreeVectorExtractor::empty() const
+{
+  return m_vec->empty();
+}
 
 
