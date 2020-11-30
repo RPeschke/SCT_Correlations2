@@ -28,8 +28,9 @@ class collection;
 class DllExport CSV_File {
 public:
 
-  CSV_File(std::string FileName, ProcessorCollection* pc=nullptr);
+  CSV_File(std::string FileName, ProcessorCollection* pc=nullptr, std::string option = "");
   collection* getCollection();
+  generic_plane get_plane();
   ProcessorCollection* getProcessorCollection();
 
 #ifndef __CINT__

@@ -28,7 +28,11 @@ public:
 private:  
   axesName_t m_name;
   const double * m_hit = nullptr;
+  std::vector<generic_plane *> get_planes() const override;
 #endif
+
+  
+
 
   
 
@@ -58,13 +62,18 @@ public:
   virtual ~unique_ax() __OVERIDE__;
 #ifndef __CINT__
   virtual std::shared_ptr<cutNote> copy() const __OVERIDE__;
+  std::vector<generic_plane *> get_planes() const override;
 private:
   axesName_t m_name;
   const double * m_hit = nullptr;
   mutable std::vector<double> m_elements;
+  
 #endif
 
 
+
+
+  
 
 };
 

@@ -142,9 +142,6 @@ void collection::save() {
 
 
   if (outPutTree) {
-    if (m_data[0]->empty()) {
-      return;
-    }
 #ifdef _DEBUG
     for (auto& e : m_data) {
       e->PushToVector();

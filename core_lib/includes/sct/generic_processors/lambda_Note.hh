@@ -10,7 +10,8 @@ class DllExport lambda_Note : public cutNote {
 public:
   lambda_Note();
   virtual bool register_plane(planeCut& pl);;
-  virtual double get_value() const;;
+  virtual double get_value() const;
+  virtual std::vector<generic_plane*> get_planes() const;
 #ifndef __CINT__
   lambda_Note(register_plane_f reg_, Predicate_f0  cut_);
   virtual std::shared_ptr<cutNote> copy() const;
@@ -68,9 +69,56 @@ struct lamda_note_helper_3 {
     return make_lambda_Node(std::forward<T>(t), axCut(m_names1), axCut(m_names2), axCut(m_names3));
   }
 };
-#define  lambda1(name1) lamda_note_helper_1(axesName_t(#name1)) * [](double name1)  
-#define  lambda2(name1, name2) lamda_note_helper_2(axesName_t(#name1),axesName_t(#name2)) * [](double name1,double name2)  
-#define  lambda3(name1, name2, name3) lamda_note_helper_3(axesName_t(#name1),axesName_t(#name2),axesName_t(#name3)) * [](double name1,double name2,double name3)  
+struct lamda_note_helper_4 {
+  lamda_note_helper_4(axesName_t names1, axesName_t names2, axesName_t names3, axesName_t names4) :m_names1(names1), m_names2(names2), m_names3(names3), m_names4(names4) {}
+  axesName_t  m_names1;
+  axesName_t  m_names2;
+  axesName_t  m_names3;
+  axesName_t  m_names4;
+  template<typename T>
+  lambda_Note operator*(T&& t) {
+    return make_lambda_Node(std::forward<T>(t), axCut(m_names1), axCut(m_names2), axCut(m_names3), axCut(m_names4));
+  }
+};
+
+struct lamda_note_helper_5 {
+  lamda_note_helper_5(axesName_t names1, axesName_t names2, axesName_t names3, axesName_t names4, axesName_t names5) 
+    :m_names1(names1), m_names2(names2), m_names3(names3), m_names4(names4), m_names5(names5) {}
+  axesName_t  m_names1;
+  axesName_t  m_names2;
+  axesName_t  m_names3;
+  axesName_t  m_names4;
+  axesName_t  m_names5;
+  template<typename T>
+  lambda_Note operator*(T&& t) {
+    return make_lambda_Node(std::forward<T>(t), axCut(m_names1), axCut(m_names2), axCut(m_names3), axCut(m_names4), axCut(m_names5));
+  }
+};
+
+
+struct lamda_note_helper_6 {
+  lamda_note_helper_6(axesName_t names1, axesName_t names2, axesName_t names3, axesName_t names4, axesName_t names5, axesName_t names6)
+    :m_names1(names1), m_names2(names2), m_names3(names3), m_names4(names4), m_names5(names5), m_names6(names6) {}
+  axesName_t  m_names1;
+  axesName_t  m_names2;
+  axesName_t  m_names3;
+  axesName_t  m_names4;
+  axesName_t  m_names5;
+  axesName_t  m_names6;
+  template<typename T>
+  lambda_Note operator*(T&& t) {
+    return make_lambda_Node(std::forward<T>(t), axCut(m_names1), axCut(m_names2), axCut(m_names3), axCut(m_names4), axCut(m_names5), axCut(m_names6));
+  }
+};
+
+
+#define  lambda1(name1) lamda_note_helper_1(axesName_t(#name1)) * [&](double name1)  
+#define  lambda2(name1, name2) lamda_note_helper_2(axesName_t(#name1),axesName_t(#name2)) * [&](double name1,double name2)  
+#define  lambda3(name1, name2, name3) lamda_note_helper_3(axesName_t(#name1),axesName_t(#name2),axesName_t(#name3)) * [&](double name1,double name2,double name3)  
+#define  lambda4(name1, name2, name3, name4) lamda_note_helper_4(axesName_t(#name1),axesName_t(#name2),axesName_t(#name3),axesName_t(#name4)) * [&](double name1,double name2,double name3,double name4)  
+#define  lambda5(name1, name2, name3, name4, name5) lamda_note_helper_5(axesName_t(#name1),axesName_t(#name2),axesName_t(#name3),axesName_t(#name4),axesName_t(#name5)) * [&](double name1,double name2,double name3,double name4,double name5)  
+#define  lambda6(name1, name2, name3, name4, name5, name6) lamda_note_helper_6(axesName_t(#name1),axesName_t(#name2),axesName_t(#name3),axesName_t(#name4),axesName_t(#name5),axesName_t(#name6)) * [&](double name1,double name2,double name3,double name4,double name5,double name6)  
+
 
 #endif
 #endif // lambda_Note_h__

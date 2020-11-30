@@ -1,0 +1,13 @@
+RunNumber,AnalysisNr,Collection,PlaneID,Type,Count
+235,1,trigger_2_unqiue,2,0,18945
+235,1,trigger_12_unqiue,12,0,38385
+235,1,trueHits_proto_2_unqiue,2,1,1567
+235,1,trueHits_proto_12_unqiue,12,1,1295
+235,1,trueHits_x_2_unqiue,2,2,1107
+235,1,trueHits_x_12_unqiue,12,2,757
+235,1,trueHits_y_2_unqiue,2,3,842
+235,1,trueHits_y_12_unqiue,12,3,611
+235,1,trueHits_2d_plane_2_unique,2,4,377
+235,1,trueHits_2d_plane_12_unique,12,4,71
+235,1,trigger_with_2_unique,2,5,1
+235,1,trigger_with_12_unique,12,5,1

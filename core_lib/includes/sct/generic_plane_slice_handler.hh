@@ -4,7 +4,7 @@
 
 #include "sct/internal/strong_types.h"
 #include "generic_processors/cutNote.hh"
-
+#include <vector>
 
 class generic_plane_slice_handler;
 class generic_plane;
@@ -50,6 +50,9 @@ public:
 
   std::shared_ptr<cutNote> copy() const ;
 
+#ifndef __CINT__
+  std::vector<generic_plane *> get_planes() const override;
+#endif;
 private:
   const double * m_hit = nullptr;
 };

@@ -50,6 +50,8 @@ ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/generic_processors/processor_generic
 ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/generic_processors/processor_normalize_on_first_plane.hh
 ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/generic_processors/processor_generic_append_plane.hh
 ${PROJECT_SOURCE_DIR}/core_lib/includes/sct/generic_processors/group_events.hh
+${PROJECT_SOURCE_DIR}/core_lib/includes/sct/generic_processors/drop.hh 
+${PROJECT_SOURCE_DIR}/core_lib/includes/sct/generic_processors/clustering.hh
  )
 
 

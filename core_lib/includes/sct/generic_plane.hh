@@ -45,6 +45,8 @@ public:
   generic_plane(const generic_plane& pl);
   generic_plane& operator=(const generic_plane& pl);
   generic_plane() {}
+
+  bool operator==(const generic_plane& pl);
   void add_axis(const axesName_t& axisName, std::vector<double> *axis_);
   bool setHitAxisAdress(const axesName_t& name, double* outVar);
   bool next();

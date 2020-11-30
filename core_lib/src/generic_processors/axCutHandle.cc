@@ -17,6 +17,12 @@ std::shared_ptr<cutNote> axCutHandle::copy() const {
   return _MAKE_SHARED1(axCutHandle, *this);
 }
 
+
+std::vector<generic_plane *> axCutHandle::get_planes() const
+{
+  throw std::logic_error("The method or operation is not implemented.");
+}
+
 axCutHandle::axCutHandle(axCut name, Predicate_f fun) :m_Ax(_MAKE_SHARED1(axCut, name)), m_predicate(std::move(fun)) {
 
 }

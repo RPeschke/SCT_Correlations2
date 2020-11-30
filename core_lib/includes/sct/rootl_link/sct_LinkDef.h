@@ -82,7 +82,8 @@
 #pragma link C++ class instrip_efficiency;
 #pragma link C++ class Cluster_strip;
 #pragma link C++ class lcio_reader;
-
+#pragma link C++ function sct::drop;
+#pragma link C++ function sct::clustering;
 
 #pragma link C++ typedef  modulo_x;
 #pragma link C++ typedef modulo_y;
@@ -108,12 +109,16 @@
 #pragma link C++ function unique_of;
 #pragma link C++ function correlation;
 #pragma link C++ function generic_append_plane_existing;
-
+#pragma link C++ function join;
+#pragma link C++ function select;
+#pragma link C++ function sct::flatten;
+#pragma link C++ function sct::enumerate_occurrence;
+#pragma link C++ function sct::first_occurrence;
 
 
 #pragma link C++ class cutNote;
 #pragma link C++ class lambda_Note;
-
+#pragma link C++ class cl_conf;
 
 #pragma link C++ function  operator&&(const cutNote& , const cutNote& );
 
@@ -177,9 +182,9 @@
 
 
 #pragma link C++ function operator||(const cutNote& , const cutNote& );
-
-
-
+#pragma link C++ class std::pair<std::string, double>;
+#pragma link C++ class  std::vector< std::pair<std::string, double> >;
+#pragma link C++ class sct::vector<std::string>;
 #pragma link C++ class sct::ref_ptr<TFile>;
 
 #pragma link C++ class lamda_note_helper_1;

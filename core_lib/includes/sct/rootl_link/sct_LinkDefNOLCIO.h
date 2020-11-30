@@ -106,6 +106,13 @@
 #pragma link C++ class generic_plane_slice_handler;
 #pragma link C++ class CSV_File;
 #pragma link C++ function sct::group_events;
+#pragma link C++ function sct::drop;
+#pragma link C++ function sct::clustering;
+#pragma link C++ function sct::first_occurrence;
+
+#pragma link C++ class cl_conf;
+
+#pragma link C++ function sct::enumerate_occurrence;
 
 #pragma link C++ function unique_of;
 #pragma link C++ function correlation;
@@ -118,8 +125,9 @@
 //#pragma link C++ function operator*(_correlation__generic_plane_wraper&&, const generic_plane&);
 
 #pragma link C++ function  operator&&(const cutNote& , const cutNote& );
-
-
+#pragma link C++ function join;
+#pragma link C++ function sct::select;
+#pragma link C++ function sct::flatten;
 
 #pragma link C++ class axCut;
 
@@ -170,9 +178,9 @@
 #pragma link C++ function operator!=(double , const cutNote&);
 
 
-
-
-
+//#pragma link C++ class std::pair<std::string, double>;
+//#pragma link C++ class  std::vector< std::pair<std::string, double> >;
+//#pragma link C++ class sct::vector<std::string>;
 
 #pragma link C++ function  operator!(const cutNote& );
 

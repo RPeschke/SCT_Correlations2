@@ -38,6 +38,19 @@ m_saved_to_disk(pl.m_saved_to_disk){
  
 }
 
+
+bool generic_plane::operator==(const generic_plane& pl)
+{
+  if (m_collectionName != pl.m_collectionName) {
+    return false;
+  }
+  if (m_id!= pl.m_id) {
+    return false;
+  }
+
+  return true;
+}
+
 generic_plane& generic_plane::operator=(const generic_plane& pl)  {
   m_pc = pl.m_pc;
   m_id = pl.m_id;
@@ -77,7 +90,11 @@ bool generic_plane::setHitAxisAdress(const axesName_t& name, double* outVar) {
       return true;
     }
   }
-  SCT_THROW("unknown Axes: " + necessary_CONVERSION(name));
+  std::string posibile_axis;
+  for (const auto & e : m_storage) {
+    posibile_axis += necessary_CONVERSION(e.axisName) + "\n";
+  }
+  SCT_THROW("unknown Axes: " + necessary_CONVERSION(name)+"\npossible axis:\n" + posibile_axis);
   return false;
 }
 

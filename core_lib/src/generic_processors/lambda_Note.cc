@@ -1,6 +1,7 @@
 #include "sct/generic_processors/lambda_Note.hh"
 #include "sct/generic_processors/cutNote.hh"
 #include <vector>
+#include "sct/generic_plane.hh"
 
 
 
@@ -20,6 +21,12 @@ bool lambda_Note::register_plane(planeCut& pl) {
 
 double lambda_Note::get_value() const {
   return m_cut();
+}
+
+
+std::vector<generic_plane*> lambda_Note::get_planes() const
+{
+  return {};
 }
 
 std::shared_ptr<cutNote> lambda_Note::copy() const {

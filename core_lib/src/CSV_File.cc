@@ -28,6 +28,7 @@ public:
 template <typename T>
 std::vector<T> split_t(const std::string& headerstr, const std::string delim = ";") {
   std::string s(headerstr);
+  s.erase(s.find_last_not_of(" \n\r\t") + 1);
   std::vector<T> result;
   if (s == "") return result;
   size_t i;
@@ -64,6 +65,7 @@ public:  virtual init_returns init() override;
   std::shared_ptr<std::ifstream> m_in;
   std::string buffer;
   std::vector<std::shared_ptr<double>> m_p1;
+  std::string m_delim;
 };
 
 init_returns CSV_reader_proc::init()
@@ -83,7 +85,7 @@ process_returns CSV_reader_proc::processEvent()
   if (!getline(*m_in, buffer)) {
     return p_stop;
   }
-  auto xs = split_t<to_double_t>(buffer);
+  auto xs = split_t<to_double_t>(buffer, m_delim);
   if (xs.size() != m_p1.size()) {
     return p_stop;
   }
@@ -129,7 +131,11 @@ CSV_reader_proc::CSV_reader_proc(std::string FileName, const processor_prob& ppr
   if (!getline(*m_in, buffer)) {
     SCT_THROW("file Empty");
   }
-  auto names = split_t<axesName_t>(buffer);
+  m_delim = ";";
+  if (buffer.find(",") != std::string::npos) {
+    m_delim = ",";
+  }
+  auto names = split_t<axesName_t>(buffer, m_delim);
   
   m_pprob.setAxis(names);
   m_pprob.addAxis(axesName_t("ID"));
@@ -146,7 +152,56 @@ CSV_reader_proc::CSV_reader_proc(std::string FileName, const processor_prob& ppr
   
 }
 
-CSV_File::CSV_File(std::string FileName, ProcessorCollection* pc/*=nullptr*/) :m_FileName(std::move(FileName))
+
+
+
+
+
+
+
+class CSV_reader_config_file_proc : public CSV_reader_proc {
+
+public: 
+        virtual init_returns init() override;
+         virtual process_returns processEvent() override;
+
+
+         CSV_reader_config_file_proc(std::string FileName, const processor_prob& pprob);
+
+};
+
+
+init_returns CSV_reader_config_file_proc::init()
+{
+  m_output_coll->clear_event();
+  while (getline(*m_in, buffer)) {
+    auto xs = split_t<to_double_t>(buffer, m_delim);
+    if (xs.size() != m_p1.size()) {
+      return i_sucess;
+    }
+
+    int i = 0;
+    for (const auto& x : xs) {
+      *m_p1[i] = x;
+      ++i;
+    }
+    m_outputPlane->push(ID_t(0));
+  }
+  return i_sucess;
+}
+
+process_returns CSV_reader_config_file_proc::processEvent()
+{
+  ++m_eventNr;
+  return p_sucess;
+}
+
+CSV_reader_config_file_proc::CSV_reader_config_file_proc(std::string FileName, const processor_prob& pprob):CSV_reader_proc(std::move(FileName), pprob)
+{
+
+}
+
+CSV_File::CSV_File(std::string FileName, ProcessorCollection* pc/*=nullptr*/, std::string option) :m_FileName(std::move(FileName))
 {
   if (!pc) {
     m_pc_owned = Snew ProcessorCollection();
@@ -156,15 +211,27 @@ CSV_File::CSV_File(std::string FileName, ProcessorCollection* pc/*=nullptr*/) :m
   }
   processor_prob m_pprob;
   m_pprob.setProcessorCollection(m_pc);
-
-  auto pr = Snew CSV_reader_proc(m_FileName, m_pprob);
-  m_pc->addProcessor(pr);
-  m_collection = pr->get_collection();
+  if (option == "configFile") {
+    auto pr = Snew CSV_reader_config_file_proc(m_FileName, m_pprob);
+    m_pc->addProcessor(pr);
+    m_collection = pr->get_collection();
+  } else {
+    auto pr = Snew CSV_reader_proc(m_FileName, m_pprob);
+    m_pc->addProcessor(pr);
+    m_collection = pr->get_collection();
+  }
+  
 }
 
 collection* CSV_File::getCollection(){
   return m_collection;
   
+}
+
+
+generic_plane CSV_File::get_plane()
+{
+  return getCollection()->getPlane(ID_t(0));
 }
 
 ProcessorCollection* CSV_File::getProcessorCollection()

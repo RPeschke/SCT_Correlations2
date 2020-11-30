@@ -19,6 +19,8 @@
 
 DllExport generic_plane correlation(const generic_plane& pl1, const generic_plane& p2, const processor_prob& pprob = saveWithRandomName(processorName_t("corr_")));
 
+DllExport generic_plane join(const generic_plane& pl1, const generic_plane& p2, const std::vector<axesName_t>& ax, const processor_prob& pprob = saveWithRandomName(processorName_t("join_")));
+
 enum _correlation_ {
   __correlation_start
 };

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+<run number="234">
+<triggers>
+<trigger>
+<planeID> 2 </planeID>
+</trigger>
+</triggers>
+</run>
+</config>

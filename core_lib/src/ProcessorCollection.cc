@@ -68,6 +68,9 @@ bool ProcessorCollection::next(){
   }
   for (auto&e : m_processors) {
     auto ret = e->fill();
+    if (ret == p_skip) {
+      return true;
+    }
     if (ret != p_sucess) {
       return false;
     }

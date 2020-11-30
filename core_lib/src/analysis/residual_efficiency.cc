@@ -6,6 +6,7 @@
 #include "sct/legacy/Draw.h"
 #include "sct/legacy/SCT_helpers.hh"
 #include "TMath.h"
+#include "TH1D.h"
 #define TrueResiduals_DEF ID_t(0)
 #define  REFERENCE_RESIDUALS_DEF ID_t(1)
 

@@ -37,6 +37,9 @@
 #include "sct/generic_processors/processor_generic_extend_base.hh"
 #include "TTree.h"
 #include "sct/generic_processors/group_events.hh"
+#include "sct/generic_processors/clustering.hh"
+#include "sct/generic_processors/drop.hh"
+#include "sct/generic_processors/processor_generic_select.hh"
 
 std::vector<TCanvas*> gCanvas;
 TBrowser* gBrowser = NULL;
@@ -294,14 +297,120 @@ void readin_csv() {
   out_file1->Write();
 }
 
-int main(int argc, char **argv) {
 
+void process227() {
+
+	TFile * out_file1 = new TFile("C:/Users/Peschke/Documents/xilinx_share2/GitHub/SCT_Correlations2/debug/eudaq_out_227.root", "recreate");
+	auto csv = CSV_File("C:/Users/Peschke/Documents/xilinx_share2/GitHub/SCT_Correlations2/debug/run227.csv");
+	var(all_layers) = csv.getCollection()->getPlane(ID_t(0));
+	var(all_dump) = all_layers[axCut(axesName_t("PlaneID")) >= 0];
+	var(all_grouped) = sct::group_events(all_dump, axesName_t("EventNumber"));
+	var(layer_2) = all_grouped[all_grouped[axesName_t("PlaneID")] == 2];
+	var(layer_12) = all_grouped[all_grouped[axesName_t("PlaneID")] == 12];
+	var(cor_2_vs_12) = layer_2 cross layer_12;
+
+	var(layer_12_trigger) = layer_12[layer_12[axesName_t("x")] == 14 && layer_12[axesName_t("y")] == 8];
+	var(layer_12_not_trigger) = layer_12[layer_12[axesName_t("x")] != 14 || layer_12[axesName_t("y")] != 8];
+	var(layer12_trig_vs_non_trig) = layer_12_trigger cross layer_12_not_trigger;
+
+	layer12_trig_vs_non_trig[axesName_t("delta_time")] = lambda2(TimeStamp1, TimeStamp2) {
+		return TimeStamp1 - TimeStamp2;
+	};
+	var(layer_12_cut) = layer12_trig_vs_non_trig[layer12_trig_vs_non_trig[axesName_t("delta_time")] > 40 && layer12_trig_vs_non_trig[axesName_t("delta_time")] < 100];
+
+
+	var(layer_2_trigger) = layer_2[layer_2[axesName_t("x")] == 15 && layer_2[axesName_t("y")] == 7];
+	var(layer_2_not_trigger) = layer_2[layer_2[axesName_t("x")] != 15 || layer_2[axesName_t("y")] != 7];
+	var(layer2_trig_vs_non_trig) = layer_2_trigger cross layer_2_not_trigger;
+
+	layer2_trig_vs_non_trig[axesName_t("delta_time")] = lambda2(TimeStamp1, TimeStamp2) {
+		return TimeStamp1 - TimeStamp2;
+	};
+
+	var(layer_2_cut) = layer2_trig_vs_non_trig[layer2_trig_vs_non_trig[axesName_t("delta_time")] > 40 && layer2_trig_vs_non_trig[axesName_t("delta_time")] < 100];
+	var(layer_cut_2_vs_12) = layer_2_cut cross layer_12_cut;
+	csv.getProcessorCollection()->loop(1000);
+	out_file1->Write();
+}
+
+
+void clustering() {
+
+
+  auto m_file2 = Snew TFile("../debug/eudaq_out_227_r5.root");
+  auto raw_file = Snew EUTFile(m_file2);
+  TFile * out_file1 = new TFile("../debug/eudaq_out_227_clustering_r5.root", "recreate");
+  var(raw_data) = raw_file->getCollection(collectionName_t("all_grouped"))->getPlane(ID_t(0));
+ // var(raw_data1) = select( { raw_data[axesName_t("x")]  ,raw_data[axesName_t("x")] }  , raw_data[axesName_t("x")]);
+
+  raw_data[axesName_t("trigger")] = lambda3(PlaneID, x, y) {
+    if (PlaneID == 2 && y == 7 && x == 15) {
+      return 1;
+    }
+    if (PlaneID == 12 && y == 8 && x == 14) {
+      return 1;
+    }
+    return 0;
+  };
+  var(trigger) = raw_data[raw_data[axesName_t("trigger")] == 1];
+  var(data) = raw_data[raw_data[axesName_t("trigger")] == 0];
+
+  temp_var(data_joined_with_trigger_valid_planes) = join(data, trigger, { axesName_t( "PlaneID") , axesName_t("Charge") });
+
+  var(ref_hits) = sct::select(data_joined_with_trigger_valid_planes, { axesName_t("x1")});
+
+ // temp_var(data_joined_with_trigger_valid_planes) = data_joined_with_trigger[data_joined_with_trigger[axesName_t("PlaneID1")] == data_joined_with_trigger[axesName_t("PlaneID2")]];
+
+  data_joined_with_trigger_valid_planes[axesName_t("isTriggered")] = lambda3(PlaneID, TimeStamp2, TimeStamp1) {
+    auto delta = TimeStamp2 - TimeStamp1;
+    if (PlaneID == 2 && 100 < delta  && delta < 150) {
+      return 1;
+    }
+    if (PlaneID == 12 && 100 < delta  && delta < 150) {
+      return 1;
+    }
+    return 0;
+  };
+  temp_var(trueHits_proto) = data_joined_with_trigger_valid_planes[data_joined_with_trigger_valid_planes[axesName_t("isTriggered")] == 1];
+
+  var(trueHits) = sct::drop(trueHits_proto, { axesName_t("TimeStamp1") });
+  var(trueHits_2plane_2d_unique) = sct::enumerate_occurrence(trueHits, { axesName_t("TimeStamp2") });
+
+
+  cl_conf a;
+  a.push(axesName_t("position1"), 20);
+  var(clustered) = sct::clustering(trueHits, a);
+  raw_file->getProcessorCollection()->loop(100);
+  out_file1->Write();
+}
+
+void converter() {
+
+  TFile * out_file1 = new TFile("../debug/eudaq_out_227_r5.root", "recreate");
+  auto csv = CSV_File("run227.csv");
+  temp_var(all_layers) = csv.getCollection()->getPlane(ID_t(0));
+  temp_var(all_dump) = all_layers[axCut(axesName_t("PlaneID")) >= 0];
+
+  all_dump[axesName_t("axis")] = lambda1(y) { return y > 5; };
+  all_dump[axesName_t("position")] = lambda2(x, y) {
+    return x + 16 * (y - 6 * (y > 5));
+  };
+  var(all_grouped) = sct::group_events(all_dump, axesName_t("EventNumber"));
+  csv.getProcessorCollection()->loop();
+  out_file1->Write();
+}
+
+int main(int argc, char **argv) {
+  auto csv = CSV_File("../macros/analisys_db.csv", 0, "configFile");
+
+  csv.getProcessorCollection()->init();
+  csv.getProcessorCollection()->next();
 #ifdef _DEBUG
   
  // auto theApp = get_TApplication();
 #endif // _DEBUG
 
-  readin_csv();
+  clustering();
   return 0;
 
 
