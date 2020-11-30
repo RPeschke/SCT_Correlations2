@@ -17,7 +17,7 @@ public:
 private:
   Predicate_f m_predicate;
   std::shared_ptr<axCut> m_Ax;
-  std::vector<generic_plane *> get_planes() const override;
+//  std::vector<generic_plane *> get_planes() const override;
 #endif
 
 

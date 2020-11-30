@@ -357,7 +357,7 @@ void clustering() {
 
   temp_var(data_joined_with_trigger_valid_planes) = join(data, trigger, { axesName_t( "PlaneID") , axesName_t("Charge") });
 
-  var(ref_hits) = sct::select(data_joined_with_trigger_valid_planes, { axesName_t("x1")});
+  var(ref_hits) = sct::drop(data_joined_with_trigger_valid_planes, { axesName_t("x1")});
 
  // temp_var(data_joined_with_trigger_valid_planes) = data_joined_with_trigger[data_joined_with_trigger[axesName_t("PlaneID1")] == data_joined_with_trigger[axesName_t("PlaneID2")]];
 

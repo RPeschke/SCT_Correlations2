@@ -8,11 +8,6 @@
 
 class cutNote;
 
-DllExport generic_plane select(
-  const std::initializer_list<const cutNote& > ax_select,
-  cutNote&  ax_where, 
-  const processor_prob& pprob = saveWithRandomName(processorName_t("select__"))
-);
 
 
 #endif // processor_generic_select_h__

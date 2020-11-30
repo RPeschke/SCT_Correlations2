@@ -24,10 +24,7 @@ double lambda_Note::get_value() const {
 }
 
 
-std::vector<generic_plane*> lambda_Note::get_planes() const
-{
-  return {};
-}
+
 
 std::shared_ptr<cutNote> lambda_Note::copy() const {
   return _MAKE_SHARED1(lambda_Note, *this);

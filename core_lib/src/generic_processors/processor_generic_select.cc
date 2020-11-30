@@ -117,32 +117,9 @@ init_returns processor_generic_select::init()
   return i_sucess;
 }
 
-bool isEqual(const  std::vector<std::pair<double*, double*>>& join_axis) {
-  for (const auto &e : join_axis) {
-    if (*(e.first) != *(e.second)) {
-      return false;
-    }
-  }
-  return true;
-}
+
 process_returns processor_generic_select::processEvent()
 {
-  ++m_current;
-  m_output_coll->clear_event();
-  
-  *m_index1 = -1;
-  while (m_plane1.next()) {
-    *m_index1 = *m_index1 + 1;
-    *m_index2 = -1;
-    while (m_plane2.next()) {
-      *m_index2 = *m_index2 + 1;
-      if (isEqual(join_axis)) {
-        m_outputPlane->push(ID_t(0));
-      }
-    }
-
-  }
-
 
   return p_sucess;
 }
@@ -170,8 +147,4 @@ collection* processor_generic_select::get_output_collection()
 }
 
 
-generic_plane select(const std::vector< cutNote& > ax_select, const std::vector< cutNote& > ax_where, const processor_prob& pprob /*= saveWithRandomName(processorName_t("drop__"))*/)
-{
 
-  return generic_plane{};
-}

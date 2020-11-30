@@ -50,10 +50,6 @@
  }
 
 
- std::vector<generic_plane *> axCut::get_planes() const
- {
-   throw std::logic_error("The method or operation is not implemented.");
- }
 
 axCut x_def() {
   return axCut(axesName_t("x"));
@@ -115,7 +111,3 @@ std::shared_ptr<cutNote> unique_ax::copy() const
   return Snew unique_ax(*this);
 }
 
-std::vector<generic_plane *> unique_ax::get_planes() const
-{
-  throw std::logic_error("The method or operation is not implemented.");
-}

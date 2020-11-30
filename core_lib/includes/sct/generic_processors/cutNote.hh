@@ -24,7 +24,7 @@ public:
   virtual double get_value() const = 0;
   virtual ~cutNote() {}
 #ifndef __CINT__
-  virtual std::vector<generic_plane*> get_planes() const = 0;
+  //virtual std::vector<generic_plane*> get_planes() const = 0;
   virtual std::shared_ptr<cutNote> copy() const = 0;
 #endif
 };

@@ -11,8 +11,8 @@ public:
   lambda_Note();
   virtual bool register_plane(planeCut& pl);;
   virtual double get_value() const;
-  virtual std::vector<generic_plane*> get_planes() const;
 #ifndef __CINT__
+ // virtual std::vector<generic_plane*> get_planes() const;
   lambda_Note(register_plane_f reg_, Predicate_f0  cut_);
   virtual std::shared_ptr<cutNote> copy() const;
   register_plane_f m_reg;
