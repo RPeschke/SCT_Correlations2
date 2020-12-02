@@ -53,7 +53,7 @@ public:
 #ifndef __CINT__
 //  std::vector<generic_plane *> get_planes() const override;
   std::vector<generic_plane *> get_planes() override;
-#endif;
+#endif
 
 
 private:
