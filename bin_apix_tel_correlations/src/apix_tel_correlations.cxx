@@ -341,7 +341,7 @@ void clustering() {
   auto raw_file = Snew EUTFile(m_file2);
   TFile * out_file1 = new TFile("../debug/eudaq_out_227_clustering_r5.root", "recreate");
   var(raw_data) = raw_file->getCollection(collectionName_t("all_grouped"))->getPlane(ID_t(0));
- // var(raw_data1) = select( { raw_data[axesName_t("x")]  ,raw_data[axesName_t("x")] }  , raw_data[axesName_t("x")]);
+  var(raw_data1) = select( { raw_data[axesName_t("x")]  ,raw_data[axesName_t("x")] }  , raw_data[axesName_t("x")]);
 
   raw_data[axesName_t("trigger")] = lambda3(PlaneID, x, y) {
     if (PlaneID == 2 && y == 7 && x == 15) {

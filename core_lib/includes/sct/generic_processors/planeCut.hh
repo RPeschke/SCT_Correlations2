@@ -12,11 +12,10 @@ public:
   double* getAxis(axesName_t ax);
   bool next();
 
-private:
 #ifndef __CINT__
-  std::map<axesName_t, std::shared_ptr<double>> m_storage;
-
   generic_plane m_pl;
-  #endif
+private:
+  std::map<axesName_t, std::shared_ptr<double>> m_storage;
+#endif
 };
 #endif // planeCut_h__

@@ -66,3 +66,8 @@ std::shared_ptr<cutNote> generic_plane_slice_handler::copy() const
 {
   return _MAKE_SHARED1(generic_plane_slice_handler, *this);
 }
+
+std::vector<generic_plane *> generic_plane_slice_handler::get_planes()
+{
+  return { m_plane };
+}

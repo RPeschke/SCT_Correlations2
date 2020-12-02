@@ -3,6 +3,7 @@
 #include "sct/xy_processors/xy_pro.hh"
 #include "sct/generic_processors/processor_generic_correlation.hh"
 #include "sct/internal/vector_helpers.hh"
+#include "sct/generic_processors/processor_generic_select.hh"
 
 class processor_generic_select :public processor {
 public:
@@ -35,6 +36,12 @@ public:
 
   std::vector<std::pair<double*, double*>> join_axis;
 };
+
+generic_plane select(const std::vector<note_ref> ax_select, cutNote& ax_where, const processor_prob& pprob /*= saveWithRandomName(processorName_t("select__")) */)
+{
+  auto a =  ax_select[0].m_note->get_planes();
+  return generic_plane();
+}
 
 processor_generic_select::processor_generic_select(const generic_plane& pl, const generic_plane& p2,const std::vector<axesName_t>& ax, const processor_prob& pprob)
                  :

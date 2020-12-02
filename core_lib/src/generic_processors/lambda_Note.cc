@@ -2,11 +2,17 @@
 #include "sct/generic_processors/cutNote.hh"
 #include <vector>
 #include "sct/generic_plane.hh"
+#include "sct/generic_processors/planeCut.hh"
 
 
 
 
-lambda_Note::lambda_Note(register_plane_f reg_, Predicate_f0 cut_) :m_reg(reg_), m_cut(cut_) {
+std::vector<generic_plane*> lambda_Note::get_planes() 
+{
+  return m_get_pl();
+}
+
+lambda_Note::lambda_Note(register_plane_f reg_, Predicate_f0 cut_, get_plane_f pl) :m_reg(reg_), m_cut(cut_), m_get_pl(std::move(pl)){
 
 }
 
@@ -15,6 +21,7 @@ lambda_Note::lambda_Note() {
 }
 
 bool lambda_Note::register_plane(planeCut& pl) {
+  m_plane = pl.m_pl;
   m_reg(pl);
   return true;
 }
