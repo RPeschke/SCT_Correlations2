@@ -15,6 +15,7 @@ class generic_plane;
 class planeCut;
 #endif // __CINT__
 #include <vector>
+#include "sct/internal/strong_types.h"
 
 
 class DllExport cutNote {
@@ -26,6 +27,7 @@ public:
 #ifndef __CINT__
   virtual std::vector<generic_plane*> get_planes()  { return {}; };
   virtual std::shared_ptr<cutNote> copy() const = 0;
+  virtual axesName_t get_name() const = 0;
 #endif
 };
 

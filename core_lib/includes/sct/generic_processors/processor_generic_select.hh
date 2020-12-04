@@ -10,15 +10,20 @@ class cutNote;
 
 class note_ref {
 public:
-  note_ref( cutNote& note) :m_note(&note) {}
-  cutNote * m_note;
+  note_ref(cutNote& note) { m_note = note.copy(); }
+  note_ref(cutNote&& note) { m_note = note.copy(); }
+  std::shared_ptr<cutNote> m_note;
 };
 
 DllExport generic_plane select(
-  const std::vector<note_ref> ax_select,
-  cutNote&  ax_where, 
+  const std::initializer_list<note_ref> ax_select,
+  const cutNote&  ax_where, 
   const processor_prob& pprob = saveWithRandomName(processorName_t("select__"))
 );
-
+DllExport generic_plane select(
+  const std::initializer_list<note_ref> ax_select,
+  cutNote&&  ax_where,
+  const processor_prob& pprob = saveWithRandomName(processorName_t("select__"))
+);
 
 #endif // processor_generic_select_h__

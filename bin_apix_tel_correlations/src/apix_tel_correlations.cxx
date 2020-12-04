@@ -341,7 +341,6 @@ void clustering() {
   auto raw_file = Snew EUTFile(m_file2);
   TFile * out_file1 = new TFile("../debug/eudaq_out_227_clustering_r5.root", "recreate");
   var(raw_data) = raw_file->getCollection(collectionName_t("all_grouped"))->getPlane(ID_t(0));
-  //var(raw_data1) = select( { raw_data[axesName_t("x")]  ,raw_data[axesName_t("x")] }  , raw_data[axesName_t("x")]);
 
   raw_data[axesName_t("trigger")] = lambda3(PlaneID, x, y) {
     if (PlaneID == 2 && y == 7 && x == 15) {
@@ -357,6 +356,28 @@ void clustering() {
 
   temp_var(data_joined_with_trigger_valid_planes) = join(data, trigger, { axesName_t( "PlaneID") , axesName_t("Charge") });
 
+
+
+  var(raw_data1) = select( 
+    { 
+      data[axesName_t("x")]  ,trigger[axesName_t("x")] ,trigger[axesName_t("PlaneID")] ,trigger[axesName_t("Charge")] 
+    }  ,
+
+    data[axesName_t("PlaneID")] == trigger[axesName_t("PlaneID")]
+    &&
+    data[axesName_t("Charge")] == trigger[axesName_t("Charge")]
+  
+  );
+  var(raw_data2) = select(
+    {
+      data[axesName_t("x")]  ,trigger[axesName_t("x")] ,trigger[axesName_t("PlaneID")] ,trigger[axesName_t("Charge")]
+    },
+
+    data[axesName_t("PlaneID")] == trigger[axesName_t("PlaneID")]
+    &&
+    data[axesName_t("Charge")] == trigger[axesName_t("Charge")]
+
+  );
   var(ref_hits) = sct::drop(data_joined_with_trigger_valid_planes, { axesName_t("x1")});
 
  // temp_var(data_joined_with_trigger_valid_planes) = data_joined_with_trigger[data_joined_with_trigger[axesName_t("PlaneID1")] == data_joined_with_trigger[axesName_t("PlaneID2")]];

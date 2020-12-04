@@ -53,7 +53,11 @@ public:
 #ifndef __CINT__
 //  std::vector<generic_plane *> get_planes() const override;
   std::vector<generic_plane *> get_planes() override;
+  axesName_t get_name() const override;
+  std::shared_ptr<double> M_hit_owned;
 #endif
+
+
 
 
 private:

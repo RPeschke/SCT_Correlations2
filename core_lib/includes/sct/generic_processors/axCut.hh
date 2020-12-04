@@ -36,6 +36,9 @@ private:
 
   
 
+
+  axesName_t get_name() const ;
+
 };
 
 
@@ -63,6 +66,7 @@ public:
 #ifndef __CINT__
   virtual std::shared_ptr<cutNote> copy() const __OVERIDE__;
 //  std::vector<generic_plane *> get_planes() const override;
+  axesName_t get_name() const __OVERIDE__;
 private:
   axesName_t m_name;
   const double * m_hit = nullptr;
@@ -74,6 +78,9 @@ private:
 
 
   
+
+
+
 
 };
 

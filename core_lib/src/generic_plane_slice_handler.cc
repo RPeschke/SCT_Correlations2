@@ -7,6 +7,7 @@
 #include "sct/platform.hh"
 #include "sct/generic_plane_slice_handler.hh"
 #include "sct/generic_processors/processor_generic_append_plane.hh"
+#include "sct/internal/vector_helpers.hh"
 
 void Draw(const generic_plane_slice_handler& pl)
 {
@@ -43,17 +44,21 @@ void generic_plane_slice_handler::print_ax()
 
 generic_plane_slice_handler::generic_plane_slice_handler(axesName_t name, generic_plane* plane) :m_plane(plane), m_name(name)
 {
+  
 
 }
 
 generic_plane_slice_handler::generic_plane_slice_handler(const char * name, generic_plane* plane) : m_plane(plane), m_name(axesName_t(name))
 {
-
+  m_hit = planeCut(*m_plane).getAxis(m_name);
 }
 
 bool generic_plane_slice_handler::register_plane(planeCut& pl)
 {
-  m_hit = pl.getAxis(m_name);
+  if (*m_plane == pl.m_pl) {
+    m_hit = pl.getAxis(m_name);
+  }
+  
   return true;
 }
 
@@ -70,4 +75,9 @@ std::shared_ptr<cutNote> generic_plane_slice_handler::copy() const
 std::vector<generic_plane *> generic_plane_slice_handler::get_planes()
 {
   return { m_plane };
+}
+
+axesName_t generic_plane_slice_handler::get_name() const
+{
+  return axesName_t(necessary_CONVERSION( m_plane->get_name()) + "_"+ necessary_CONVERSION(m_name));
 }

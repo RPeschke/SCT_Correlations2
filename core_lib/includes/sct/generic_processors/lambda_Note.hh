@@ -18,10 +18,13 @@ public:
   virtual std::shared_ptr<cutNote> copy() const;
   register_plane_f m_reg;
   Predicate_f0 m_cut;
-  generic_plane m_plane;
+
   get_plane_f m_get_pl;
   std::vector<std::shared_ptr<cutNote>> m_notes;
 #endif
+
+  axesName_t get_name() const ;
+
 };
 #ifndef __CINT__
 template<typename... Axes_t>

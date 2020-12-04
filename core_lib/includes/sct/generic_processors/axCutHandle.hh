@@ -14,11 +14,14 @@ public:
 #ifndef __CINT__  
   axCutHandle(axCut name, Predicate_f fun);
   virtual std::shared_ptr<cutNote> copy() const __OVERIDE__;
+  axesName_t get_name() const override;
 private:
   Predicate_f m_predicate;
   std::shared_ptr<axCut> m_Ax;
 //  std::vector<generic_plane *> get_planes() const override;
 #endif
+
+
 
 
 
