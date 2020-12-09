@@ -370,7 +370,7 @@ void clustering() {
   );
   var(raw_data2) = select(
     {
-      data[axesName_t("x")]  ,trigger[axesName_t("x")] ,trigger[axesName_t("PlaneID")] ,trigger[axesName_t("Charge")]
+      data[axesName_t("x")]  ,trigger[axesName_t("x")] ,trigger[axesName_t("PlaneID")] ,trigger[axesName_t("Charge")],data[axesName_t("Charge")]
     },
 
     data[axesName_t("PlaneID")] == trigger[axesName_t("PlaneID")]
