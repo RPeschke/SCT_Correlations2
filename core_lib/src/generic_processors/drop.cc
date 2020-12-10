@@ -119,6 +119,18 @@ namespace sct {
     return dynamic_cast<processor_generic_drop*>(p.get())->get_output_collection()->getPlane(ID_t(0));
   }
 
+  generic_plane select(const generic_plane & pl, const  std::vector<axesName_t>& ax, const processor_prob& pprob) {
+    std::vector<axesName_t> outNames;
+    for (auto &e : pl.get_axes_names()) {
+      if (std::find(ax.begin(), ax.end(), e) != ax.end()) {
+        continue;
+      }
+      outNames.push_back(e);
+    }
+    std::shared_ptr<processor> p(new processor_generic_drop(pl, std::move(outNames), pprob));
+    pl.get_ProcessorCollection()->addProcessor(p);
 
+    return dynamic_cast<processor_generic_drop*>(p.get())->get_output_collection()->getPlane(ID_t(0));
+  }
 
 }
